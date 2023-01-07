@@ -1,0 +1,22 @@
+{typedef}:
+stands for “type definition”. 
+typedef is nothing but a way to assign a new name to a pre-existing data type. 
+In other words, typedef is basically a reserved keyword that we use in order to create an (alias name) 
+for a specific data type.
+
+======================================================================================================================
+[explicit]:
+The explicit keyword in C++ is used to mark constructors to not implicitly convert types.
+
+======================================================================================================================
+[_allocator.allocate()]
+Allocates storage suitable for an array object of type T[n] and creates the array, 
+but does not construct array elements. 
+May throw exceptions. If n == 0, the return value is unspecified.
+
+======================================================================================================================
+[_allocator.construct(&_array[i], val);]
+Constructs an object of type X in previously-allocated storage at the address pointed to by xp, 
+using args as the constructor arguments.
+
+======================================================================================================================
