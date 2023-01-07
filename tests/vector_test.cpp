@@ -152,46 +152,48 @@ int main()
 
 	}
 	/*==================================================================================================================*/
-	// std::cout << BOLDYELLOW << "6. (Test the push_back function):" << RESET << std::endl;
-	// std::vector<int> v6;
-	// v6.push_back(1);
-	// v6.push_back(2);
-	// v6.push_back(3);
-	// v6.push_back(4);
-	// v6.push_back(5);
+	{ // 7.8. (Test the push_back function) && (Test the pop_back function):
+		std::cout << BOLDYELLOW << "7. (Test the push_back function):" << RESET << std::endl;
+		ft::vector<int> mv7;
+		mv7.push_back(1);
+		mv7.push_back(2);
+		mv7.push_back(3);
+		mv7.push_back(4);
+		mv7.push_back(5);
 
-	// assert(v6.size() == 5);
-	// assert(v6[0] == 1);
-	// assert(v6[1] == 2);
-	// assert(v6[2] == 3);
-	// assert(v6[3] == 4);
-	// assert(v6[4] == 5);
+		assert(mv7.size() == 5);
+		assert(mv7[0] == 1);
+		assert(mv7[1] == 2);
+		assert(mv7[2] == 3);
+		assert(mv7[3] == 4);
+		assert(mv7[4] == 5);
 
-	// for (int i = 0; i < v6.size(); i++)
-	// 	std::cout << BOLDWHITE << v6[i] << RESET << std::endl;
-	// std::cout << BOLDWHITE << "The vector (v6) size = [" << v6.size() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Push_back function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+		for (int i = 0; i < mv7.size(); i++)
+			std::cout << BOLDWHITE << mv7[i] << RESET << std::endl;
+		std::cout << BOLDWHITE << "The vector (v6) size = [" << mv7.size() << "]" << RESET << std::endl;
+		std::cout << BOLDGREEN << "Push_back function test passed ✅" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+	
+	/*==================================================================================================================*/
 
-	// /*==================================================================================================================*/
+		std::cout << BOLDYELLOW << "8. (Test the pop_back function):\n" << RESET << std::endl;
+		
+		ft::vector<int> mv8(mv7);
+		mv8.pop_back();
+		mv8.pop_back();
 
-	// std::cout << BOLDYELLOW << "7. (Test the pop_back function):" << RESET << std::endl;
-	// std::vector<int> v7(v6);
-	// v7.pop_back();
-	// v7.pop_back();
+		assert(mv8.size() == 3);
+		assert(mv8[0] == 1);
+		assert(mv8[1] == 2);
+		assert(mv8[2] == 3);
 
-	// assert(v7.size() == 3);
-	// assert(v7[0] == 1);
-	// assert(v7[1] == 2);
-	// assert(v7[2] == 3);
-
-	// for (int i = 0; i < v7.size(); i++)
-	// 	std::cout << BOLDWHITE << v7[i] << RESET << std::endl;
-	// std::cout << BOLDWHITE << "The vector (v7) size = [" << v7.size() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Pop_back function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-
-	// /*==================================================================================================================*/
+		for (int i = 0; i < mv8.size(); i++)
+			std::cout << BOLDWHITE << mv8[i] << RESET << std::endl;
+		std::cout << BOLDWHITE << "The vector (mv8) size = [" << mv8.size() << "]" << RESET << std::endl;
+		std::cout << BOLDGREEN << "Pop_back function test passed ✅" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	}
+	/*==================================================================================================================*/
 
 	// std::cout << BOLDYELLOW << "8. (Test the insert function):" << RESET << std::endl;
 	// std::vector<int> v8(v7);
