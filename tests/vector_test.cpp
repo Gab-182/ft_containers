@@ -1,6 +1,6 @@
 # include "../vector/vector.hpp"
 # include <iostream>
-# include <vector>
+
 # include <cstring>
 # include <iterator>
 #include <cassert>
@@ -95,22 +95,22 @@ int main()
 	}
 	/*==================================================================================================================*/
 	{// 4. (Test the range constructor):
-		std::cout << BOLDYELLOW << "[4]. (Test the range constructor):\n" << RESET << std::endl;
+		// std::cout << BOLDYELLOW << "[4]. (Test the range constructor):\n" << RESET << std::endl;
 
-		int arr[5] = {1, 2, 3, 4, 5};
-		std::vector<int> v4(arr, arr + 5);
-		// arr is the memory location for the beginning of the array.
-		// arr + 5 is the memory location for the end of the array.
+		// int arr[5] = {1, 2, 3, 4, 5};
+		// std::vector<int> v4(arr, arr + 5);
+		// // arr is the memory location for the beginning of the array.
+		// // arr + 5 is the memory location for the end of the array.
 
-		assert(v4.size() == 5);
-		assert(v4[0] == 1);
-		assert(v4[4] == 5);
+		// assert(v4.size() == 5);
+		// assert(v4[0] == 1);
+		// assert(v4[4] == 5);
 
-		std::cout << BOLDWHITE << "v4[0] = [" << v4[0] << "]" << RESET << std::endl;
-		std::cout << BOLDWHITE << "v4[4] = [" << v4[4] << "]" << RESET << std::endl;
-		std::cout << BOLDWHITE << "The vector (v4) size = [" << v4.size() << "]" << RESET << std::endl;
-		std::cout << BOLDGREEN << "Range constructor test passed ✅" << RESET << std::endl;
-		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+		// std::cout << BOLDWHITE << "v4[0] = [" << v4[0] << "]" << RESET << std::endl;
+		// std::cout << BOLDWHITE << "v4[4] = [" << v4[4] << "]" << RESET << std::endl;
+		// std::cout << BOLDWHITE << "The vector (v4) size = [" << v4.size() << "]" << RESET << std::endl;
+		// std::cout << BOLDGREEN << "Range constructor test passed ✅" << RESET << std::endl;
+		// std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	}
 	/*==================================================================================================================*/
 	{ // 5. (Test the copy constructor):

@@ -1,10 +1,13 @@
-#ifndef VECTOR_HPP
-# define VECTOR_HPP
+#ifndef FT_VECTOR_HPP
+# define FT_VECTOR_HPP
 
 # include <iostream>
 # include <memory>		// For the (allocator) object
 # include <limits>		// for max_size()
-#include <cstddef>		// for ptrdiff_t
+# include <cstddef>		// for ptrdiff_t
+
+# include "../iterator/iterator_traits.hpp"
+# include "../iterator/iterator.hpp"
 /*=============================================================================================================*/
 namespace ft
 {
@@ -146,4 +149,4 @@ namespace ft
 }
 
 /*=============================================================================================================*/
-#endif
+#endif //!FT_VECTOR_HPP

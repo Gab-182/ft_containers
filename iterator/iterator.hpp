@@ -1,33 +1,17 @@
-#ifndef ITERATOR_HPP
-# define ITERATOR_HPP
+#ifndef FT_ITERATOR_HPP
+# define FT_ITERATOR_HPP
 
-# include <iostream>
-# include <cstddef>
-# include <cstring>
+# include "iterator_traits.hpp"
 
-/*=============================================================================================================*/
 namespace ft {
-
 	template< class T >
 	class iterator {
+	/**
+	 ** Member types: */
 		public:
-		/**
-		 ** Member Types: */
-			typedef		T						value_type;
-			typedef		T*						pointer;
-			typedef		const T*				const_pointer;
-			typedef		T&						reference;
-			typedef		const T&				const_reference;
-			typedef		ptrdiff_t				difference_type;
-			
-		public:
-		/**
-		 ** Member Functions: */
-		
-		
-		};
+			// typedef		ft::iterator_traits<T>::value_type		value_type;
+
+	};
 }
 
-
-/*=============================================================================================================*/
-#endif // !ITERATOR_HPP
+#endif //! FT_ITERATOR_HPP
