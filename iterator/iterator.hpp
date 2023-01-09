@@ -4,13 +4,8 @@
 # include "iterator_traits.hpp"
 
 namespace ft {
-	template< class T >
+	template< typename T >
 	class iterator {
-	/**
-	 ** Member types: */
-		public:
-			// typedef		ft::iterator_traits<T>::value_type		value_type;
-
 	};
 }
 
