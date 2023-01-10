@@ -1,6 +1,19 @@
 # ft_containers
 re-implementation of the standard C++ containers with all the specific usage.
 
+## If you are familiar with:
+```
+- std::vector<T>
+- std::map<T>
+- std::stack<T>
+- and others
+```
+## Ok then, Now we call them differently:
+```
+- ft::vector<T>
+- ft::map<T>
+- ft::stack<T>
+```
 Resourses:
 -------------
 1. ft_container testers [https://morioh.com/p/06e8c5450e41].
