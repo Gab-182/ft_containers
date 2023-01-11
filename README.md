@@ -15,8 +15,8 @@ In this project I'm re-implementation some of the standard C++ containers with t
 - std::stack<T>
 ```
 
-Resourses:
--------------
+Resourses that helped me in this project:
+-----------------------------------------
 
 1. ft_container testers 
   [https://morioh.com/p/06e8c5450e41].
