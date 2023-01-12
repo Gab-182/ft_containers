@@ -409,7 +409,7 @@ int main()
 
 	 /*==================================================================================================================*/
 	std::cout << BOLDYELLOW << "21. (Test the swap function):" << RESET << std::endl;
-	std::vector<int> mv21(6);
+	ft::vector<int> mv21(6);
 	ft::vector<int> mv22(3);
 	
 	mv21[0] = 1;

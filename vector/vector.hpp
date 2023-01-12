@@ -34,11 +34,11 @@ namespace ft
 		 ** Iterator types
 		 * */
 //		public:
-//			typedef					ft::iterator<value_type>				iterator;
+//			typedef					ft::iterator<std::random_access_iterator_tag , value_type>				iterator;
 //			typedef					ft::iterator<const value_type>			const_iterator;
 //			typedef					ft::reverse_iterator<iterator>			reverse_iterator;
 //			typedef					ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-//
+
 		/**
 		 ** @Private_members
 		 */
@@ -52,7 +52,7 @@ namespace ft
 		 ** @Member_functions
 		 */
 		public:
-			/**---------------------------[Empty Constructor]----------------------------------*/
+			/**-------------------------------[Empty Constructor]------------------------------------*/
 			explicit vector (const allocator_type& alloc = allocator_type()) {
 				_allocator = alloc;
 				_size = 0;
@@ -99,7 +99,7 @@ namespace ft
 					_allocator.construct(&_array[i], vec._array[i]);
 				return (*this);
 			}
-				/**------------------------------[Iterators]----------------------------------------------*/
+			/**------------------------------[Iterators]----------------------------------------------*/
 
 			/**------------------------------[Capacity]-----------------------------------------------*/
 			size_type	size() const {
