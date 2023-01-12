@@ -4,7 +4,7 @@
 # include <cstring>
 # include <iterator>
 #include <cassert>
-
+#include <vector>
 /*===============================================================================*/
 # define BLACK			"\033[30m"				/* Black */
 # define RED			"\033[31m"				/* Red */
@@ -29,7 +29,7 @@ int main()
 {
 	/*==================================================================================================================*/
 	{ // 1. (default constructor):
-		std::cout << BOLDYELLOW << "[1]. (default constructor):\n" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "[1]. (default constructor):" << RESET << std::endl;
 		/**
 		 *!=====================*
 		 *! [integer vector] 
@@ -52,7 +52,7 @@ int main()
 	}
 	/*==================================================================================================================*/
 	{ // 2. (Test the size constructor:)
-		std::cout << BOLDYELLOW << "[2]. (Test the size constructor):\n" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "[2]. (Test the size constructor):" << RESET << std::endl;
 
 		ft::vector<int> mv2(5);
 		
@@ -65,7 +65,7 @@ int main()
 	}
 	/*==================================================================================================================*/
 	{ // 3. (Test the fill constructor):
-		std::cout << BOLDYELLOW << "[3]. (Test the fill constructor):\n" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "[3]. (Test the fill constructor):" << RESET << std::endl;
 		/**
 		 *!=====================*
 		 *! [integer vector] 
@@ -114,7 +114,7 @@ int main()
 	}
 	/*==================================================================================================================*/
 	{ // 5. (Test the copy constructor):
-		std::cout << BOLDYELLOW << "[5]. (Test the copy constructor):\n" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "[5]. (Test the copy constructor):" << RESET << std::endl;
 		ft::vector<int> mv3(5, 10);
 		ft::vector<int> mv5(mv3);
 
@@ -134,7 +134,7 @@ int main()
 	}
 	/*==================================================================================================================*/
 	{ // 6. (Test the operator=):
-		std::cout << BOLDYELLOW << "[6]. (Test the operator=):\n" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "[6]. (Test the operator=):" << RESET << std::endl;
 		ft::vector<int> mv3(2, 10);
 		ft::vector<int> mv6;
 		mv6 = mv3;
@@ -172,11 +172,11 @@ int main()
 			std::cout << BOLDWHITE << mv7[i] << RESET << std::endl;
 		std::cout << BOLDWHITE << "The vector (v6) size = [" << mv7.size() << "]" << RESET << std::endl;
 		std::cout << BOLDGREEN << "Push_back function test passed ✅" << RESET << std::endl;
-		std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	
 	/*==================================================================================================================*/
 
-		std::cout << BOLDYELLOW << "8. (Test the pop_back function):\n" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "8. (Test the pop_back function):" << RESET << std::endl;
 		
 		ft::vector<int> mv8(mv7);
 		mv8.pop_back();
@@ -234,33 +234,32 @@ int main()
 	// std::cout << BOLDGREEN << "Erase function test passed ✅" << RESET << std::endl;
 	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
-	// /*==================================================================================================================*/
+	 /*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "10. (Test the clear function):" << RESET << std::endl;
+	std::vector<int> mv10(10, 10);
+	assert(mv10.size() == 10);
+	std::cout << BOLDWHITE << "The vector (v10) size = [" << mv10.size() << "]" << RESET << std::endl;
+	mv10.clear();
+	assert(mv10.size() == 0);
+	std::cout << BOLDWHITE << "The vector (v10) size = [" << mv10.size() << "]" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Clear function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
-	// std::cout << BOLDYELLOW << "10. (Test the clear function):" << RESET << std::endl;
-	// std::vector<int> v10(v9);
-	// v10.clear();
+	/*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "11. (Test the resize function):" << RESET << std::endl;
+	ft::vector<int> mv11;
+	std::cout << BOLDWHITE << "The vector (mv11) size = [" << mv11.size() << "]" << RESET << std::endl;
+	mv11.resize(5);
+	assert(mv11.size() == 5);
+	std::cout << BOLDWHITE << "The vector (mv11) size = [" << mv11.size() << "]" << RESET << std::endl;
+	mv11.resize(10);
+	assert(mv11.size() == 10);
 
-	// assert(v10.size() == 0);
+	std::cout << BOLDWHITE << "The vector (mv11) size = [" << mv11.size() << "]" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Resize function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
-	// for (int i = 0; i < v10.size(); i++)
-	// 	std::cout << BOLDWHITE << v10[i] << RESET << std::endl;
-	// std::cout << BOLDWHITE << "The vector (v10) size = [" << v10.size() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Clear function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-
-	// /*==================================================================================================================*/
-	// std::cout << BOLDYELLOW << "11. (Test the resize function):" << RESET << std::endl;
-	// std::vector<int> v11;
-	// v11.resize(5);
-	// assert(v11.size() == 5);
-	// v11.resize(10);
-	// assert(v11.size() == 10);
-
-	// std::cout << BOLDWHITE << "The vector (v11) size = [" << v11.size() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Resize function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-
-	// /*==================================================================================================================*/
+	/*==================================================================================================================*/
 
 	// std::cout << BOLDYELLOW << "12. (Test the at function):" << RESET << std::endl;
 	// std::vector<int> v12;
@@ -313,20 +312,22 @@ int main()
 	// std::cout << BOLDGREEN << "Back function test passed ✅" << RESET << std::endl;
 	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
-	// /*==================================================================================================================*/
+	 /*==================================================================================================================*/
 	
-	// std::cout << BOLDYELLOW << "15. (Test the empty function):" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "15. (Test the empty function):" << RESET << std::endl;
 	
-	// std::vector<int> v15;
-	// assert(v15.empty() == true);
-	// v15.push_back(1);
-	// assert(v15.empty() == false);
+	ft::vector<int> mv15;
+	assert(mv15.empty() == true);
+	std::cout << BOLDWHITE << "mv15.empty() = [" << mv15.empty() << "]" << RESET << std::endl;
 
-	// std::cout << BOLDWHITE << "v15.empty() = [" << v15.empty() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Empty function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+	mv15.push_back(1);
+	assert(mv15.empty() == false);
+	std::cout << BOLDWHITE << "mv15.empty() = [" << mv15.empty() << "]" << RESET << std::endl;
+	
+	std::cout << BOLDGREEN << "Empty function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 
-	// /*==================================================================================================================*/
+	 /*==================================================================================================================*/
 	// /**
 	//  * max_size() is the theoretical maximum number of items that could be put in your vector.
 	//  * On a 32-bit system, you could in theory allocate 4Gb == 2^32 which is: 
@@ -337,41 +338,43 @@ int main()
 	//  * max_size() function is going to return (1073741823) built as 32-bit target
 	//  */
 	
-	// std::cout << BOLDYELLOW << "16. (Test the max_size function):" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "16. (Test the max_size function):" << RESET << std::endl;
 	
-	// std::vector<int> v16;
-	// assert(v16.max_size() == 4611686018427387903);
+	std::vector<int> v16;
+	ft::vector<int> mv16;
+//	assert(mv16.max_size() == v16.max_size());
+	std::cout << BOLDWHITE << "v16.max_size() = [" << v16.max_size() << "]" << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv16.max_size() = [" << mv16.max_size() << "]" << RESET << std::endl;
+	
+	std::cout << BOLDGREEN << "Max_size function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
-	// std::cout << BOLDWHITE << "v16.max_size() = [" << v16.max_size() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Max_size function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+	 /*==================================================================================================================*/
+	 /**
+	  * Size: the number of items currently in the vector
+	  * Capacity: how many items can be fit in the vector before it is "full". Once full,
+	  * adding new items will result in a new, larger block of memory being allocated and the existing items being copied to it
+	  */
+	 std::cout << BOLDYELLOW << "17. (Test the capacity function):" << RESET << std::endl;
 
-	// /*==================================================================================================================*/
-	// /**
-	//  * Size: the number of items currently in the vector
-	//  * Capacity: how many items can be fit in the vector before it is "full". Once full,
-	//  * adding new items will result in a new, larger block of memory being allocated and the existing items being copied to it
-	//  */
-	// std::cout << BOLDYELLOW << "17. (Test the capacity function):" << RESET << std::endl;
+	 ft::vector<int> mv17(17);
+	 assert(mv17.capacity() == 17);
 
-	// std::vector<int> v17(17);
-	// assert(v17.capacity() == 17);
+	 std::cout << BOLDWHITE << "v17.capacity() = [" << mv17.capacity() << "]" << RESET << std::endl;
+	 std::cout << BOLDGREEN << "Capacity function test passed ✅" << RESET << std::endl;
+	 std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
-	// std::cout << BOLDWHITE << "v17.capacity() = [" << v17.capacity() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Capacity function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+	 /*==================================================================================================================*/
 
-	// /*==================================================================================================================*/
+	 std::cout << BOLDYELLOW << "18. (Test the reserve function):" << RESET << std::endl;
 
-	// std::cout << BOLDYELLOW << "18. (Test the reserve function):" << RESET << std::endl;
+	 ft::vector<int> mv18;
+	 mv18.reserve(18);
+	 assert(mv18.capacity() == 18);
 
-	// std::vector<int> v18;
-	// v18.reserve(18);
-	// assert(v18.capacity() == 18);
-
-	// std::cout << BOLDWHITE << "v18.capacity() = [" << v18.capacity() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Reserve function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+	 std::cout << BOLDWHITE << "mv18.capacity() = [" << mv18.capacity() << "]" << RESET << std::endl;
+	 std::cout << BOLDGREEN << "Reserve function test passed ✅" << RESET << std::endl;
+	 std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 
 	// /*==================================================================================================================*/
 
@@ -404,38 +407,37 @@ int main()
 	// std::cout << BOLDGREEN << "Assign function test passed ✅" << RESET << std::endl;
 	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
-	// /*==================================================================================================================*/
+	 /*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "21. (Test the swap function):" << RESET << std::endl;
+	std::vector<int> mv21(6);
+	ft::vector<int> mv22(3);
+	
+	mv21[0] = 1;
+	mv21[1] = 2;
+	mv21[2] = 3;
+	mv21[3] = 4;
+	mv21[4] = 5;
+	mv21[5] = 6;
+	
+	mv22[0] = 7;
+	mv22[1] = 8;
+	mv22[2] = 9;
+	
+	mv21.swap(mv22);
+	std::cout << BOLDWHITE << "mv21.size() = " << mv21.size() << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv21.capacity() = " << mv21.capacity() << RESET << std::endl;
+	for (int i = 0; i < mv21.size(); i++)
+		std::cout << BOLDWHITE << mv21[i] << RESET << std::endl;
+	
+	std::cout << BOLDWHITE << "mv22.size() = " << mv22.size() << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv22.capacity() = " << mv22.capacity() << RESET << std::endl;
+	for (int i = 0; i < mv22.size(); i++)
+		std::cout << BOLDWHITE << mv22[i] << RESET << std::endl;
+	
+	std::cout << BOLDGREEN << "Swap function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 
-	// std::cout << BOLDYELLOW << "21. (Test the swap function):" << RESET << std::endl;
-
-	// std::vector<int> v21(3);
-	// std::vector<int> v22(3);
-
-	// v21[0] = 1;
-	// v21[1] = 2;
-	// v21[2] = 3;
-
-	// v22[0] = 4;
-	// v22[1] = 5;
-	// v22[2] = 6;
-
-	// v21.swap(v22);
-
-	// assert(v21[0] == 4);
-	// assert(v21[1] == 5);
-	// assert(v21[2] == 6);
-
-	// assert(v22[0] == 1);
-	// assert(v22[1] == 2);
-	// assert(v22[2] == 3);
-
-	// std::cout << BOLDWHITE << "v21 = [" << v21[0] << ", " << v21[1] << ", " << v21[2] << "]" << RESET << std::endl;
-	// std::cout << BOLDWHITE << "v22 = [" << v22[0] << ", " << v22[1] << ", " << v22[2] << "]" << RESET << std::endl;
-
-	// std::cout << BOLDGREEN << "Swap function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-
-	// /*==================================================================================================================*/
+	 /*==================================================================================================================*/
 
 	// std::cout << BOLDYELLOW << "22. (Test the data function):" << RESET << std::endl;
 

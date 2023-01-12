@@ -2,7 +2,7 @@
 ==========
 stands for “type definition”. 
 typedef is nothing but a way to assign a new name to a pre-existing data type. 
-In other words, typedef is basically a reserved keyword that we use in order to create an (alias name) 
+In other words, typedef is basically a reserved keyword that we use in order to create an ("alias" name)
 for a specific data type.
 
 ======================================================================================================================

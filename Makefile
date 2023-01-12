@@ -6,7 +6,7 @@
 #    By: gabdoush <gabdoush@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/04 03:46:21 by gabdoush          #+#    #+#              #
-#    Updated: 2023/01/07 10:23:07 by gabdoush         ###   ########.fr        #
+#    Updated: 2023/01/11 10:59:05 by gabdoush         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJ = $(FILES:.cpp=.o)
 
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-CC = c++ -g
+CC = c++ -g3
 
 all: $(NAME) $(OBJ) clean
 
