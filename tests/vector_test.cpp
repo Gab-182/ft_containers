@@ -1,4 +1,5 @@
 # include "../vector/vector.hpp"
+# include "../iterator/vector_iterator.hpp"
 # include <iostream>
 
 # include <cstring>
@@ -437,32 +438,27 @@ int main()
 	std::cout << BOLDGREEN << "Swap function test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 
-	 /*==================================================================================================================*/
+	/*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "22. (Test the begin function):" << RESET << std::endl;
+	ft::vector<int> mv23(6);
+	
+	mv23[0] = 1;
+	mv23[1] = 2;
+	mv23[2] = 3;
+	mv23[3] = 4;
+	mv23[4] = 5;
+	mv23[5] = 6;
+	
+	ft::vector<int>::iterator it = mv23.begin();
+	ft::vector<int>::iterator ite = mv23.end();
 
-	// std::cout << BOLDYELLOW << "22. (Test the data function):" << RESET << std::endl;
-
-	// std::vector<int> v23(3);
-	// v23[0] = 1;
-	// v23[1] = 2;
-	// v23[2] = 3;
-
-	// int *p = v23.data();
-
-	// assert(p[0] == 1);
-	// assert(p[1] == 2);
-	// assert(p[2] == 3);
-
-	// std::cout << BOLDWHITE << "p = [" << p[0] << ", " << p[1] << ", " << p[2] << "]" << RESET << std::endl;
-
-	// std::cout << BOLDGREEN << "Data function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-
-	// /*==================================================================================================================*/
-
-	// std::cout << BOLDYELLOW << "23. (Test the get_allocator function):" << RESET << std::endl;
-
-
-	// /*==================================================================================================================*/
+	assert(*it == 1);
+	assert(*ite == 6);
+	std::cout << BOLDWHITE << "mv23.begin() = " << *it << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv23.end() = " << *ite << RESET << std::endl;
+	std::cout << BOLDGREEN << "Begin function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	/*==================================================================================================================*/
 
 	return 0;
 }

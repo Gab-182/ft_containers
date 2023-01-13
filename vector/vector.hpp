@@ -7,6 +7,7 @@
 # include <cstddef>		// for ptrdiff_t
 
 # include <iterator>
+# include "../iterator/vector_iterator.hpp"
 # include "../iterator/iterator_traits.hpp"
 # include "../iterator/iterator.hpp"
 /*=============================================================================================================*/
@@ -33,12 +34,12 @@ namespace ft
 		/**
 		 ** Iterator types
 		 * */
-//		public:
-//			typedef					ft::iterator<std::random_access_iterator_tag , value_type>				iterator;
-//			typedef					ft::iterator<const value_type>			const_iterator;
-//			typedef					ft::reverse_iterator<iterator>			reverse_iterator;
-//			typedef					ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-
+		public:
+			typedef					ft::vector_iterator<value_type>			iterator;
+			typedef					ft::vector_iterator<const value_type>	const_iterator;
+//
+//			typedef					ft::reverse_iterator<iterator>					reverse_iterator;
+//			typedef					ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 		/**
 		 ** @Private_members
 		 */
@@ -52,7 +53,7 @@ namespace ft
 		 ** @Member_functions
 		 */
 		public:
-			/**-------------------------------[Empty Constructor]------------------------------------*/
+			/**---------------------------[Empty Constructor]----------------------------------*/
 			explicit vector (const allocator_type& alloc = allocator_type()) {
 				_allocator = alloc;
 				_size = 0;
@@ -100,7 +101,25 @@ namespace ft
 				return (*this);
 			}
 			/**------------------------------[Iterators]----------------------------------------------*/
-
+			iterator begin() {
+				return (iterator(_array));
+			}
+			/**_____________________________________________________________________________*/
+			const_iterator begin() const {
+				return (const_iterator(_array));
+			}
+			/**_____________________________________________________________________________*/
+			iterator end() {
+				return (iterator(_array + _size - 1));
+			}
+			/**_____________________________________________________________________________*/
+			const_iterator end() const {
+				return (iterator(_array + _size - 1));
+			}
+			/**_____________________________________________________________________________*/
+			/**_____________________________________________________________________________*/
+			/**_____________________________________________________________________________*/
+			
 			/**------------------------------[Capacity]-----------------------------------------------*/
 			size_type	size() const {
 				return (_size);
