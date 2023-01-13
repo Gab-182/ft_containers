@@ -1,11 +1,8 @@
 # include "../vector/vector.hpp"
-# include "../iterator/vector_iterator.hpp"
 # include <iostream>
-
-# include <cstring>
 # include <iterator>
-#include <cassert>
-#include <vector>
+# include <cassert>
+# include <vector>
 /*===============================================================================*/
 # define BLACK			"\033[30m"				/* Black */
 # define RED			"\033[31m"				/* Red */
@@ -241,7 +238,7 @@ int main()
 	assert(mv10.size() == 10);
 	std::cout << BOLDWHITE << "The vector (v10) size = [" << mv10.size() << "]" << RESET << std::endl;
 	mv10.clear();
-	assert(mv10.size() == 0);
+	assert(mv10.empty());
 	std::cout << BOLDWHITE << "The vector (v10) size = [" << mv10.size() << "]" << RESET << std::endl;
 	std::cout << BOLDGREEN << "Clear function test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
@@ -329,21 +326,20 @@ int main()
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 
 	 /*==================================================================================================================*/
-	// /**
-	//  * max_size() is the theoretical maximum number of items that could be put in your vector.
-	//  * On a 32-bit system, you could in theory allocate 4Gb == 2^32 which is: 
-	//  * 2^32 char values, 
-	//  * 2^30 int values or 2^29 double values.
-	//  * 
-	//  * max_size() function is going to return (4611686018427387903) built as 64-bit target
-	//  * max_size() function is going to return (1073741823) built as 32-bit target
-	//  */
+	 /**
+	  * max_size() is the theoretical maximum number of items that could be put in your vector.
+	  * On a 32-bit system, you could in theory allocate 4Gb == 2^32 which is:
+	  * 2^32 char values,
+	  * 2^30 int values or 2^29 double values.
+	  *
+	  * max_size() function is going to return (4611686018427387903) built as 64-bit target
+	  * max_size() function is going to return (1073741823) built as 32-bit target
+	  */
 	
 	std::cout << BOLDYELLOW << "16. (Test the max_size function):" << RESET << std::endl;
 	
 	std::vector<int> v16;
 	ft::vector<int> mv16;
-//	assert(mv16.max_size() == v16.max_size());
 	std::cout << BOLDWHITE << "v16.max_size() = [" << v16.max_size() << "]" << RESET << std::endl;
 	std::cout << BOLDWHITE << "mv16.max_size() = [" << mv16.max_size() << "]" << RESET << std::endl;
 	
@@ -364,9 +360,7 @@ int main()
 	 std::cout << BOLDWHITE << "v17.capacity() = [" << mv17.capacity() << "]" << RESET << std::endl;
 	 std::cout << BOLDGREEN << "Capacity function test passed ✅" << RESET << std::endl;
 	 std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-
 	 /*==================================================================================================================*/
-
 	 std::cout << BOLDYELLOW << "18. (Test the reserve function):" << RESET << std::endl;
 
 	 ft::vector<int> mv18;
@@ -376,21 +370,6 @@ int main()
 	 std::cout << BOLDWHITE << "mv18.capacity() = [" << mv18.capacity() << "]" << RESET << std::endl;
 	 std::cout << BOLDGREEN << "Reserve function test passed ✅" << RESET << std::endl;
 	 std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
-
-	// /*==================================================================================================================*/
-
-	// std::cout << BOLDYELLOW << "19. (Test the shrink_to_fit function):" << RESET << std::endl;
-
-	// std::vector<int> v19;
-	// v19.reserve(19);
-	// assert(v19.capacity() == 19);
-	// v19.shrink_to_fit();
-	// assert(v19.capacity() == 0);
-
-	// std::cout << BOLDWHITE << "v19.capacity() = [" << v19.capacity() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Shrink_to_fit function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-
 	// /*==================================================================================================================*/
 
 	// std::cout << BOLDYELLOW << "20. (Test the assign function):" << RESET << std::endl;
@@ -439,7 +418,7 @@ int main()
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 
 	/*==================================================================================================================*/
-	std::cout << BOLDYELLOW << "22. (Test the begin function):" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "22. (Test the begin && end function):" << RESET << std::endl;
 	ft::vector<int> mv23(6);
 	
 	mv23[0] = 1;
@@ -456,8 +435,19 @@ int main()
 	assert(*ite == 6);
 	std::cout << BOLDWHITE << "mv23.begin() = " << *it << RESET << std::endl;
 	std::cout << BOLDWHITE << "mv23.end() = " << *ite << RESET << std::endl;
-	std::cout << BOLDGREEN << "Begin function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDGREEN << "(Begin && end) function test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	/*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "23. (Test the reverse iterator):" << RESET << std::endl;
+	ft::vector<int> mv24(3);
+	
+	mv24[0] = 1;
+	mv24[1] = 2;
+	mv24[2] = 3;
+	
+	ft::vector<int>::reverse_iterator rit = mv24.rbegin();
+	std::cout << BOLDWHITE << "mv24.rbegin() = " << *rit << RESET << std::endl;
+	
 	/*==================================================================================================================*/
 
 	return 0;

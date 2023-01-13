@@ -70,8 +70,8 @@ namespace ft {
 		typedef					std::random_access_iterator_tag					iterator_category;
 	};
 	/*---------------------------------------------------------------------------------------------------*/
-} // namespace ft
+} //! namespace ft
 
 
 /*=============================================================================================================*/
-#endif // !FT_ITERATOR_TRAITS_HPP
+#endif //! FT_ITERATOR_TRAITS_HPP

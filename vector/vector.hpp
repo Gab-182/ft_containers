@@ -6,10 +6,10 @@
 # include <limits>		// for max_size()
 # include <cstddef>		// for ptrdiff_t
 
-# include <iterator>
-# include "../iterator/vector_iterator.hpp"
-# include "../iterator/iterator_traits.hpp"
 # include "../iterator/iterator.hpp"
+# include "../iterator/iterator_traits.hpp"
+# include "../iterator/vector_iterator.hpp"
+# include "../iterator/reverse_iterator.hpp"
 /*=============================================================================================================*/
 namespace ft
 {
@@ -32,14 +32,13 @@ namespace ft
 			typedef					size_t									size_type;
 
 		/**
-		 ** Iterator types
+		 ** @Iterator types
 		 * */
 		public:
 			typedef					ft::vector_iterator<value_type>			iterator;
 			typedef					ft::vector_iterator<const value_type>	const_iterator;
-//
-//			typedef					ft::reverse_iterator<iterator>					reverse_iterator;
-//			typedef					ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef					ft::reverse_iterator<iterator>			reverse_iterator;
+//			typedef					ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 		/**
 		 ** @Private_members
 		 */
@@ -117,10 +116,22 @@ namespace ft
 				return (iterator(_array + _size - 1));
 			}
 			/**_____________________________________________________________________________*/
+			reverse_iterator rbegin() {
+				return (reverse_iterator(end()));
+			};
 			/**_____________________________________________________________________________*/
+//			const_reverse_iterator rbegin() const {
+//				return (const_reverse_iterator(end()));
+//			};
 			/**_____________________________________________________________________________*/
-			
-			/**------------------------------[Capacity]-----------------------------------------------*/
+			reverse_iterator rend() {
+				return (reverse_iterator(begin()));
+			};
+			/**_____________________________________________________________________________*/
+//			const_reverse_iterator rend() const {
+//				return (const_reverse_iterator(begin()));
+//			};
+			/**--------------------------------[Capacity]-----------------------------------------------*/
 			size_type	size() const {
 				return (_size);
 			}
