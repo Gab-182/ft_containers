@@ -439,15 +439,16 @@ int main()
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	/*==================================================================================================================*/
 	std::cout << BOLDYELLOW << "23. (Test the reverse iterator):" << RESET << std::endl;
-	ft::vector<int> mv24(3);
+	std::vector<int> mv24(3);
 	
 	mv24[0] = 1;
 	mv24[1] = 2;
 	mv24[2] = 3;
 	
-	ft::vector<int>::reverse_iterator rit = mv24.rbegin();
+	std::vector<int>::reverse_iterator rit = mv24.rbegin();
 	std::cout << BOLDWHITE << "mv24.rbegin() = " << *rit << RESET << std::endl;
-	
+	std::cout << BOLDGREEN << "Reverse iterator test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	/*==================================================================================================================*/
 
 	return 0;

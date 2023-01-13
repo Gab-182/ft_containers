@@ -18,7 +18,7 @@ OBJ = $(FILES:.cpp=.o)
 
 FLAGS = -g -Wall -Wextra -Werror -std=c++98
 
-CC = c++ -g3
+CC = c++
 
 all: $(NAME) $(OBJ) clean
 
