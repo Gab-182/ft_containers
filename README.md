@@ -34,3 +34,5 @@ Resourses that helped me in this project:
   [https://stackoverflow.com/questions/6296945/size-vs-capacity-of-a-vector].
 8. Intro to Iteraiter traits 
   [https://www.codeproject.com/Articles/36530/An-Introduction-to-Iterator-Traits].
+9. Why should we prefer to use member initialization lists?
+  [https://stackoverflow.com/questions/926752/why-should-i-prefer-to-use-member-initialization-lists]
