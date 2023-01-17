@@ -1,4 +1,5 @@
 # include "../vector/vector.hpp"
+
 # include <iostream>
 # include <iterator>
 # include <cassert>
@@ -439,14 +440,22 @@ int main()
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	/*==================================================================================================================*/
 	std::cout << BOLDYELLOW << "23. (Test the reverse iterator):" << RESET << std::endl;
-	std::vector<int> mv24(3);
+	ft::vector<int> mv24(9);
 	
-	mv24[0] = 1;
-	mv24[1] = 2;
-	mv24[2] = 3;
-	
-	std::vector<int>::reverse_iterator rit = mv24.rbegin();
-	std::cout << BOLDWHITE << "mv24.rbegin() = " << *rit << RESET << std::endl;
+	mv24[0] = 10;
+	mv24[1] = 20;
+	mv24[2] = 30;
+	mv24[3] = 40;
+	mv24[4] = 50;
+	mv24[5] = 60;
+	mv24[6] = 70;
+	mv24[7] = 80;
+	mv24[8] = 90;
+
+	ft::vector<int>::reverse_iterator rev_it = mv24.rbegin();
+	std::cout << BOLDWHITE << "mv24.rbegin() = " << *rev_it << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv24.size() = " << mv24.size() << RESET << std::endl;
+
 	std::cout << BOLDGREEN << "Reverse iterator test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	/*==================================================================================================================*/

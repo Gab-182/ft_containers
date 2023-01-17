@@ -1,0 +1,11 @@
+1- Operator* in reverse iterator, it should return *(--tmp)
+    I edit it to return *(tmp), Cause *(--tmp) will give me
+    the element before the last one.
+
+2- end() I saw it online this way:
+    return (_array + _size);
+    I edit it to return (_array + _size - 1);
+    Cause I want to return the last element in the array.
+    otherwise it will return the element after the last one.
+
+3-

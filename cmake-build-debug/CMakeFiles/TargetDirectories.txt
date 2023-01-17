@@ -1,0 +1,3 @@
+/home/gab-182/Desktop/ft_conatiner/cmake-build-debug/CMakeFiles/ft_container.dir
+/home/gab-182/Desktop/ft_conatiner/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/gab-182/Desktop/ft_conatiner/cmake-build-debug/CMakeFiles/rebuild_cache.dir

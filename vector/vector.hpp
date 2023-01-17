@@ -3,24 +3,19 @@
 
 # include <iostream>
 # include <memory>		// For the (allocator) object
-# include <limits>		// for max_size()
 # include <cstddef>		// for ptrdiff_t
 
 # include "../iterator/iterator.hpp"
 # include "../iterator/iterator_traits.hpp"
-# include "../iterator/vector_iterator.hpp"
 # include "../iterator/reverse_iterator.hpp"
 /*=============================================================================================================*/
 namespace ft
 {
-/*---------------------------------------------------------------------------------------------------*/
 	template < class T, class Alloc = std::allocator<T> >
 	class vector 
 	{
-		/*-------------------------------------------------------------------------------------------*/
 		/**
-		 ** @Member_types_"Aliases"
-		 */
+		 ** @Member_types_"Aliases" */
 		public:
 			typedef					T										value_type;
 			typedef					Alloc									allocator_type;
@@ -31,17 +26,14 @@ namespace ft
 			typedef					ptrdiff_t								difference_type;
 			typedef					size_t									size_type;
 
-		/**
-		 ** @Iterator types
-		 * */
+		/*================================[ Iterator_types ]=====================================*/
 		public:
-			typedef					ft::vector_iterator<value_type>			iterator;
-			typedef					ft::vector_iterator<const value_type>	const_iterator;
+			typedef					ft::iterator<value_type>				iterator;
+			typedef					ft::iterator<const value_type>			const_iterator;
 			typedef					ft::reverse_iterator<iterator>			reverse_iterator;
-//			typedef					ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-		/**
-		 ** @Private_members
-		 */
+			typedef					ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+		/**=======================================================================================
+		 ** @Private_members */
 		private:
 			pointer					_array;
 			size_type				_size;
@@ -49,18 +41,19 @@ namespace ft
 			allocator_type			_allocator;
 
 		/**
-		 ** @Member_functions
-		 */
+		 **==============================[ Member_functions ]==================================*/
 		public:
-			/**---------------------------[Empty Constructor]----------------------------------*/
-			explicit vector (const allocator_type& alloc = allocator_type()) {
+			/**=========================[ empty constructor ]==================================*/
+			explicit
+			vector (const allocator_type& alloc = allocator_type()) {
 				_allocator = alloc;
 				_size = 0;
 				_capacity = 0;
 		 		_array = NULL;
 			}
-			/**---------------------------[Fill Constructor]------------------------------------------*/
-			explicit vector (size_type n,
+			/**=========================[ fill constructor ]==================================*/
+			explicit
+			vector (size_type n,
 							const value_type& val = value_type(),
 							const allocator_type& alloc = allocator_type()) {
 				_allocator = alloc;
@@ -70,10 +63,9 @@ namespace ft
 				for (size_type i = 0; i < n; i++)
 					_allocator.construct(&_array[i], val); // **[Note]
 			}
-			/**---------------------------[Range Constructor]-----------------------------------------*/
+			/**=========================[ range constructor ]==================================*/
 
-
-			/**---------------------------[Copy Constructor]------------------------------------------*/
+			/**=========================[ copy constructor ]==================================*/
 			vector (const vector& vec) {
 				_allocator = vec._allocator;
 				_size = vec._size;
@@ -83,12 +75,14 @@ namespace ft
 					_allocator.construct(&_array[i], vec._array[i]);
 			}
 
-			/**------------------------------[Destructor]---------------------------------------------*/
+			/**=========================[ destructor ]==================================*/
 			~vector() {
 				_allocator.deallocate(_array, _capacity);
 			}
-			/**------------------------------[Assignation]--------------------------------------------*/
-			vector& operator= (const vector& vec) {
+
+			/**=========================[ operator= ]==================================*/
+			vector&
+			operator= (const vector& vec) {
 				if (this == &vec)
 					return (*this);
 				_allocator = vec._allocator;
@@ -99,52 +93,65 @@ namespace ft
 					_allocator.construct(&_array[i], vec._array[i]);
 				return (*this);
 			}
-			/**------------------------------[Iterators]----------------------------------------------*/
-			iterator begin() {
+
+			/**=========================[ Iterators ]==================================*/
+			iterator
+			begin() {
 				return (iterator(_array));
 			}
-			/**_____________________________________________________________________________*/
-			const_iterator begin() const {
+			/**_________________________________________________________*/
+			const_iterator
+			begin() const {
 				return (const_iterator(_array));
 			}
-			/**_____________________________________________________________________________*/
-			iterator end() {
+			/**_________________________________________________________*/
+			iterator
+			end() {
 				return (iterator(_array + _size - 1));
 			}
-			/**_____________________________________________________________________________*/
-			const_iterator end() const {
+			/**_________________________________________________________*/
+			const_iterator
+			end() const {
 				return (iterator(_array + _size - 1));
 			}
-			/**_____________________________________________________________________________*/
-			reverse_iterator rbegin() {
+			/**_________________________________________________________*/
+			reverse_iterator
+			rbegin() {
 				return (reverse_iterator(end()));
 			};
-			/**_____________________________________________________________________________*/
-//			const_reverse_iterator rbegin() const {
-//				return (const_reverse_iterator(end()));
-//			};
-			/**_____________________________________________________________________________*/
-			reverse_iterator rend() {
+			/**_________________________________________________________*/
+			const_reverse_iterator
+			rbegin() const {
+				return (const_reverse_iterator(end()));
+			};
+			/**_________________________________________________________*/
+			reverse_iterator
+			rend() {
 				return (reverse_iterator(begin()));
 			};
-			/**_____________________________________________________________________________*/
-//			const_reverse_iterator rend() const {
-//				return (const_reverse_iterator(begin()));
-//			};
-			/**--------------------------------[Capacity]-----------------------------------------------*/
+			/**_________________________________________________________*/
+			const_reverse_iterator
+			rend() const {
+				return (const_reverse_iterator(begin()));
+			};
+
+			/**=========================[ Capacity ]==================================*/
 			size_type	size() const {
 				return (_size);
 			}
-			/**_____________________________________________________________________________*/
-			size_type	max_size() const {
+			/**_________________________________________________________*/
+			size_type
+			max_size() const {
 				return (_allocator.max_size());
 			}
-			/**_____________________________________________________________________________*/
-			size_type	capacity() const {
+			/**_________________________________________________________*/
+			size_type
+			capacity() const {
 				return (_capacity);
 			}
-			/**_____________________________________________________________________________*/
-			void	resize (size_type n, value_type val = value_type()) {
+			/**_________________________________________________________*/
+			void
+			resize (size_type n, value_type val = value_type()) {
 				while (n < _size)
 					pop_back();
 				while (n > _size)
@@ -152,14 +159,16 @@ namespace ft
 				if (n > _capacity)
 					reserve(n);
 			}
-			/**_____________________________________________________________________________*/
-			bool	empty() const {
+			/**_________________________________________________________*/
+			bool
+			empty() const {
 				if (_size == 0)
 					return (true);
 				return (false);
 			}
-			/**_____________________________________________________________________________*/
-			void	reserve (size_type n) {
+			/**_________________________________________________________*/
+			void
+			reserve (size_type n) {
 				if (n > _capacity) {
 					pointer temp_array = _allocator.allocate(n);
 				for (size_type i = 0; i < _size; i++) {
@@ -170,11 +179,13 @@ namespace ft
 				_capacity = n;
 				}
 			}
-			/**------------------------------[Element access]-----------------------------------------*/
-			
 
-			/**------------------------------[Modifiers]-----------------------------------------------*/
-			void	push_back (const value_type& val) {
+			/**=========================[ Element access ]==================================*/
+
+
+			/**===========================[ Modifiers ]=====================================*/
+			void
+			push_back (const value_type& val) {
 				if (_size + 1 > _capacity) {
 					if (_capacity == 0)
 						reserve(1);
@@ -184,13 +195,15 @@ namespace ft
 				_allocator.construct(&_array[_size], val);
 				_size++;
 			}
-		/**__________________________________________________________________________*/
-			void	pop_back() {
+			/**_________________________________________________________*/
+			void
+			pop_back() {
 				_allocator.destroy(&_array[_size - 1]);
 				_size--;
 			}
-		/**__________________________________________________________________________*/
-			void	swap(vector& vec) {
+			/**_________________________________________________________*/
+			void
+			swap(vector& vec) {
 				size_type temp_size = _size;
 				size_type temp_capacity = _capacity;
 				pointer temp_array = _array;
@@ -203,21 +216,23 @@ namespace ft
 				vec._capacity = temp_capacity;
 				vec._array = temp_array;
 			}
-			/**__________________________________________________________________________*/
-			void	clear() {
+			/**_________________________________________________________*/
+			void
+			clear() {
 				for (size_type i = 0; i < _size; i++)
 					_allocator.destroy(&_array[i]);
 				_size = 0;
 			}
-			
-			/**------------------------------[Operations]---------------------------------------------*/
 
-			/**---------------------------------------------------------------------------------------*/
-		reference	operator[] (size_type n) {
-			return (_array[n]);
+
+			/**=========================[ Operations ]==================================*/
+			reference
+			operator[] (size_type n) {
+				return (_array[n]);
 		}
-	};
-}
+	}; // vector
+	
+}// namespace ft
 
 /*=============================================================================================================*/
 #endif //!FT_VECTOR_HPP

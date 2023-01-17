@@ -10,17 +10,13 @@ namespace ft {
 	template <class T>
 	class reverse_iterator {
 		public:
-		/**
-		 * @Member_types
-		 */
+		/*=====================================[Member types]=====================================*/
 			/**
-			 * iterator_type: A type that provides the underlying iterator for a reverse_iterator.
-			 */
+			 * iterator_type: A type that provides the underlying iterator for a reverse_iterator. */
 		 	typedef 				T												iterator_type;
 			typedef typename		ft::iterator_traits<T>::value_type				value_type;
 			/**
-			 * A type that provides a pointer to an element addressed by a reverse_iterator.
-			 */
+			 * A type that provides a pointer to an element addressed by a reverse_iterator. */
 			typedef typename		ft::iterator_traits<T>::pointer					pointer;
 			typedef typename		ft::iterator_traits<T>::reference				reference;
 			
@@ -34,11 +30,10 @@ namespace ft {
 			iterator_type			_current_iter;
 		/*---------------------------------------------------------------------------------------------------*/
 		public:
-			reverse_iterator() {
-				_current_iter = NULL;
-			};
+			reverse_iterator(): _current_iter() {};
 		/*---------------------------------------------------------------------------------------------------*/
-			explicit reverse_iterator (iterator_type rev_it) {
+			explicit
+			reverse_iterator (iterator_type rev_it) {
 			_current_iter = rev_it;
 			};
 		/*---------------------------------------------------------------------------------------------------*/
@@ -50,134 +45,133 @@ namespace ft {
 			 * @param rev_it
 			 */
 			template <class Iter>
-			explicit reverse_iterator (const reverse_iterator<Iter>& rev_it) {
-				_current_iter = rev_it._current_iter;
-			};
+			explicit
+			reverse_iterator (const reverse_iterator<Iter>& rev_it): _current_iter(rev_it.base()) {};
 		/*---------------------------------------------------------------------------------------------------*/
 		/***
 		 * @Member_function
 		 * Recovers the underlying iterator from its reverse_iterator.
 		 */
-			iterator_type base() const {
+			iterator_type
+			base() const {
 				return (_current_iter);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 			/**
-			 * Returns a reference or pointer to the element previous to current.
-			 * Equivalent to
-			 * Iter tmp = current;
-			 * return *--tmp;
+			 *! Returns a reference or pointer to the element previous to current.
+			 *! Equivalent to
+			 *! Iter tmp = current;
+			 *! return *--tmp;
 			 */
-			reference operator*() const {
+			reference
+			operator*() const {
 				iterator_type tmp = _current_iter;
-				return (*--tmp);
+				return *(tmp);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
-			pointer operator->() const {
+			pointer
+			operator->() const {
 				return (&(operator*()));
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 		/**
-		*  @return  @c *this
-		*
+		*  @return  *this
 		*  Decrements the underlying iterator.
 		*/
-			reverse_iterator& operator++() {
+			reverse_iterator&
+			operator++() {
 				--_current_iter;
 				return (*this);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 		/**
-		 *  @return  The original value of @c *this
-		 *
+		 *  @return  The original value of *this
 		 *  Decrements the underlying iterator.
 		*/
-			reverse_iterator operator++(int) {
+			reverse_iterator
+			operator++(int) {
 				reverse_iterator tmp(*this);
 				--_current_iter;
 				return (tmp);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 		/**
-		 *  @return  @c *this
-		 *
+		 *  @return  *this
 		 *  Increments the underlying iterator.
 		*/
-			reverse_iterator& operator--() {
+			reverse_iterator&
+			operator--() {
 				++_current_iter;
 				return (*this);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 		/**
-		 *  @return  A reverse_iterator with the previous value of @c *this
-		 *
+		 *  @return  A reverse_iterator with the previous value of *this
 		 *  Increments the underlying iterator.
 		*/
-			reverse_iterator operator--(int) {
+			reverse_iterator
+			operator--(int) {
 				reverse_iterator tmp(*this);
 				++_current_iter;
 				return (tmp);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 		/**
-		 *  @return  A reverse_iterator that refers to (@c _current_iter - @a n)
-		 *
+		 *  @return  A reverse_iterator that refers to (_current_iter - n)
 		 *  The underlying iterator must be a Random Access Iterator.
 		*/
-			reverse_iterator operator+(difference_type n) const {
+			reverse_iterator
+			operator+(difference_type n) const {
 				return (reverse_iterator(_current_iter - n));
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 		/**
 		 *  @return  *this
-		 *
-		 *  Moves the underlying iterator backwards @a (n steps).
+		 *  Moves the underlying iterator backwards (n steps).
 		 *  The underlying iterator must be a Random Access Iterator.
 		*/
-			reverse_iterator& operator+=(difference_type n) {
+			reverse_iterator&
+			operator+=(difference_type n) {
 			_current_iter = _current_iter - n;
 				return (*this);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 		/**
-		 *  @return  A reverse_iterator that refers to @c (_current_iter - @a n)
-		 *
+		 *  @return  A reverse_iterator that refers to (_current_iter - n)
 		 *  The underlying iterator must be a Random Access Iterator.
 		*/
-			reverse_iterator operator-(difference_type n) const {
+			reverse_iterator
+			operator-(difference_type n) const {
 				return (reverse_iterator(_current_iter + n));
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 		/**
 		 *  @return  *this
-		 *
-		 *  Moves the underlying iterator forwards @a (n steps).
+		 *  Moves the underlying iterator forwards (n steps).
 		 *  The underlying iterator must be a Random Access Iterator.
 		*/
-			reverse_iterator& operator-=(difference_type n) {
+			reverse_iterator&
+			operator-=(difference_type n) {
 			_current_iter = _current_iter + n;
 				return (*this);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
-			reverse_iterator& operator=(const reverse_iterator& rev_it) {
+			reverse_iterator&
+			operator=(const reverse_iterator& rev_it) {
 				_current_iter = rev_it._current_iter;
 				return (*this);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
 		/**
-		 *  @return  The value at @c (_current_iter - @a n - 1)
-		 *
+		 *  @return  The value at (_current_iter - n - 1)
 		 *  The underlying iterator must be a Random Access Iterator.
 		*/
-			reference operator[] (difference_type n) const {
+			reference
+			operator[] (difference_type n) const {
 				return (_current_iter[-n - 1]);
 			};
 		/*---------------------------------------------------------------------------------------------------*/
-		
 	}; // reverse_iterator
-	/*---------------------------------------------------------------------------------------------------*/
-	
-	/*---------------------------------------------------------------------------------------------------*/
 } // name space ft
 
 #endif //FT_REVERSE_ITERATOR_HPP
