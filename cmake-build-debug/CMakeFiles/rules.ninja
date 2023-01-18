@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: ft_container
+# Project: ft_containers_D
 # Configurations: Debug
 # =============================================================================
 # =============================================================================
@@ -14,7 +14,7 @@
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__ft_container_Debug
+rule CXX_COMPILER__ft_containers_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = /usr/bin/c++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -24,7 +24,7 @@ rule CXX_COMPILER__ft_container_Debug
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__ft_container_Debug
+rule CXX_EXECUTABLE_LINKER__ft_containers_Debug
   command = $PRE_LINK && /usr/bin/c++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
@@ -42,7 +42,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /home/gab-182/clion-2022.2.3/bin/cmake/linux/bin/cmake --regenerate-during-build -S/home/gab-182/Desktop/ft_conatiner -B/home/gab-182/Desktop/ft_conatiner/cmake-build-debug
+  command = /home/gab-182/clion-2022.2.3/bin/cmake/linux/bin/cmake --regenerate-during-build -S/home/gab-182/Desktop/ft_conatiners_D -B/home/gab-182/Desktop/ft_conatiners_D/cmake-build-debug
   description = Re-running CMake...
   generator = 1
 

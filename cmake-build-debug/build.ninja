@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: ft_container
+# Project: ft_containers_D
 # Configurations: Debug
 # =============================================================================
 
@@ -39,44 +39,44 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = /home/gab-182/Desktop/ft_conatiner/cmake-build-debug/
+cmake_ninja_workdir = /home/gab-182/Desktop/ft_conatiners_D/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target ft_container
+# Object build statements for EXECUTABLE target ft_containers
 
 
 #############################################
-# Order-only phony target for ft_container
+# Order-only phony target for ft_containers
 
-build cmake_object_order_depends_target_ft_container: phony || CMakeFiles/ft_container.dir
+build cmake_object_order_depends_target_ft_containers: phony || CMakeFiles/ft_containers.dir
 
-build CMakeFiles/ft_container.dir/tests/vector_test.cpp.o: CXX_COMPILER__ft_container_Debug /home/gab-182/Desktop/ft_conatiner/tests/vector_test.cpp || cmake_object_order_depends_target_ft_container
-  DEP_FILE = CMakeFiles/ft_container.dir/tests/vector_test.cpp.o.d
+build CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o: CXX_COMPILER__ft_containers_Debug /home/gab-182/Desktop/ft_conatiners_D/tests/vector_test.cpp || cmake_object_order_depends_target_ft_containers
+  DEP_FILE = CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o.d
   FLAGS = -g -std=gnu++98
-  OBJECT_DIR = CMakeFiles/ft_container.dir
-  OBJECT_FILE_DIR = CMakeFiles/ft_container.dir/tests
+  OBJECT_DIR = CMakeFiles/ft_containers.dir
+  OBJECT_FILE_DIR = CMakeFiles/ft_containers.dir/tests
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target ft_container
+# Link build statements for EXECUTABLE target ft_containers
 
 
 #############################################
-# Link the executable ft_container
+# Link the executable ft_containers
 
-build ft_container: CXX_EXECUTABLE_LINKER__ft_container_Debug CMakeFiles/ft_container.dir/tests/vector_test.cpp.o
+build ft_containers: CXX_EXECUTABLE_LINKER__ft_containers_Debug CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o
   FLAGS = -g
-  OBJECT_DIR = CMakeFiles/ft_container.dir
+  OBJECT_DIR = CMakeFiles/ft_containers.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = ft_container
-  TARGET_PDB = ft_container.dbg
+  TARGET_FILE = ft_containers
+  TARGET_PDB = ft_containers.dbg
 
 
 #############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/gab-182/Desktop/ft_conatiner/cmake-build-debug && /home/gab-182/clion-2022.2.3/bin/cmake/linux/bin/ccmake -S/home/gab-182/Desktop/ft_conatiner -B/home/gab-182/Desktop/ft_conatiner/cmake-build-debug
+  COMMAND = cd /home/gab-182/Desktop/ft_conatiners_D/cmake-build-debug && /home/gab-182/clion-2022.2.3/bin/cmake/linux/bin/ccmake -S/home/gab-182/Desktop/ft_conatiners_D -B/home/gab-182/Desktop/ft_conatiners_D/cmake-build-debug
   DESC = Running CMake cache editor...
   pool = console
   restat = 1
@@ -88,7 +88,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/gab-182/Desktop/ft_conatiner/cmake-build-debug && /home/gab-182/clion-2022.2.3/bin/cmake/linux/bin/cmake --regenerate-during-build -S/home/gab-182/Desktop/ft_conatiner -B/home/gab-182/Desktop/ft_conatiner/cmake-build-debug
+  COMMAND = cd /home/gab-182/Desktop/ft_conatiners_D/cmake-build-debug && /home/gab-182/clion-2022.2.3/bin/cmake/linux/bin/cmake --regenerate-during-build -S/home/gab-182/Desktop/ft_conatiners_D -B/home/gab-182/Desktop/ft_conatiners_D/cmake-build-debug
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -104,9 +104,9 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 
 #############################################
-# Folder: /home/gab-182/Desktop/ft_conatiner/cmake-build-debug
+# Folder: /home/gab-182/Desktop/ft_conatiners_D/cmake-build-debug
 
-build all: phony ft_container
+build all: phony ft_containers
 
 # =============================================================================
 # Built-in targets

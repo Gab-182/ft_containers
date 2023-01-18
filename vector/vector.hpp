@@ -4,6 +4,7 @@
 # include <iostream>
 # include <memory>		// For the (allocator) object
 # include <cstddef>		// for ptrdiff_t
+# include <exception>
 
 # include "../iterator/iterator.hpp"
 # include "../iterator/iterator_traits.hpp"
@@ -19,12 +20,12 @@ namespace ft
 		public:
 			typedef					T										value_type;
 			typedef					Alloc									allocator_type;
-			typedef					value_type&								reference;
-			typedef					value_type*								pointer;
-			typedef					const value_type*						const_pointer;
-			typedef					const value_type&						const_reference;
-			typedef					ptrdiff_t								difference_type;
-			typedef					size_t									size_type;
+			typedef	typename 		allocator_type::reference				reference;
+			typedef	typename		allocator_type::pointer					pointer;
+			typedef	typename		allocator_type::const_pointer			const_pointer;
+			typedef	typename		allocator_type::const_reference			const_reference;
+			typedef	typename		allocator_type::difference_type			difference_type;
+			typedef	typename		allocator_type::size_type				size_type;
 
 		/*================================[ Iterator_types ]=====================================*/
 		public:
@@ -45,12 +46,8 @@ namespace ft
 		public:
 			/**=========================[ empty constructor ]==================================*/
 			explicit
-			vector (const allocator_type& alloc = allocator_type()) {
-				_allocator = alloc;
-				_size = 0;
-				_capacity = 0;
-		 		_array = NULL;
-			}
+			vector (const allocator_type& alloc = allocator_type())
+				: _array(NULL), _size(0), _capacity(0), _allocator(alloc) {};
 			/**=========================[ fill constructor ]==================================*/
 			explicit
 			vector (size_type n,
@@ -60,7 +57,7 @@ namespace ft
 				_size = n;
 				_capacity = n;
 				_array = _allocator.allocate(_capacity); // **[Note]
-				for (size_type i = 0; i < n; i++)
+				for (size_type i = 0; i < _size; i++)
 					_allocator.construct(&_array[i], val); // **[Note]
 			}
 			/**=========================[ range constructor ]==================================*/
@@ -100,19 +97,30 @@ namespace ft
 				return (iterator(_array));
 			}
 			/**_________________________________________________________*/
+			/**
+			 * @return
+			 ** an object of the const_iterator class that is
+			 ** initialized with the member variable _array.
+			 */
 			const_iterator
 			begin() const {
 				return (const_iterator(_array));
 			}
 			/**_________________________________________________________*/
+			/**
+			 *! NOTE !
+			 *!======!
+			 ** end(), rbegin() iterators (are valid iterators,
+			 ** but they are not de-reference-able) */
+
 			iterator
 			end() {
-				return (iterator(_array + _size - 1));
+				return (iterator(_array + _size));
 			}
 			/**_________________________________________________________*/
 			const_iterator
 			end() const {
-				return (iterator(_array + _size - 1));
+				return (iterator(_array + _size));
 			}
 			/**_________________________________________________________*/
 			reverse_iterator
@@ -136,7 +144,8 @@ namespace ft
 			};
 
 			/**=========================[ Capacity ]==================================*/
-			size_type	size() const {
+			size_type
+			size() const {
 				return (_size);
 			}
 			/**_________________________________________________________*/
@@ -181,9 +190,62 @@ namespace ft
 			}
 
 			/**=========================[ Element access ]==================================*/
-
-
-			/**===========================[ Modifiers ]=====================================*/
+			reference
+			at( size_type pos ) {
+				if (pos >= _size)
+					throw std::out_of_range("out of range");
+				return (_array[pos]);
+			};
+			/**_________________________________________________________*/
+			reference
+			operator[] (size_type pos) {
+				if (pos >= _size)
+					throw std::out_of_range("out of range");
+				return (_array[pos]);
+			}
+			/**_________________________________________________________*/
+			reference
+			front() {
+				if (_size == 0)
+					throw std::out_of_range("out of range");
+				return (_array[0]);
+			}
+			/**_________________________________________________________*/
+			const_reference
+			front() const {
+				if (_size == 0)
+					throw std::out_of_range("out of range");
+				return (_array[0]);
+			}
+			/**_________________________________________________________*/
+			reference
+			back() {
+				if (_size == 0)
+					throw std::out_of_range("out of range");
+				return (_array[_size - 1]);
+			}
+			/**_________________________________________________________*/
+			const_reference
+			back() const {
+				if (_size == 0)
+					throw std::out_of_range("out of range");
+				return (_array[_size - 1]);
+			}
+			/**_________________________________________________________*/
+			pointer
+			data() {
+				if (_size == 0)
+					return (NULL);
+				return (_array);
+			}
+			/**_________________________________________________________*/
+			const_pointer
+			data() const {
+				if (_size == 0)
+					return (NULL);
+				return (_array);
+			}
+		/**===========================[ Modifiers ]=====================================*/
 			void
 			push_back (const value_type& val) {
 				if (_size + 1 > _capacity) {
@@ -223,13 +285,13 @@ namespace ft
 					_allocator.destroy(&_array[i]);
 				_size = 0;
 			}
+			/**_________________________________________________________*/
+//			iterator
+//			erase(iterator pos) {
+//
+//			}
 
-
-			/**=========================[ Operations ]==================================*/
-			reference
-			operator[] (size_type n) {
-				return (_array[n]);
-		}
+			/**=========================================================================*/
 	}; // vector
 	
 }// namespace ft

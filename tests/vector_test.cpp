@@ -4,24 +4,14 @@
 # include <iterator>
 # include <cassert>
 # include <vector>
+# include <exception>
 /*===============================================================================*/
-# define BLACK			"\033[30m"				/* Black */
-# define RED			"\033[31m"				/* Red */
-# define GREEN			"\033[32m"				/* Green */
-# define YELLOW			"\033[33m"				/* Yellow */
-# define BLUE			"\033[34m"				/* Blue */
-# define MAGENTA		"\033[35m"				/* Magenta */
-# define CYAN			"\033[36m"				/* Cyan */
-# define WHITE			"\033[37m"				/* White */
-# define BOLDMAGENTA	"\033[1m\033[35m"		/* Bold Magenta */
-# define BOLDCYAN		"\033[1m\033[36m"		/* Bold Cyan */
+
 # define BOLDWHITE		"\033[1m\033[37m"		/* Bold White */
 # define RESET			"\033[0m"				/* Reset the color */
-# define BOLDBLACK		"\033[1m\033[30m"		/* Bold Black */
-# define BOLDRED		"\033[1m\033[31m"		/* Bold Red */
 # define BOLDGREEN		"\033[1m\033[32m"		/* Bold Green */
 # define BOLDYELLOW		"\033[1m\033[33m"		/* Bold Yellow */
-# define BOLDBLUE		"\033[1m\033[34m"		/* Bold Blue */
+# define BOLDRED		"\033[1m\033[31m"		/* Bold Red */
 /*===============================================================================*/
 
 int main()
@@ -420,22 +410,29 @@ int main()
 
 	/*==================================================================================================================*/
 	std::cout << BOLDYELLOW << "22. (Test the begin && end function):" << RESET << std::endl;
+	/**
+	 *! NOTE !
+	 *!======!
+	 ** end(), rbegin() iterators (are valid iterators,
+	 ** but they are not de-reference-able) */
+
 	ft::vector<int> mv23(6);
-	
+
 	mv23[0] = 1;
 	mv23[1] = 2;
 	mv23[2] = 3;
 	mv23[3] = 4;
 	mv23[4] = 5;
 	mv23[5] = 6;
-	
+
 	ft::vector<int>::iterator it = mv23.begin();
 	ft::vector<int>::iterator ite = mv23.end();
 
-	assert(*it == 1);
-	assert(*ite == 6);
 	std::cout << BOLDWHITE << "mv23.begin() = " << *it << RESET << std::endl;
+//	std::cout << BOLDWHITE << "mv23.end() = " << *ite << RESET << std::endl;
+	ite--;
 	std::cout << BOLDWHITE << "mv23.end() = " << *ite << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv23.size() = " << mv23.size() << RESET << std::endl;
 	std::cout << BOLDGREEN << "(Begin && end) function test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	/*==================================================================================================================*/
@@ -459,6 +456,162 @@ int main()
 	std::cout << BOLDGREEN << "Reverse iterator test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	/*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "24. (Test the const iterator):" << RESET << std::endl;
+	ft::vector<int> mv25(3);
 
+	mv25[0] = 10;
+	mv25[1] = 20;
+	mv25[2] = 30;
+
+	ft::vector<int>::const_iterator const_it = mv25.begin();
+	std::cout << BOLDWHITE << "mv25.begin() = " << *const_it << RESET << std::endl;
+	std::cout << BOLDGREEN << "Const iterator test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	/*==================================================================================================================*/
+	try {
+		std::cout << BOLDYELLOW << "25. (Test at function):" << RESET << std::endl;
+		ft::vector<int> mv26(3);
+
+		mv26[0] = 10;
+		mv26[1] = 20;
+		mv26[2] = 30;
+
+		std::cout << BOLDWHITE << "mv26.at(0) = " << mv26.at(0) << RESET << std::endl;
+		std::cout << BOLDWHITE << "mv26.at(1) = " << mv26.at(1) << RESET << std::endl;
+		std::cout << BOLDWHITE << "mv26.at(2) = " << mv26.at(2) << RESET << std::endl;
+		std::cout << BOLDWHITE << "mv26.at(3) = " << mv26.at(3) << RESET << std::endl;
+
+		std::cout << BOLDGREEN << "At function test passed ✅" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << BOLDRED << "Error: " << e.what() << RESET << std::endl;
+	}
+	/*==================================================================================================================*/
+	try {
+		std::cout << BOLDYELLOW << "26. (Test the front function):" << RESET << std::endl;
+		ft::vector<int> mv27(3);
+
+		mv27[0] = 10;
+		mv27[1] = 20;
+		mv27[2] = 30;
+
+		std::cout << BOLDWHITE << "mv27.front() = " << mv27.front() << RESET << std::endl;
+
+		ft::vector<int> mv28;
+
+		std::cout << BOLDWHITE << "mv28.front() = " << mv28.front() << RESET << std::endl;
+
+		std::cout << BOLDGREEN << "Front function test passed ✅" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET
+				  << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << BOLDRED << "Error: " << e.what() << RESET << std::endl;
+	}
+	/*==================================================================================================================*/
+	try {
+		std::cout << BOLDYELLOW << "27. (Test the back function):" << RESET << std::endl;
+		ft::vector<int> mv29(3);
+
+		mv29[0] = 10;
+		mv29[1] = 20;
+		mv29[2] = 30;
+
+		std::cout << BOLDWHITE << "mv29.back() = " << mv29.back() << RESET << std::endl;
+
+		ft::vector<int> mv30;
+
+		std::cout << BOLDWHITE << "mv30.back() = " << mv30.back() << RESET << std::endl;
+
+		std::cout << BOLDGREEN << "Back function test passed ✅" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << BOLDRED << "Error: " << e.what() << RESET << std::endl;
+	}
+	/*==================================================================================================================*/
+	try {
+		std::cout << BOLDYELLOW << "28. (Test the const front function):" << RESET << std::endl;
+		ft::vector<int> mv31(3);
+
+		mv31[0] = 10;
+		mv31[1] = 20;
+		mv31[2] = 30;
+
+		ft::vector<int>::const_reference const_ref = mv31.front();
+		std::cout << BOLDWHITE << "mv31.front() = " << const_ref << RESET << std::endl;
+
+		ft::vector<int> mv32;
+
+		ft::vector<int>::const_reference const_ref2 = mv32.front();
+		std::cout << BOLDWHITE << "mv32.front() = " << const_ref2 << RESET << std::endl;
+
+		std::cout << BOLDGREEN << "Const front function test passed ✅" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << BOLDRED << "Error: " << e.what() << RESET << std::endl;
+	}
+	/*==================================================================================================================*/
+	try {
+		std::cout << BOLDYELLOW << "29. (Test the const back function):" << RESET << std::endl;
+		ft::vector<int> mv33(3);
+
+		mv33[0] = 10;
+		mv33[1] = 20;
+		mv33[2] = 30;
+
+		ft::vector<int>::const_reference const_ref = mv33.back();
+		std::cout << BOLDWHITE << "mv33.back() = " << const_ref << RESET << std::endl;
+
+		ft::vector<int> mv34;
+
+		ft::vector<int>::const_reference const_ref2 = mv34.back();
+		std::cout << BOLDWHITE << "mv34.back() = " << const_ref2 << RESET << std::endl;
+
+		std::cout << BOLDGREEN << "Const back function test passed ✅" << RESET << std::endl;
+		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	}
+	catch (std::exception &e) {
+		std::cout << BOLDRED << "Error: " << e.what() << RESET << std::endl;
+	}
+	/*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "30. (Test the data function):" << RESET << std::endl;
+	ft::vector<int> mv35(3);
+
+	mv35[0] = 10;
+	mv35[1] = 20;
+	mv35[2] = 30;
+
+	std::cout << BOLDWHITE << "mv35.data() = " << mv35.data() << RESET << std::endl;
+	// if (size() = 0)
+	ft::vector<int> mv36;
+
+	std::cout << BOLDWHITE << "mv36.data() = " << mv36.data() << RESET << std::endl;
+
+	std::cout << BOLDGREEN << "Data function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	/*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "31. (Test the const data function):" << RESET << std::endl;
+	ft::vector<int> mv37(3);
+
+	mv37[0] = 10;
+	mv37[1] = 20;
+	mv37[2] = 30;
+
+	ft::vector<int>::const_pointer const_ptr = mv37.data();
+	std::cout << BOLDWHITE << "mv37.data() = " << const_ptr << RESET << std::endl;
+	// if (size() = 0)
+	ft::vector<int> mv38;
+
+	ft::vector<int>::const_pointer const_ptr2 = mv38.data();
+	std::cout << BOLDWHITE << "mv38.data() = " << const_ptr2 << RESET << std::endl;
+
+	std::cout << BOLDGREEN << "Const data function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	/*==================================================================================================================*/
+
+	/*==================================================================================================================*/
 	return 0;
 }

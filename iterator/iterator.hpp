@@ -24,21 +24,24 @@ namespace ft {
 		public:
 			/**
 			 * @Member_functions */
-			iterator() {
-				_ptr = NULL;
-			};
+
+			iterator()
+				: _ptr(NULL) {};
 
 			explicit
-			iterator(pointer ptr) {
-				_ptr = ptr;
-			};
+			iterator(pointer ptr)
+				: _ptr(ptr) {};
 
-			iterator(const iterator &other) {
-				_ptr = other._ptr;
-			};
+			template <class U>
+			iterator(const iterator<U>& other)
+				: _ptr(other.base()) {};
 
 			~iterator() {};
 		/*---------------------------------------------------------------------------------------------------*/
+			pointer base() const {
+				return (_ptr);
+			};
+
 			/**
 			 * @Operator_overloads
 			 * @attention
@@ -51,7 +54,7 @@ namespace ft {
 			 * The only (sensible) way to return a new value is to return it by value.
 			 */
 			iterator&
-			operator=(const iterator &other) {
+			operator=(const iterator& other) {
 				if (this != &other)
 					_ptr = other._ptr;
 				return (*this);

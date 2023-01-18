@@ -54,3 +54,7 @@ using args as the constructor arguments.
 When using a type from a template in some case, we should include (typename), cause the compiler will
 be confused if we did not specify the type in some cases.
 ======================================================================================================================
+[end()]:
+========
+the end() iterator (which is valid, but is not dereferenceable).
+======================================================================================================================
