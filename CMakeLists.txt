@@ -11,4 +11,4 @@ add_executable(ft_containers
         ./tests/vector_test.cpp
         ./iterator/iterator.hpp
         ./iterator/reverse_iterator.hpp
-        ./iterator/iterator_traits.hpp)
+        ./iterator/iterator_traits.hpp tests/vector_test.cpp utils/utils.cpp)

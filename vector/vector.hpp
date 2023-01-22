@@ -61,7 +61,17 @@ namespace ft
 					_allocator.construct(&_array[i], val); // **[Note]
 			}
 			/**=========================[ range constructor ]==================================*/
+			/**
+			 * * @TODO: vector() ---> RANGE CONSTRUCTOR
+			 * * @TODO: assign()
+			 * * @TODO: get_allocator()
+			 * * @TODO: Non member functions .
 
+			 * * @TODO: Calculate time spent by my containers and compare it to the STL containers.
+			 * * @TODO: Calculate the memory used by my containers and compare it to the STL containers.
+			 * * @TODO: Check if my containers are exception safe.
+			 * * @TODO: Calculate the number of instructions executed by my containers and compare it to the STL containers.
+			 * */
 			/**=========================[ copy constructor ]==================================*/
 			vector (const vector& vec) {
 				_allocator = vec._allocator;
@@ -126,22 +136,22 @@ namespace ft
 			reverse_iterator
 			rbegin() {
 				return (reverse_iterator(end()));
-			};
+			}
 			/**_________________________________________________________*/
 			const_reverse_iterator
 			rbegin() const {
 				return (const_reverse_iterator(end()));
-			};
+			}
 			/**_________________________________________________________*/
 			reverse_iterator
 			rend() {
 				return (reverse_iterator(begin()));
-			};
+			}
 			/**_________________________________________________________*/
 			const_reverse_iterator
 			rend() const {
 				return (const_reverse_iterator(begin()));
-			};
+			}
 
 			/**=========================[ Capacity ]==================================*/
 			size_type
@@ -159,6 +169,17 @@ namespace ft
 				return (_capacity);
 			}
 			/**_________________________________________________________*/
+			/**
+			 **  @brief  Resizes the vector to the specified number of elements.
+			 **  @param  n  Number of elements the vector should contain.
+			 **  @param  val  Data with which new elements should be populated.
+			 **
+			 **  This function will resize the vector to the specified
+			 **  number of elements.  If the number is smaller than the
+			 **  vector's current size the vector is truncated, otherwise
+			 **  the vector is extended and new elements are populated with
+			 **  given data.
+			 */
 			void
 			resize (size_type n, value_type val = value_type()) {
 				while (n < _size)
@@ -176,8 +197,21 @@ namespace ft
 				return (false);
 			}
 			/**_________________________________________________________*/
+			/**
+			 **  @brief  Attempt to preallocate enough memory for specified
+			 * 			number of elements.
+			 **  @param  n  Number of elements required.
+			 **  @throw  std::length_error  If  n exceeds  max_size().
+			 **
+			 **  This function attempts to reserve enough memory for the
+			 **  vector to hold the specified number of elements.  If the
+			 **  number requested is more than max_size(), length_error is
+			 **  thrown.
+			 */
 			void
 			reserve (size_type n) {
+				if (n > max_size())
+					throw std::length_error("Length error");
 				if (n > _capacity) {
 					pointer temp_array = _allocator.allocate(n);
 				for (size_type i = 0; i < _size; i++) {
@@ -246,6 +280,14 @@ namespace ft
 				return (_array);
 			}
 		/**===========================[ Modifiers ]=====================================*/
+			/**
+			**  @brief  Add data to the end of the vector.
+			**  @param  val  Data to be added.
+			**
+			**  This is a typical stack operation.  The function creates an
+			**  element at the end of the vector and assigns the given data
+			**  to it.
+			*/
 			void
 			push_back (const value_type& val) {
 				if (_size + 1 > _capacity) {
@@ -258,12 +300,22 @@ namespace ft
 				_size++;
 			}
 			/**_________________________________________________________*/
+			/**
+			**  @brief  Removes last element.
+			**  It shrinks the vector by one.
+			*/
 			void
 			pop_back() {
-				_allocator.destroy(&_array[_size - 1]);
+				_allocator.destroy(_array + (_size - 1));
 				_size--;
 			}
 			/**_________________________________________________________*/
+			/**
+			 **  @brief  Swaps data with another vector.
+			 **  @param  vec  A vector of the same element and allocator types.
+			 **
+			 **  This exchanges the elements between two vectors in constant time.
+			 */
 			void
 			swap(vector& vec) {
 				size_type temp_size = _size;
@@ -286,12 +338,169 @@ namespace ft
 				_size = 0;
 			}
 			/**_________________________________________________________*/
-//			iterator
-//			erase(iterator pos) {
+			/**
+			 **  @brief  Remove element at given position.
+			 **  @param  pos  Iterator pointing to element to be erased.
+			 **  @return  An iterator pointing to the next element (or end()).
+			 **
+			 **  This function will erase the element at the given position and thus
+			 **  shorten the vector by one.
+			 **/
+			iterator
+			erase(iterator pos) {
+				if (pos == end())
+					return (pos);
+				_allocator.destroy(pos.base());
+				for (iterator it = pos; it != end() - 1; it++)
+					*it = *(it + 1);
+				--_size;
+				return (pos);
+			}
+			/**_________________________________________________________*/
+			/**
+			**  @brief  Remove a range of elements.
+			**  @param  first  Iterator pointing to the first element to be erased.
+			**  @param  last  Iterator pointing to one past the last element to be
+			**                  erased.
+			**  @return  An iterator pointing to the element pointed to by last
+			**           prior to erasing (or end()).
+			**
+			**  This function will erase the elements in the range
+			**  [first, last) and shorten the vector accordingly.
+			**/
+			iterator
+			erase( iterator first, iterator last ) {
+				if (first == last)
+					return (first);
+				if (first == begin() && last == end()) {
+					clear();
+					return (end());
+				}
+				for (iterator it = first; it != last; it++)
+					_allocator.destroy(it.base());
+				for (iterator it = first; it != end() - (last - first); it++)
+					*it = *(it + (last - first));
+				_size = _size - (last - first);
+				return (last);
+			}
+			/**_________________________________________________________*/
+			/**
+			 **  @brief  Inserts given value into vector before specified iterator.
+			 **  @param  position  An iterator into the vector.
+			 **  @param  val  Data to be inserted.
+			 **  @return  An iterator that points to the inserted data.
+			 **
+			 **  This function will insert a copy of the given value before
+			 **  the specified location.
+			 *
+			 * @Note:
+			 * 		Because vectors use an array as their underlying storage,
+			 * 		inserting elements in positions other than the vector end
+			 * 		causes the container to relocate all the elements that were
+			 * 		after position to their new positions.
+			 * 		This is generally an inefficient operation compared to the
+			 * 		one performed for the same operation by other kinds of sequence
+			 * 		containers (such as list or forward_list).
+			 */
+			iterator
+			insert (iterator position, const value_type& val) {
+				// Since after reserve() the pointers for the iterators going to be lost;
+				// so we need to save some values.
+				difference_type val_pos = position - begin();
+				
+				if (_size == _capacity)
+					reserve(_capacity * 2);
+				
+				for (size_type i = _size; i >= val_pos; i--) {
+					/*
+					 ** When adding the new value to the beginning
+					 ** of the array (val_pos = 0)
+					 ** then we break the loop to assign the new val.
+					 **/
+					if (val_pos == 0 && i == 0)
+						break;
+					_array[i] = _array[i - 1];
+				}
+				_array[val_pos] = val;
+				_size++;
+				return (position);
+			}
+			/**_________________________________________________________*/
+			/**
+			 **  @brief  Inserts a number of copies of given data into the vector.
+			 **  @param  position  An iterator into the vector.
+			 **  @param  n  Number of elements to be inserted.
+			 **  @param  val  Data to be inserted.
+			 **
+			 **  This function will insert a specified number of copies of
+			 **  the given data before the location specified by position.
+			 *
+			 * @Note:
+			 * 		Because vectors use an array as their underlying storage,
+			 * 		inserting elements in positions other than the vector end
+			 * 		causes the container to relocate all the elements that were
+			 * 		after position to their new positions.
+			 * 		This is generally an inefficient operation compared to the
+			 * 		one performed for the same operation by other kinds of sequence
+			 * 		containers (such as list or forward_list).
+			 */
+			void
+			insert (iterator position, size_type n, const value_type& val) {
+				difference_type val_pos = position - begin();
+				for (size_type to_fill = 0; to_fill < n; to_fill++) {
+					if (_size == _capacity)
+						reserve(_capacity * 2);
+					for (size_type i = _size; i >= val_pos; i--) {
+						if (val_pos == 0 && i == 0)
+							break;
+						_array[i] = _array[i - 1];
+					}
+					_array[val_pos] = val;
+					_size++;
+				}
+			}
+			/**_________________________________________________________*/
+			/**
+			 **  @brief  Inserts a range into the %vector.
+			 **  @param  position  An iterator into the %vector.
+			 **  @param  first  An input iterator.
+			 **  @param  last   An input iterator.
+			 **
+			 **  This function will insert copies of the data in the range
+			 **  [first, last) into the vector before the location specified
+			 **  by position.
+			 *
+			 * @Note:
+			 * 		Because vectors use an array as their underlying storage,
+			 * 		inserting elements in positions other than the vector end
+			 * 		causes the container to relocate all the elements that were
+			 * 		after position to their new positions.
+			 * 		This is generally an inefficient operation compared to the
+			 * 		one performed for the same operation by other kinds of sequence
+			 * 		containers (such as list or forward_list).
+			 */
+//			template <class Iter>
+//			void
+//			insert (iterator position, Iter first, Iter last) {
+//					difference_type val_pos = position - begin();
+//					difference_type rng_iter = last - first;
 //
+//					for (size_type to_fill = 0; to_fill < rng_iter; to_fill++) {
+//						if (_size == _capacity)
+//							reserve(_capacity * 2);
+//
+//						for (size_type i = _size; i >= val_pos; i--) {
+//							if (val_pos == 0 && i == 0)
+//								break;
+//							_array[i] = _array[i - 1];
+//						}
+//						if (last >= first)
+//						_array[val_pos] = *last;
+//						last--;
+//						_size++;
+//					}
 //			}
-
-			/**=========================================================================*/
+			/**_________________________________________________________*/
 	}; // vector
 	
 }// namespace ft

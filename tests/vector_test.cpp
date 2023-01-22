@@ -250,56 +250,56 @@ int main()
 
 	/*==================================================================================================================*/
 
-	// std::cout << BOLDYELLOW << "12. (Test the at function):" << RESET << std::endl;
-	// std::vector<int> v12;
-	// v12.push_back(1);
-	// v12.push_back(2);
-	// v12.push_back(3);
-	// v12.push_back(4);
-	// v12.push_back(5);
+	 std::cout << BOLDYELLOW << "12. (Test the at function):" << RESET << std::endl;
+	 std::vector<int> v12;
+	 v12.push_back(1);
+	 v12.push_back(2);
+	 v12.push_back(3);
+	 v12.push_back(4);
+	 v12.push_back(5);
 
-	// assert(v12.at(0) == 1);
-	// assert(v12.at(1) == 2);
-	// assert(v12.at(2) == 3);
-	// assert(v12.at(3) == 4);
-	// assert(v12.at(4) == 5);
+	 assert(v12.at(0) == 1);
+	 assert(v12.at(1) == 2);
+	 assert(v12.at(2) == 3);
+	 assert(v12.at(3) == 4);
+	 assert(v12.at(4) == 5);
 
-	// for (int i = 0; i < v12.size(); i++)
-	// 	std::cout << BOLDWHITE << "v12.at(" << i << ") = " << v12.at(i) << RESET << std::endl;
+	 for (int i = 0; i < v12.size(); i++)
+	 	std::cout << BOLDWHITE << "v12.at(" << i << ") = " << v12.at(i) << RESET << std::endl;
 
-	// std::cout << BOLDGREEN << "At function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+	 std::cout << BOLDGREEN << "At function test passed ✅" << RESET << std::endl;
+	 std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
-	// /*==================================================================================================================*/
+	 /*==================================================================================================================*/
 
-	// std::cout << BOLDYELLOW << "13. (Test the front function):" << RESET << std::endl;
-	// std::vector<int> v13;
-	// v13.push_back(1);
-	// v13.push_back(2);
-	// v13.push_back(3);
+	 std::cout << BOLDYELLOW << "13. (Test the front function):" << RESET << std::endl;
+	 std::vector<int> v13;
+	 v13.push_back(1);
+	 v13.push_back(2);
+	 v13.push_back(3);
 
-	// assert(v13.front() == 1);
+	 assert(v13.front() == 1);
 
-	// for (int i = 0; i < v13.size(); i++)
-	// 	std::cout << BOLDWHITE << v13[i] << RESET << std::endl;
+	 for (int i = 0; i < v13.size(); i++)
+	 	std::cout << BOLDWHITE << v13[i] << RESET << std::endl;
 
-	// std::cout << BOLDWHITE << "v13.front() = [" << v13.front() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Front function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+	 std::cout << BOLDWHITE << "v13.front() = [" << v13.front() << "]" << RESET << std::endl;
+	 std::cout << BOLDGREEN << "Front function test passed ✅" << RESET << std::endl;
+	 std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
-	// /*==================================================================================================================*/
-
-	// std::cout << BOLDYELLOW << "14. (Test the back function):" << RESET << std::endl;
+	 /*==================================================================================================================*/
+	 
+	 std::cout << BOLDYELLOW << "14. (Test the back function):" << RESET << std::endl;
 	
-	// std::vector<int> v14(v13);
-	// assert(v14.back() == 3);
+	 std::vector<int> v14(v13);
+	 assert(v14.back() == 3);
 
-	// for (int i = 0; i < v14.size(); i++)
-	// 	std::cout << BOLDWHITE << v14[i] << RESET << std::endl;
+	 for (int i = 0; i < v14.size(); i++)
+	 	std::cout << BOLDWHITE << v14[i] << RESET << std::endl;
 	
-	// std::cout << BOLDWHITE << "v14.back() = [" << v14.back() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Back function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+	 std::cout << BOLDWHITE << "v14.back() = [" << v14.back() << "]" << RESET << std::endl;
+	 std::cout << BOLDGREEN << "Back function test passed ✅" << RESET << std::endl;
+	 std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
 	 /*==================================================================================================================*/
 	
@@ -611,7 +611,172 @@ int main()
 	std::cout << BOLDGREEN << "Const data function test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	/*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "32. (Test the erase function):" << RESET << std::endl;
+	ft::vector<int> mv39(5);
+	
+	mv39[0] = 10;
+	mv39[1] = 20;
+	mv39[2] = 30;
+	mv39[3] = 40;
+	mv39[4] = 50;
+	
+	ft::vector<int>::iterator ers_it1 = mv39.erase(mv39.begin());
+	std::cout << BOLDWHITE << "mv39.erase(mv39.begin()) = " << *ers_it1 << RESET << std::endl;
+	for (int i = 0; i < mv39.size(); i++)
+		std::cout << BOLDWHITE << "mv39[i] = " << mv39[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+	ft::vector<int>::iterator ers_it2 = mv39.erase(mv39.begin());
+	for (int i = 0; i < mv39.size(); i++)
+		std::cout << BOLDWHITE << "mv39[i] = " << mv39[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+	
+	/*==================================================================================================================*/
+	std::cout << BOLDYELLOW << "32. (Test the erase(range) function):" << RESET << std::endl;
+	ft::vector<int> mv40(5);
+	
+	mv40[0] = 10;
+	mv40[1] = 20;
+	mv40[2] = 30;
+	mv40[3] = 40;
+	mv40[4] = 50;
+	
+	ft::vector<int>::iterator ers_it3 = mv40.erase(mv40.begin(), mv40.begin() + 2);
+	for (int i = 0; i < mv40.size(); i++)
+		std::cout << BOLDWHITE << "mv40[" << i << "] = " << mv40[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+	ft::vector<int>::iterator ers_it4 = mv40.erase(mv40.begin(), mv40.begin() + 2);
+	for (int i = 0; i < mv40.size(); i++)
+		std::cout << BOLDWHITE << "mv40[" << i << "] = " << mv40[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	std::cout << BOLDGREEN << "Erase function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 
 	/*==================================================================================================================*/
+	
+	std::cout << BOLDYELLOW << "33. (Test the insert function):" << RESET << std::endl;
+	ft::vector<int> mv41(5);
+	std::cout << "----------------------------" << std::endl;
+	
+	mv41[0] = 10;
+	mv41[1] = 20;
+	mv41[2] = 30;
+	mv41[3] = 40;
+	mv41[4] = 50;
+	std::cout << BOLDWHITE << "mv42.size() = " << mv41.size() << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv42.capacity() = " << mv41.capacity() << RESET << std::endl;
+
+	ft::vector<int>::iterator ins_it1 = mv41.insert(mv41.begin(), 100);
+	
+	for (int i = 0; i < mv41.size(); i++)
+		std::cout << BOLDWHITE << "mv41[" << i << "] = " << mv41[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+	
+	ft::vector<int>::iterator ins_it2 = mv41.insert(mv41.begin() + 2, 200);
+
+	for (int i = 0; i < mv41.size(); i++)
+		std::cout << BOLDWHITE << "mv41[" << i << "] = " << mv41[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	ft::vector<int>::iterator ins_it3 = mv41.insert(mv41.end(), 300);
+
+	for (int i = 0; i < mv41.size(); i++)
+		std::cout << BOLDWHITE << "mv41[" << i << "] = " << mv41[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	std::cout << BOLDWHITE << "mv42.size() = " << mv41.size() << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv42.capacity() = " << mv41.capacity() << RESET << std::endl;
+
+	std::cout << BOLDGREEN << "Insert function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	
+	/*==================================================================================================================*/
+	
+	std::cout << BOLDYELLOW << "34. (Test the insert(range) function):" << RESET << std::endl;
+	std::vector<int> mv42(5);
+	std::cout << "----------------------------" << std::endl;
+
+	mv42[0] = 10;
+	mv42[1] = 20;
+	mv42[2] = 30;
+	mv42[3] = 40;
+	mv42[4] = 50;
+	std::cout << BOLDWHITE << "mv42.size() = " << mv42.size() << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv42.capacity() = " << mv42.capacity() << RESET << std::endl;
+
+	std::vector<int> mv43(3);
+	mv43[0] = 100;
+	mv43[1] = 200;
+	mv43[2] = 300;
+
+	std::vector<int>::iterator ins_it4 = mv42.insert(mv42.begin(), mv43.begin(), mv43.end());
+
+	for (int i = 0; i < mv42.size(); i++)
+		std::cout << BOLDWHITE << "mv42[" << i << "] = " << mv42[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	std::vector<int>::iterator ins_it5 = mv42.insert(mv42.begin() + 2, mv43.begin(), mv43.end());
+
+	for (int i = 0; i < mv42.size(); i++)
+		std::cout << BOLDWHITE << "mv42[" << i << "] = " << mv42[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	std::vector<int>::iterator ins_it6 = mv42.insert(mv42.end(), mv43.begin(), mv43.end());
+
+	for (int i = 0; i < mv42.size(); i++)
+		std::cout << BOLDWHITE << "mv42[" << i << "] = " << mv42[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	std::cout << BOLDWHITE << "mv42.size() = " << mv42.size() << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv42.capacity() = " << mv42.capacity() << RESET << std::endl;
+
+	std::cout << BOLDGREEN << "Insert range function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+
+	/*==================================================================================================================*/
+	
+	std::cout << BOLDYELLOW << "35. (Test the insert(fill) function):" << RESET << std::endl;
+	ft::vector<int> mv44(5);
+	std::cout << "----------------------------" << std::endl;
+
+	mv44[0] = 10;
+	mv44[1] = 20;
+	mv44[2] = 30;
+	mv44[3] = 40;
+	mv44[4] = 50;
+	std::cout << BOLDWHITE << "mv44.size() = " << mv44.size() << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv44.capacity() = " << mv44.capacity() << RESET << std::endl;
+
+	mv44.insert(mv44.begin(), 3, 100);
+
+	for (int i = 0; i < mv44.size(); i++)
+		std::cout << BOLDWHITE << "mv44[" << i << "] = " << mv44[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	mv44.insert(mv44.begin() + 2, 3, 200);
+
+	for (int i = 0; i < mv44.size(); i++)
+		std::cout << BOLDWHITE << "mv44[" << i << "] = " << mv44[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	mv44.insert(mv44.end(), 3, 300);
+
+	for (int i = 0; i < mv44.size(); i++)
+		std::cout << BOLDWHITE << "mv44[" << i << "] = " << mv44[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	std::cout << BOLDWHITE << "mv44.size() = " << mv44.size() << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv44.capacity() = " << mv44.capacity() << RESET << std::endl;
+
+	std::cout << BOLDGREEN << "Insert fill function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	/*==================================================================================================================*/
+
+	/*==================================================================================================================*/
+
+	/*==================================================================================================================*/
+
+	/*==================================================================================================================*/
+
 	return 0;
 }

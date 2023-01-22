@@ -1,4 +1,4 @@
-# Install script for directory: /home/gab-182/Desktop/ft_conatiners_D
+# Install script for directory: /home/gab-182/Desktop/ft_container_D
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/gab-182/Desktop/ft_conatiners_D/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/gab-182/Desktop/ft_container_D/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
