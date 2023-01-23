@@ -55,18 +55,7 @@ namespace ft
 		**  7) assign()
 		**  8) get_allocator()
 		**
-		—————————————————————————————————————————————————————————————————————————————————*
-		**
-		**  1) Empty constructor
-		**  2) Fill constructor
-		**  3) Range constructor
-		**  4) Copy constructor
-		**  5) Destructor
-		**  6) Assignment operator
-		**  7) assign()
-		**  8) get_allocator()
-		**
-		** */
+		**/
 		/**—————————————————[ empty constructor ]——————————————————————————*
 		**  @brief  Creates a vector with no elements.
 		**  @param  alloc  An allocator object.
@@ -96,8 +85,8 @@ namespace ft
 		}
 		
 		/**—————————————————[ range constructor ]—————————————————————————*
-		* @TODO: vector() ---> RANGE CONSTRUCTOR
 		* @TODO: Non member functions .
+		 *
 		* @TODO: Calculate time spent by my containers and compare it to the STL containers.
 		* @TODO: Calculate the memory used by my containers and compare it to the STL containers.
 		* @TODO: Check if my containers are exception safe.
@@ -174,6 +163,49 @@ namespace ft
 				_allocator.construct(&_array[i], vec._array[i]);
 			return (*this);
 		}
+		
+		/**————————————————————[ assign ]—————————————————————————————————*
+		**  @brief  Assigns a given value to a vector.
+		**  @param  n  Number of elements to be assigned.
+		**  @param  val  Value to be assigned.
+		**
+		**  This function fills a vector with n copies of the given
+		**  value.
+		**  Note that the assignment completely changes the
+		**  vector and that the resulting vector's size is the same as
+		**  the number of elements assigned.
+		**/
+		void
+		assign (size_type n, const value_type& val) {
+			_allocator.deallocate(_array, _capacity);
+			vector(n, val);
+		}
+		/**———————————————————————————————————————————————————————————*
+		**  @brief  Assigns a range to a vector.
+		**  @param  first  An input iterator.
+		**  @param  last   An input iterator.
+		**
+		**  This function fills a vector with copies of the elements in the
+		**  range [first, last).
+		**
+		**  Note that the assignment completely changes the vector and
+		**  that the resulting vector's size is the same as the number
+		**  of elements assigned.
+		*/
+		template <class Iter>
+		void
+		assign (Iter first, Iter last) {
+		
+		}
+		
+		/**————————————————————[ get_allocator ]——————————————————————————
+		 ** @brief  Returns a copy of the memory allocation object.
+		 **/
+		allocator_type
+		get_allocator() const {
+			return (_allocator);
+		}
+		
 		/*———————————————————————————————————————————————————————————————————————————————*
 		————————————————————————————[ Non Member Functions ]—————————————————————————————*
 		—————————————————————————————————————————————————————————————————————————————————*

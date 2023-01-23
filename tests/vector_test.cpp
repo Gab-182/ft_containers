@@ -380,21 +380,25 @@ int main()
 	 std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	// /*==================================================================================================================*/
 
-	// std::cout << BOLDYELLOW << "20. (Test the assign function):" << RESET << std::endl;
+	 std::cout << BOLDYELLOW << "20. (Test the assign function):" << RESET << std::endl;
 
-	// std::vector<int> v20;
-	// v20.assign(20, 20);
-	// assert(v20.size() == 20);
-	// assert(v20.capacity() == 20);
-	// assert(v20[0] == 20);
-	// assert(v20[19] == 20);
+	 ft::vector<int> v20(10, 1);
+	 ft::vector<int>::size_type n = 5;
+	 
+	 v20.assign(n, 20);
+	 assert(v20.size() == 5);
+	 assert(v20.capacity() == 10);
+	 assert(v20[0] == 20);
+	 assert(v20[4] == 20);
 
-	// for (int i = 0; i < v20.size(); i++)
-	// 	std::cout << BOLDWHITE << v20[i] << RESET << std::endl;
-
-	// std::cout << BOLDGREEN << "Assign function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-
+	 for (int i = 0; i < v20.size(); i++)
+	 	std::cout << BOLDWHITE << v20[i] << RESET << std::endl;
+	
+	 std::cout << BOLDWHITE << "v20.size() = [" << v20.size() << "]" << RESET << std::endl;
+	 std::cout << BOLDWHITE << "v20.capacity() = [" << v20.capacity() << "]" << RESET << std::endl;
+	 std::cout << BOLDGREEN << "Assign function test passed ✅" << RESET << std::endl;
+	 std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
+	 return 0;
 	 /*==================================================================================================================*/
 	std::cout << BOLDYELLOW << "21. (Test the swap function):" << RESET << std::endl;
 	ft::vector<int> mv21(6);

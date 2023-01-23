@@ -1,0 +1,60 @@
+[typedef]:
+==========
+stands for “type definition”. 
+typedef is nothing but a way to assign a new name to a pre-existing data type. 
+In other words, typedef is basically a reserved keyword that we use in order to create an ("alias" name)
+for a specific data type.
+
+======================================================================================================================
+[explicit]:
+============
+The explicit keyword in C++ is used to mark constructors to not implicitly convert types.
+
+FROM STACKOVERFLOW:
+-------------------
+Suppose, you have a class String:
+
+class String {
+public:
+    String(int n); // allocate n bytes to the String object
+    String(const char *p); // initializes object with char *p
+};
+Now, if you try:
+
+String mystring = 'x';
+The character 'x' will be implicitly converted to int and then the String(int) constructor
+will be called. But, this is not what the user might have intended.
+So, to prevent such conditions, we shall define the constructor as explicit:
+
+class String {
+public:
+    explicit String (int n); //allocate n bytes
+    String(const char *p); // initialize object with string p
+};
+
+** In general:
+single argument constructor must be marked as (explicit)
+
+======================================================================================================================
+[_allocator.allocate()]
+=========================
+Allocates storage suitable for an array object of type T[n] and creates the array, 
+but does not construct array elements. 
+May throw exceptions. If n == 0, the return value is unspecified.
+
+======================================================================================================================
+[_allocator.construct(&_array[i], val);]
+=========================================
+Constructs an object of type X in previously-allocated storage at the address pointed to by xp, 
+using args as the constructor arguments.
+
+======================================================================================================================
+[typename]
+==========
+When using a type from a template in some case, we should include (typename), cause the compiler will
+be confused if we did not specify the type in some cases.
+======================================================================================================================
+[end()]:
+========
+the end() iterator (which is valid, but is not dereferenceable).
+======================================================================================================================
