@@ -83,24 +83,41 @@ int main()
 		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	}
 	/*==================================================================================================================*/
-	{// 4. (Test the range constructor):
-		// std::cout << BOLDYELLOW << "[4]. (Test the range constructor):\n" << RESET << std::endl;
-
-		// int arr[5] = {1, 2, 3, 4, 5};
-		// std::vector<int> v4(arr, arr + 5);
-		// // arr is the memory location for the beginning of the array.
-		// // arr + 5 is the memory location for the end of the array.
-
-		// assert(v4.size() == 5);
-		// assert(v4[0] == 1);
-		// assert(v4[4] == 5);
-
-		// std::cout << BOLDWHITE << "v4[0] = [" << v4[0] << "]" << RESET << std::endl;
-		// std::cout << BOLDWHITE << "v4[4] = [" << v4[4] << "]" << RESET << std::endl;
-		// std::cout << BOLDWHITE << "The vector (v4) size = [" << v4.size() << "]" << RESET << std::endl;
-		// std::cout << BOLDGREEN << "Range constructor test passed ✅" << RESET << std::endl;
-		// std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
-	}
+	std::cout << BOLDYELLOW << "[4]. (Test the range constructor):\n" << RESET << std::endl;
+	/**
+	 *!=====================*
+	 *! [integer vector]
+	 *!=====================*/
+	int arr[] = {1, 2, 3, 4, 5};
+	std::vector<int> mv4(arr, arr + 5);
+	assert(mv4.size() == 5);
+	
+	assert(mv4[0] == 1);
+	assert(mv4[1] == 2);
+	assert(mv4[2] == 3);
+	assert(mv4[3] == 4);
+	assert(mv4[4] == 5);
+	
+	for (int i = 0; i < mv4.size(); i++)
+		std::cout << BOLDWHITE << "mv4[i] = " << mv4[i] << RESET << std::endl;
+	std::cout << BOLDWHITE << "The vector (mv4) size = [" << mv4.size() << "]" << RESET << std::endl;
+	/**
+	 *!===================*
+	 * ! [string vector]
+	 *!===================*/
+	std::string arr_str[] = {"hello", " ", "world", "!", "!"};
+	std::vector<std::string> mv4_str(arr_str, arr_str + 5);
+	assert(mv4_str.size() == 5);
+	assert(mv4_str[0] == "hello");
+	assert(mv4_str[1] == " ");
+	assert(mv4_str[2] == "world");
+	assert(mv4_str[3] == "!");
+	assert(mv4_str[4] == "!");
+	for (int i = 0; i < mv4_str.size(); i++)
+		std::cout << BOLDWHITE << "mv4_str[i] = " << mv4_str[i] << RESET << std::endl;
+	std::cout << BOLDWHITE << "The vector (mv4_str) size = [" << mv4_str.size() << "]" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Range constructor test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	/*==================================================================================================================*/
 	{ // 5. (Test the copy constructor):
 		std::cout << BOLDYELLOW << "[5]. (Test the copy constructor):" << RESET << std::endl;
