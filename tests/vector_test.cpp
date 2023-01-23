@@ -693,7 +693,7 @@ int main()
 	/*==================================================================================================================*/
 	
 	std::cout << BOLDYELLOW << "34. (Test the insert(range) function):" << RESET << std::endl;
-	std::vector<int> mv42(5);
+	ft::vector<int> mv42(5);
 	std::cout << "----------------------------" << std::endl;
 
 	mv42[0] = 10;
@@ -703,25 +703,26 @@ int main()
 	mv42[4] = 50;
 	std::cout << BOLDWHITE << "mv42.size() = " << mv42.size() << RESET << std::endl;
 	std::cout << BOLDWHITE << "mv42.capacity() = " << mv42.capacity() << RESET << std::endl;
-
-	std::vector<int> mv43(3);
+	
+	ft::vector<int> mv43(3);
 	mv43[0] = 100;
 	mv43[1] = 200;
 	mv43[2] = 300;
-
-	std::vector<int>::iterator ins_it4 = mv42.insert(mv42.begin(), mv43.begin(), mv43.end());
-
-	for (int i = 0; i < mv42.size(); i++)
-		std::cout << BOLDWHITE << "mv42[" << i << "] = " << mv42[i] << RESET << std::endl;
-	std::cout << "----------------------------" << std::endl;
-
-	std::vector<int>::iterator ins_it5 = mv42.insert(mv42.begin() + 2, mv43.begin(), mv43.end());
+	
+	// testing if both of the iterators are the same. should not insert anything.
+	mv42.insert(mv42.begin(), mv43.begin(), mv43.begin());
 
 	for (int i = 0; i < mv42.size(); i++)
 		std::cout << BOLDWHITE << "mv42[" << i << "] = " << mv42[i] << RESET << std::endl;
 	std::cout << "----------------------------" << std::endl;
 
-	std::vector<int>::iterator ins_it6 = mv42.insert(mv42.end(), mv43.begin(), mv43.end());
+	mv42.insert(mv42.begin() + 2, mv43.begin(), mv43.end());
+
+	for (int i = 0; i < mv42.size(); i++)
+		std::cout << BOLDWHITE << "mv42[" << i << "] = " << mv42[i] << RESET << std::endl;
+	std::cout << "----------------------------" << std::endl;
+
+	mv42.insert(mv42.end(), mv43.begin(), mv43.end());
 
 	for (int i = 0; i < mv42.size(); i++)
 		std::cout << BOLDWHITE << "mv42[" << i << "] = " << mv42[i] << RESET << std::endl;
@@ -734,9 +735,13 @@ int main()
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 
 	/*==================================================================================================================*/
-	
+
 	std::cout << BOLDYELLOW << "35. (Test the insert(fill) function):" << RESET << std::endl;
 	ft::vector<int> mv44(5);
+	
+	// To help the compiler decide which overload of insert() to use,
+	// we need to specify the type of the elements_num variable.
+	ft::vector<int>::size_type elements_num = 3;
 	std::cout << "----------------------------" << std::endl;
 
 	mv44[0] = 10;
@@ -747,19 +752,19 @@ int main()
 	std::cout << BOLDWHITE << "mv44.size() = " << mv44.size() << RESET << std::endl;
 	std::cout << BOLDWHITE << "mv44.capacity() = " << mv44.capacity() << RESET << std::endl;
 
-	mv44.insert(mv44.begin(), 3, 100);
+	mv44.insert(mv44.begin(), elements_num, 100);
 
 	for (int i = 0; i < mv44.size(); i++)
 		std::cout << BOLDWHITE << "mv44[" << i << "] = " << mv44[i] << RESET << std::endl;
 	std::cout << "----------------------------" << std::endl;
 
-	mv44.insert(mv44.begin() + 2, 3, 200);
+	mv44.insert(mv44.begin() + 2, elements_num, 200);
 
 	for (int i = 0; i < mv44.size(); i++)
 		std::cout << BOLDWHITE << "mv44[" << i << "] = " << mv44[i] << RESET << std::endl;
 	std::cout << "----------------------------" << std::endl;
 
-	mv44.insert(mv44.end(), 3, 300);
+	mv44.insert(mv44.end(), elements_num, 300);
 
 	for (int i = 0; i < mv44.size(); i++)
 		std::cout << BOLDWHITE << "mv44[" << i << "] = " << mv44[i] << RESET << std::endl;

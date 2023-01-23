@@ -479,27 +479,27 @@ namespace ft
 			 * 		one performed for the same operation by other kinds of sequence
 			 * 		containers (such as list or forward_list).
 			 */
-//			template <class Iter>
-//			void
-//			insert (iterator position, Iter first, Iter last) {
-//					difference_type val_pos = position - begin();
-//					difference_type rng_iter = last - first;
-//
-//					for (size_type to_fill = 0; to_fill < rng_iter; to_fill++) {
-//						if (_size == _capacity)
-//							reserve(_capacity * 2);
-//
-//						for (size_type i = _size; i >= val_pos; i--) {
-//							if (val_pos == 0 && i == 0)
-//								break;
-//							_array[i] = _array[i - 1];
-//						}
-//						if (last >= first)
-//						_array[val_pos] = *last;
-//						last--;
-//						_size++;
-//					}
-//			}
+			template <class Iter>
+			void
+			insert (iterator position, Iter first, Iter last) {
+				difference_type val_pos = position - begin();
+				difference_type rng_iter = last - first;
+
+				for (size_type to_fill = 0; to_fill < rng_iter; to_fill++) {
+					if (_size == _capacity)
+						reserve(_capacity * 2);
+					for (size_type i = _size; i >= val_pos; i--) {
+						if (val_pos == 0 && i == 0)
+							break;
+						_array[i] = _array[i - 1];
+					}
+					if (last > first) {
+						_array[val_pos] = *(last-1);
+						last--;
+					}
+					_size++;
+				}
+			}
 			/**_________________________________________________________*/
 	}; // vector
 	
