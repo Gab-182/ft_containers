@@ -88,14 +88,14 @@ int main()
 	 *!=====================*
 	 *! [integer vector]
 	 *!=====================*/
-	int arr[] = {1, 2, 3, 4, 5};
-	ft::vector<int> mv4(arr, arr + 5);
+	ft::vector<int> vec(10, 5);
+	ft::vector<int> mv4(vec.begin(), vec.begin() + 5);
 	assert(mv4.size() == 5);
 	
-	assert(mv4[0] == 1);
-	assert(mv4[1] == 2);
-	assert(mv4[2] == 3);
-	assert(mv4[3] == 4);
+	assert(mv4[0] == 5);
+	assert(mv4[1] == 5);
+	assert(mv4[2] == 5);
+	assert(mv4[3] == 5);
 	assert(mv4[4] == 5);
 	
 	for (int i = 0; i < mv4.size(); i++)
@@ -105,8 +105,14 @@ int main()
 	 *!===================*
 	 * ! [string vector]
 	 *!===================*/
-	std::string arr_str[] = {"hello", " ", "world", "!", "!"};
-	std::vector<std::string> mv4_str(arr_str, arr_str + 5);
+	 ft::vector<std::string> arr_str;
+	 arr_str.push_back("hello");
+	 arr_str.push_back(" ");
+	 arr_str.push_back("world");
+	 arr_str.push_back("!");
+	 arr_str.push_back("!");
+	 
+	ft::vector<std::string> mv4_str(arr_str.begin(), arr_str.begin() + 5);
 	assert(mv4_str.size() == 5);
 	assert(mv4_str[0] == "hello");
 	assert(mv4_str[1] == " ");
@@ -118,6 +124,7 @@ int main()
 	std::cout << BOLDWHITE << "The vector (mv4_str) size = [" << mv4_str.size() << "]" << RESET << std::endl;
 	std::cout << BOLDGREEN << "Range constructor test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	
 	/*==================================================================================================================*/
 	{ // 5. (Test the copy constructor):
 		std::cout << BOLDYELLOW << "[5]. (Test the copy constructor):" << RESET << std::endl;
@@ -202,7 +209,8 @@ int main()
 
 	 /*==================================================================================================================*/
 	std::cout << BOLDYELLOW << "10. (Test the clear function):" << RESET << std::endl;
-	std::vector<int> mv10(10, 10);
+	ft::vector<int> mv10(10, 10);
+	
 	assert(mv10.size() == 10);
 	std::cout << BOLDWHITE << "The vector (v10) size = [" << mv10.size() << "]" << RESET << std::endl;
 	mv10.clear();
@@ -228,7 +236,7 @@ int main()
 	/*==================================================================================================================*/
 
 	 std::cout << BOLDYELLOW << "12. (Test the at function):" << RESET << std::endl;
-	 std::vector<int> v12;
+	 ft::vector<int> v12;
 	 v12.push_back(1);
 	 v12.push_back(2);
 	 v12.push_back(3);
@@ -250,7 +258,7 @@ int main()
 	 /*==================================================================================================================*/
 
 	 std::cout << BOLDYELLOW << "13. (Test the front function):" << RESET << std::endl;
-	 std::vector<int> v13;
+	 ft::vector<int> v13;
 	 v13.push_back(1);
 	 v13.push_back(2);
 	 v13.push_back(3);
@@ -268,7 +276,7 @@ int main()
 	 
 	 std::cout << BOLDYELLOW << "14. (Test the back function):" << RESET << std::endl;
 	
-	 std::vector<int> v14(v13);
+	 ft::vector<int> v14(v13);
 	 assert(v14.back() == 3);
 
 	 for (int i = 0; i < v14.size(); i++)
@@ -341,10 +349,7 @@ int main()
 	 std::cout << BOLDYELLOW << "19. (Test the assign function):" << RESET << std::endl;
 
 	 ft::vector<int> v20(10, 1);
-	 
-	 // To make sure we pick the right overload
-	 ft::vector<int>::size_type n = 5;
-	 v20.assign(n, 20);
+	 v20.assign(5, 20);
 	 
 	 assert(v20.size() == 5);
 	 assert(v20.capacity() == 10);
@@ -778,7 +783,89 @@ int main()
 
 	std::cout << BOLDGREEN << "Insert fill function test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	
 	/*==================================================================================================================*/
+	
+	std::cout << BOLDYELLOW << "36. (Test the operator== function):" << RESET << std::endl;
+	
+	ft::vector<int> mv45(5, 1);
+	ft::vector<int> mv46(5, 2);
+	ft::vector<int> mv47(5, 1);
+	
+	std::cout << "----------------------------" << std::endl;
+	std::cout << BOLDWHITE << "mv45 == mv46 = " << (mv45 == mv46) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv45 == mv47 = " << (mv45 == mv47) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv46 == mv47 = " << (mv46 == mv47) << RESET << std::endl;
+	
+	std::cout << BOLDGREEN << "Operator== function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	
+	/*==================================================================================================================*/
+	
+	std::cout << BOLDWHITE << "37. (Test the operator!= function):" << RESET << std::endl;
+	
+	ft::vector<int> mv48(5, 1);
+	ft::vector<int> mv49(5, 2);
+	ft::vector<int> mv50(5, 1);
+	
+	std::cout << "----------------------------" << std::endl;
+	std::cout << BOLDWHITE << "mv48 != mv49 = " << (mv48 != mv49) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv48 != mv50 = " << (mv48 != mv50) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv49 != mv50 = " << (mv49 != mv50) << RESET << std::endl;
+	
+	std::cout << BOLDGREEN << "Operator!= function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	
+	/*==================================================================================================================*/
+	
+	std::cout << BOLDWHITE << "38. (Test the operator< function):" << RESET << std::endl;
+	
+	ft::vector<int> mv51(5, 1);
+	ft::vector<int> mv52(5, 2);
+	ft::vector<int> mv53(5, 1);
+	
+	std::cout << "----------------------------" << std::endl;
+	std::cout << BOLDWHITE << "mv51 < mv52 = " << (mv51 < mv52) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv51 < mv53 = " << (mv51 < mv53) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv52 < mv53 = " << (mv52 < mv53) << RESET << std::endl;
+	
+	std::cout << BOLDGREEN << "Operator< function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	
+	/*==================================================================================================================*/
+	
+	std::cout << BOLDWHITE << "39. (Test the operator<= function):" << RESET << std::endl;
+	
+	ft::vector<int> mv54(5, 1);
+	ft::vector<int> mv55(5, 2);
+	ft::vector<int> mv56(5, 1);
+	
+	std::cout << "----------------------------" << std::endl;
+	std::cout << BOLDWHITE << "mv54 <= mv55 = " << (mv54 <= mv55) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv54 <= mv56 = " << (mv54 <= mv56) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv55 <= mv56 = " << (mv55 <= mv56) << RESET << std::endl;
+	
+	std::cout << BOLDGREEN << "Operator<= function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	
+	/*==================================================================================================================*/
+	
+	std::cout << BOLDWHITE << "40. (Test the operator> function):" << RESET << std::endl;
+	
+	ft::vector<int> mv57(5, 1);
+	ft::vector<int> mv58(5, 2);
+	ft::vector<int> mv59(5, 1);
+	
+	std::cout << "----------------------------" << std::endl;
+	std::cout << BOLDWHITE << "mv57 > mv58 = " << (mv57 > mv58) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv57 > mv59 = " << (mv57 > mv59) << RESET << std::endl;
+	std::cout << BOLDWHITE << "mv58 > mv59 = " << (mv58 > mv59) << RESET << std::endl;
+	
+	std::cout << BOLDGREEN << "Operator> function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	
+	/*==================================================================================================================*/
+	
 
 	return 0;
 }

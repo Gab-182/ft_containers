@@ -15,10 +15,18 @@
  * @NOTE: the usage of (ft::enable_if)
  * =================================
  *
- * 		template <typename T>
- * 		typename enable_if<ft::is_integral<T>::value>::type
+ * 		in c++11: --> we can use enable_if in the template parameters.
  *
- * 		do_something(T x) {
+ * 		template <typename T>
+ * 		do_something(T x, typename enable_if<ft::is_integral<T>::value>::type) {
+ * 			// code that should only be enabled for integral types
+ * 		}
+ *
+ * 		-------------------------------------------------------------------------
+ * 		in c++98: --> we should use enable_if in the function parameters.
+ *
+ * 		template <typename T>
+ * 		do_something(T x, typename enable_if<ft::is_integral<T>::value>::type) {
  * 			// code that should only be enabled for integral types
  * 		}
  *
@@ -35,7 +43,7 @@ namespace ft {
 	/**———————————————————————————————————————————————————————————*/
 	template <typename T>
 	struct enable_if<true, T> {
-		using type = T;
+		typedef T type;
 	};
 	/**———————————————————————————————————————————————————————————*/
 };

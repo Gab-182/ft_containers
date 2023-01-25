@@ -1,4 +1,9 @@
-# ft_containers
+
+
+
+<h1> <center> ft_containers </h1>
+--------------------------------------------------
+## Description
 
 #### The designer of STL chose a wonderful yet simple common approach - "The separation of data and operation".
 - The data is held and managed by the Container classes.
@@ -6,7 +11,26 @@
 
 
 
-In this project I'm re-implementation some of the standard C++ containers with the specific usage.
+In this project I'm re-implementation some of the standard C++ containers with the specific usage, such as vector, map, and stack, under the namespace "ft" instead of "std".
+
+## Usage
+
+To use these container classes in your project, simply include the appropriate header file and use the "ft" namespace. For example:
+
+```c++
+#include "vector.h"
+
+int main() {
+    ft::vector<int> v;
+    v.push_back(1);
+    v.push_back(2);
+    v.push_back(3);
+
+    for (int i : v) {
+        std::cout << i << std::endl;
+    }
+}
+```
 
 ### re-implementation of:
 
@@ -28,6 +52,8 @@ Resources that helped me in this project:
 - [size vs capacity of a vector](https://stackoverflow.com/questions/6296945/size-vs-capacity-of-a-vector).
 - [Intro to Iterator traits](https://www.codeproject.com/Articles/36530/An-Introduction-to-Iterator-Traits).
 - [The difference between the (allocator.destruct) and (allocator.deallocate) in allocator class](https://stackoverflow.com/questions/26667026/difference-between-destroy-destructor-deallocate-in-stdallocator)
+- [overloading with the usage of enable_if](https://akrzemi1.wordpress.com/examples/overloading-enable_if/)
+- [how to use enable_if with overloads](https://stackoverflow.com/questions/38908260/how-to-use-enable-if-with-overloads)
 -----------------------------------------
 Useful Notes: **[Notes](./resources/Notes.txt)**
 
