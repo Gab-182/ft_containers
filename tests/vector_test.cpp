@@ -89,7 +89,7 @@ int main()
 	 *! [integer vector]
 	 *!=====================*/
 	int arr[] = {1, 2, 3, 4, 5};
-	std::vector<int> mv4(arr, arr + 5);
+	ft::vector<int> mv4(arr, arr + 5);
 	assert(mv4.size() == 5);
 	
 	assert(mv4[0] == 1);
@@ -199,46 +199,6 @@ int main()
 		std::cout << BOLDGREEN << "Pop_back function test passed ✅" << RESET << std::endl;
 		std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	}
-	/*==================================================================================================================*/
-
-	// std::cout << BOLDYELLOW << "8. (Test the insert function):" << RESET << std::endl;
-	// std::vector<int> v8(v7);
-	// v8.insert(v8.begin() + 1, 10);
-	// v8.insert(v8.begin() + 3, 20);
-	// v8.insert(v8.begin() + 5, 30);
-
-	// assert(v8.size() == 6);
-	// assert(v8[0] == 1);
-	// assert(v8[1] == 10);
-	// assert(v8[2] == 2);
-	// assert(v8[3] == 20);
-	// assert(v8[4] == 3);
-	// assert(v8[5] == 30);
-
-	// for (int i = 0; i < v8.size(); i++)
-	// 	std::cout << BOLDWHITE << v8[i] << RESET << std::endl;
-	// std::cout << BOLDWHITE << "The vector (v8) size = [" << v8.size() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Insert function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-
-	// /*==================================================================================================================*/
-
-	// std::cout << BOLDYELLOW << "9. (Test the erase function):" << RESET << std::endl;
-	// std::vector<int> v9(v8);
-	// v9.erase(v9.begin() + 1);
-	// v9.erase(v9.begin() + 2);
-	// v9.erase(v9.begin() + 3);
-
-	// assert(v9.size() == 3);
-	// assert(v9[0] == 1);
-	// assert(v9[1] == 2);
-	// assert(v9[2] == 3);
-
-	// for (int i = 0; i < v9.size(); i++)
-	// 	std::cout << BOLDWHITE << v9[i] << RESET << std::endl;
-	// std::cout << BOLDWHITE << "The vector (v9) size = [" << v9.size() << "]" << RESET << std::endl;
-	// std::cout << BOLDGREEN << "Erase function test passed ✅" << RESET << std::endl;
-	// std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
 
 	 /*==================================================================================================================*/
 	std::cout << BOLDYELLOW << "10. (Test the clear function):" << RESET << std::endl;
@@ -346,9 +306,7 @@ int main()
 	
 	std::cout << BOLDYELLOW << "16. (Test the max_size function):" << RESET << std::endl;
 	
-	std::vector<int> v16;
 	ft::vector<int> mv16;
-	std::cout << BOLDWHITE << "v16.max_size() = [" << v16.max_size() << "]" << RESET << std::endl;
 	std::cout << BOLDWHITE << "mv16.max_size() = [" << mv16.max_size() << "]" << RESET << std::endl;
 	
 	std::cout << BOLDGREEN << "Max_size function test passed ✅" << RESET << std::endl;
@@ -378,14 +336,16 @@ int main()
 	 std::cout << BOLDWHITE << "mv18.capacity() = [" << mv18.capacity() << "]" << RESET << std::endl;
 	 std::cout << BOLDGREEN << "Reserve function test passed ✅" << RESET << std::endl;
 	 std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
-	// /*==================================================================================================================*/
+	 /*==================================================================================================================*/
 
-	 std::cout << BOLDYELLOW << "20. (Test the assign function):" << RESET << std::endl;
+	 std::cout << BOLDYELLOW << "19. (Test the assign function):" << RESET << std::endl;
 
 	 ft::vector<int> v20(10, 1);
-	 ft::vector<int>::size_type n = 5;
 	 
+	 // To make sure we pick the right overload
+	 ft::vector<int>::size_type n = 5;
 	 v20.assign(n, 20);
+	 
 	 assert(v20.size() == 5);
 	 assert(v20.capacity() == 10);
 	 assert(v20[0] == 20);
@@ -393,13 +353,36 @@ int main()
 
 	 for (int i = 0; i < v20.size(); i++)
 	 	std::cout << BOLDWHITE << v20[i] << RESET << std::endl;
-	
+
 	 std::cout << BOLDWHITE << "v20.size() = [" << v20.size() << "]" << RESET << std::endl;
 	 std::cout << BOLDWHITE << "v20.capacity() = [" << v20.capacity() << "]" << RESET << std::endl;
 	 std::cout << BOLDGREEN << "Assign function test passed ✅" << RESET << std::endl;
-	 std::cout << BOLDYELLOW << "--------------------------------------------------------------\n" << RESET << std::endl;
-	 return 0;
-	 /*==================================================================================================================*/
+	 std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	 
+	/*==================================================================================================================*/
+
+	std::cout << BOLDYELLOW << "20. (Test the assign(range) function):" << RESET << std::endl;
+
+	ft::vector<int> vec1(5, 5);
+	ft::vector<int> vec2(5, 1);
+	
+	for (int i = 0; i < vec2.size(); i++)
+		std::cout << BOLDWHITE << vec2[i] << RESET << std::endl;
+	std::cout << BOLDWHITE << "----------------------------------------" << RESET << std::endl;
+	
+	vec2.assign(vec1.begin(), vec1.begin() + 2);
+	
+	for (int i = 0; i < vec2.size(); i++)
+		std::cout << BOLDWHITE << vec2[i] << RESET << std::endl;
+	std::cout << BOLDWHITE << "----------------------------------------" << RESET << std::endl;
+	
+	std::cout << BOLDWHITE << "vec2.size() = [" << vec2.size() << "]" << RESET << std::endl;
+	std::cout << BOLDWHITE << "vec2.capacity() = [" << vec2.capacity() << "]" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Assign(range) function test passed ✅" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
+	
+	/*==================================================================================================================*/
+	
 	std::cout << BOLDYELLOW << "21. (Test the swap function):" << RESET << std::endl;
 	ft::vector<int> mv21(6);
 	ft::vector<int> mv22(3);
@@ -450,7 +433,6 @@ int main()
 	ft::vector<int>::iterator ite = mv23.end();
 
 	std::cout << BOLDWHITE << "mv23.begin() = " << *it << RESET << std::endl;
-//	std::cout << BOLDWHITE << "mv23.end() = " << *ite << RESET << std::endl;
 	ite--;
 	std::cout << BOLDWHITE << "mv23.end() = " << *ite << RESET << std::endl;
 	std::cout << BOLDWHITE << "mv23.size() = " << mv23.size() << RESET << std::endl;
@@ -796,12 +778,6 @@ int main()
 
 	std::cout << BOLDGREEN << "Insert fill function test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
-	/*==================================================================================================================*/
-
-	/*==================================================================================================================*/
-
-	/*==================================================================================================================*/
-
 	/*==================================================================================================================*/
 
 	return 0;

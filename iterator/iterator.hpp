@@ -37,11 +37,12 @@ namespace ft {
 				: _ptr(other.base()) {}
 
 			~iterator() {}
-		/*---------------------------------------------------------------------------------------------------*/
-			pointer base() const {
+			/*---------------------------------------------------------------------------------------------------*/
+			inline pointer
+			base() const {
 				return (_ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
+			/*---------------------------------------------------------------------------------------------------*/
 			/**
 			 * @Operator_overloads
 			 * @attention
@@ -53,148 +54,152 @@ namespace ft {
 			 * ]
 			 * The only (sensible) way to return a new value is to return it by value.
 			 */
-			iterator&
+			inline iterator&
 			operator=(const iterator& other) {
 				if (this != &other)
 					_ptr = other._ptr;
 				return (*this);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			reference
+			/*---------------------------------------------------------------------------------------------------*/
+			inline reference
 			operator*() const {
 				return (*_ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			pointer
+			/*---------------------------------------------------------------------------------------------------*/
+			inline pointer
 			operator->() const {
 				return (_ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			iterator&
+			/*---------------------------------------------------------------------------------------------------*/
+			inline iterator&
 			operator++() {
 				++_ptr;
 				return (*this);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			const iterator<T>
+			/*---------------------------------------------------------------------------------------------------*/
+			inline const iterator<T>
 			operator++(int) {
 				iterator tmp(*this);
 				++_ptr;
 				return (tmp);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			iterator&
+			/*---------------------------------------------------------------------------------------------------*/
+			inline iterator&
 			operator--() {
 				--_ptr;
 				return (*this);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			const iterator<T>
+			/*---------------------------------------------------------------------------------------------------*/
+			inline const iterator<T>
 			operator--(int) {
 				iterator tmp(*this);
 				--_ptr;
 				return (tmp);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
+			/*---------------------------------------------------------------------------------------------------*/
 			/**
 			 * Constructing new iterator, not modifying the current one.
 			 * which means that the current iterator is not incremented.
 			 * @param n
 			 * @return iterator
 			 */
-			iterator
+			inline iterator
 			operator+(difference_type n) const {
 				return iterator(_ptr + n);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			iterator
+			/*---------------------------------------------------------------------------------------------------*/
+			inline iterator
 			operator-(difference_type n) const {
 				return iterator(_ptr - n);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			iterator&
+			/*---------------------------------------------------------------------------------------------------*/
+			inline iterator&
 			operator+=(difference_type n) {
 				_ptr += n;
 				return (*this);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			iterator&
+			/*---------------------------------------------------------------------------------------------------*/
+			inline iterator&
 			operator-=(difference_type n) {
 				_ptr -= n;
 				return (*this);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			bool
+			/*---------------------------------------------------------------------------------------------------*/
+			inline bool
 			operator==(const iterator& rhs) const {
 				return (_ptr == rhs._ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			bool
+			/*---------------------------------------------------------------------------------------------------*/
+			inline bool
 			operator!=(const iterator& rhs) const {
 				return (_ptr != rhs._ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-		/**
-		 * @brief return the number of elements between two iterators
-		 * @param rhs
-		 * @return
-		 */
-			ptrdiff_t
+			/*---------------------------------------------------------------------------------------------------*/
+			/**
+			 * @brief return the number of elements between two iterators
+			 * @param rhs
+			 * @return
+			 */
+			inline ptrdiff_t
 			operator+(const iterator& rhs) const {
 				return (_ptr + rhs._ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			ptrdiff_t
+			/*---------------------------------------------------------------------------------------------------*/
+			inline ptrdiff_t
 			operator-(const iterator& rhs) const {
 				return (_ptr - rhs._ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			bool
+			/*---------------------------------------------------------------------------------------------------*/
+			inline bool
 			operator<=(const iterator &rhs) const {
 				return (_ptr <= rhs._ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			bool
+			/*---------------------------------------------------------------------------------------------------*/
+			inline bool
 			operator>=(const iterator &rhs) const {
 				return (_ptr >= rhs._ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			bool
+			/*---------------------------------------------------------------------------------------------------*/
+			inline bool
 			operator<(const iterator &rhs) const {
 				return (_ptr < rhs._ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
-			bool
+			/*---------------------------------------------------------------------------------------------------*/
+			inline bool
 			operator>(const iterator &rhs) const {
 				return (_ptr > rhs._ptr);
 			}
-		/*---------------------------------------------------------------------------------------------------*/
 		}; //? iterator
-		// overload << operator:
+		
+		/*---------------------------------------------------------------------------------------------------*/
 		template<class T >
 		std::ostream&
 		operator<<(std::ostream& os, const iterator<T> &it) {
 			os << *it;
 			return (os);
 		}
+		
 		/*---------------------------------------------------------------------------------------------------*/
-//		template <class Iterator>
-//		typename iterator<Iterator>::difference_type
-//		operator-(const iterator<Iterator> &lhs, const iterator<Iterator> &rhs) {
-//			return lhs.base() - rhs.base();
-//		}
-//
-//		template <class Iterator, class I2>
-//		typename iterator<Iterator>::difference_type
-//		operator-(const iterator<Iterator> &lhs, const iterator<I2> &rhs) {
-//			return lhs.base() - rhs.base();
-//		}
-//
-//		template <class Iterator>
-//		iterator<Iterator>
-//		operator+(typename iterator<Iterator>::difference_type n, const iterator<Iterator> &it) {
-//			return iterator<Iterator>(it.base() + n);
-//	}
+        template <class Iter >
+		inline typename iterator<Iter>::difference_type
+		operator-(const iterator<Iter>& lhs, const iterator<Iter>& rhs) {
+			return (lhs.base() - rhs.base());
+		}
+		/*---------------------------------------------------------------------------------------------------*/
+		template <class Iter >
+		inline bool
+		operator!=(const iterator<Iter>& lhs, const iterator<Iter>& rhs) {
+			return (lhs.base() != rhs.base());
+		}
+		
+		/*---------------------------------------------------------------------------------------------------*/
+		template <class Iter >
+		inline iterator<Iter>
+		operator+(const iterator<Iter>& lhs, typename iterator<Iter>::difference_type rhs) {
+			return (lhs.base() + rhs);
+		}
+		
+		/*---------------------------------------------------------------------------------------------------*/
 } // namespace ft
 
 #endif //! FT_ITERATOR_HPP

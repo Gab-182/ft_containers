@@ -1,16 +1,6 @@
 # ninja log v5
-320	386	1674302298355808909	ft_containers	29cb7d9caff2dd6
-1	320	1674302298291808229	CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o	59273afc0b0eb2c
-0	14	1674366187314095309	CMakeFiles/ft_containers.dir/utils/utils.cpp.o	eb8384a69898094d
-0	352	1674366187654102527	CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o	59273afc0b0eb2c
-352	420	1674366187722103970	ft_containers	4f6a66ce88e8d2c7
-0	370	1674366229294978613	CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o	59273afc0b0eb2c
-370	444	1674366229370980198	ft_containers	4f6a66ce88e8d2c7
-33	428	1674377571209683220	CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o	59273afc0b0eb2c
-428	604	1674377571385689784	ft_containers	4f6a66ce88e8d2c7
-0	567	1674377928749102172	CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o	59273afc0b0eb2c
-567	675	1674377928857105161	ft_containers	4f6a66ce88e8d2c7
-1	361	1674382233555401949	CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o	59273afc0b0eb2c
-361	431	1674382233623400987	ft_containers	4f6a66ce88e8d2c7
-1	353	1674382522512522184	CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o	59273afc0b0eb2c
 353	420	1674382522580521743	ft_containers	4f6a66ce88e8d2c7
+0	14	1674366187314095309	CMakeFiles/ft_containers.dir/utils/utils.cpp.o	eb8384a69898094d
+1	353	1674382522512522184	CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o	59273afc0b0eb2c
+0	415	1674553385443532398	CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o	59273afc0b0eb2c
+415	653	1674553385683532917	ft_containers	29cb7d9caff2dd6

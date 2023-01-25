@@ -6,6 +6,9 @@
 # include <cstddef>		// for ptrdiff_t
 # include <exception>
 
+# include "../utils/enable_if.hpp"
+# include "../utils/is_integral.hpp"
+
 # include "../iterator/iterator.hpp"
 # include "../iterator/iterator_traits.hpp"
 # include "../iterator/reverse_iterator.hpp"
@@ -83,16 +86,22 @@ namespace ft
 			for (size_type i = 0; i < _size; i++)
 				_allocator.construct(&_array[i], val); // **[Note]
 		}
-		
+		/**
+		 * @TODO:std::equal and/or std::lexicographical_compare
+		 * @TODO:std::pair
+		 * @TODO:std::make_pair
+		 */
 		/**—————————————————[ range constructor ]—————————————————————————*
-		* @TODO: Non member functions .
+		* #TODO: Non member functions .
 		 *
-		* @TODO: Calculate time spent by my containers and compare it to the STL containers.
+		* #TODO: [READ] about the (allocator.destructor) & (allocator.deallocate)
+		
+		 * @TODO: Calculate time spent by my containers and compare it to the STL containers.
 		* @TODO: Calculate the memory used by my containers and compare it to the STL containers.
 		* @TODO: Check if my containers are exception safe.
 		* @TODO: Calculate the number of instructions executed by my containers and compare it to the STL containers.
 		
-		**  @brief  Builds a %vector from a range.
+		**  @brief  Builds a vector from a range.
 		**  @param  first  An input iterator.
 		**  @param  last  An input iterator.
 		**  @param  alloc  An allocator.
@@ -107,10 +116,17 @@ namespace ft
 		**  used, then this will do at most 2N calls to the copy
 		**  constructor, and logN memory re-allocations.
 		*/
-//		template <class Iterator>
-//		vector (Iterator first, Iterator last, const allocator_type& alloc = allocator_type()) {
-//
-//		}
+		template <class Iterator>
+		vector (Iterator first,
+				Iterator last,
+				const allocator_type& alloc = allocator_type(),
+		        typename ft::enable_if<!ft::is_integral<Iterator>::value, Iterator>::type* = 0) {
+			_allocator = alloc;
+			_size = 0;
+			_capacity = 0;
+			_array = NULL;
+			assign(first, last);
+		}
 		
 		/**—————————————————[ copy constructor ———————————————————————————*
 		**  @brief  Vector copy constructor.
@@ -177,8 +193,16 @@ namespace ft
 		**/
 		void
 		assign (size_type n, const value_type& val) {
+			/**
+			 **  NOTE --> {diff between destroy & deallocate}
+			 **  A question answered from slack on Slack, on the resources page.
+			 **  _allocator.destroy(_array);
+			 **/
 			_allocator.deallocate(_array, _capacity);
-			vector(n, val);
+			_size = n;
+			_array = _allocator.allocate(n);
+			for (size_type i = 0; i < _size; i++)
+				_allocator.construct(&_array[i], val);
 		}
 		/**———————————————————————————————————————————————————————————*
 		**  @brief  Assigns a range to a vector.
@@ -194,10 +218,22 @@ namespace ft
 		*/
 		template <class Iter>
 		void
-		assign (Iter first, Iter last) {
-		
+		assign (Iter first,
+				Iter last,
+				typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = 0) {
+			if (first == last)
+				return;
+			else if (first > last)
+				throw std::out_of_range("first > last");
+			_allocator.deallocate(_array, _capacity);
+			_size = last - first;
+			_array = _allocator.allocate(_size);
+			
+			size_type i = 0;
+			for (iterator it = first; it != last; it++)
+				_allocator.construct(&_array[i++], *it);
 		}
-		
+
 		/**————————————————————[ get_allocator ]——————————————————————————
 		 ** @brief  Returns a copy of the memory allocation object.
 		 **/

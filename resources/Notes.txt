@@ -58,3 +58,13 @@ be confused if we did not specify the type in some cases.
 ========
 the end() iterator (which is valid, but is not dereferenceable).
 ======================================================================================================================
+[inline]:
+When a function is marked as "inline", it means that the compiler should insert the function's body directly into
+the code at the point of the function call, rather than generating a call to the function.
+This can improve performance by avoiding the overhead of making a function call.
+
+It's important to note that, the use of the inline keyword is a hint to the compiler, not a requirement.
+The compiler may choose to ignore the hint and not inline the function,
+depending on the context and the optimization settings.
+
+The use of inline function is particularly useful when the function is small and is called frequently.

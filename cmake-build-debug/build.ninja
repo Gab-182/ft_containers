@@ -55,12 +55,6 @@ build CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o: CXX_COMPILER__ft_con
   OBJECT_DIR = CMakeFiles/ft_containers.dir
   OBJECT_FILE_DIR = CMakeFiles/ft_containers.dir/tests
 
-build CMakeFiles/ft_containers.dir/utils/utils.cpp.o: CXX_COMPILER__ft_containers_Debug /home/gab-182/Desktop/ft_container_D/utils/utils.cpp || cmake_object_order_depends_target_ft_containers
-  DEP_FILE = CMakeFiles/ft_containers.dir/utils/utils.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++98
-  OBJECT_DIR = CMakeFiles/ft_containers.dir
-  OBJECT_FILE_DIR = CMakeFiles/ft_containers.dir/utils
-
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ft_containers
@@ -69,7 +63,7 @@ build CMakeFiles/ft_containers.dir/utils/utils.cpp.o: CXX_COMPILER__ft_container
 #############################################
 # Link the executable ft_containers
 
-build ft_containers: CXX_EXECUTABLE_LINKER__ft_containers_Debug CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o CMakeFiles/ft_containers.dir/utils/utils.cpp.o
+build ft_containers: CXX_EXECUTABLE_LINKER__ft_containers_Debug CMakeFiles/ft_containers.dir/tests/vector_test.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/ft_containers.dir
   POST_BUILD = :
