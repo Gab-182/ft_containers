@@ -1,9 +1,12 @@
 
 
+<h1> <p align="center"> FT_Containers </p> </h1>
 
-<h1> <center> ft_containers </h1>
---------------------------------------------------
-## Description
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/83855149/214600672-3ff0531b-8237-419e-9dd2-b9ed87a3dffc.png" />
+</p>
+
+## - Description
 
 #### The designer of STL chose a wonderful yet simple common approach - "The separation of data and operation".
 - The data is held and managed by the Container classes.
@@ -13,7 +16,7 @@
 
 In this project I'm re-implementation some of the standard C++ containers with the specific usage, such as vector, map, and stack, under the namespace "ft" instead of "std".
 
-## Usage
+## - Usage
 
 To use these container classes in your project, simply include the appropriate header file and use the "ft" namespace. For example:
 
