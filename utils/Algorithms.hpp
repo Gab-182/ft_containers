@@ -17,7 +17,7 @@ namespace ft {
 	**
 	**  @return true if the first range is lexicographically less than the second range, false otherwise
 	*/
-	/**—————————————————————————————————————————————————————————————————————————————————**/
+	/*—————————————————————————————————————————————————————————————————————————————————**/
 	/**
 	 **  @NOTE:
 	 **  ======
@@ -30,7 +30,7 @@ namespace ft {
 	 **  hence the function returns true.
 	 **
 	 */
-	 /**—————————————————————————————————————————————————————————————————————————————————**/
+	 /*————————————————————————————————————————————————————————————————————————————————**/
 	template< class It1, class It2 >
 	inline bool
 	lexicographical_compare( It1 first1, It1 last1,
@@ -46,6 +46,6 @@ namespace ft {
 		return (first1 == last1 && first2 != last2);
 	}
 	/**—————————————————————————————————————————————————————————————————————————————————**/
-};
+}
 
 #endif //ALGORITHMS_HPP

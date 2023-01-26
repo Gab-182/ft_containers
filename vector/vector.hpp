@@ -22,22 +22,22 @@ namespace ft
 		/**
 		 ** @Member_types_"Aliases" */
 		public:
-			typedef					T										value_type;
-			typedef					Alloc									allocator_type;
-			typedef	typename 		allocator_type::reference				reference;
-			typedef	typename		allocator_type::pointer					pointer;
-			typedef	typename		allocator_type::const_pointer			const_pointer;
-			typedef	typename		allocator_type::const_reference			const_reference;
-			typedef	typename		allocator_type::difference_type			difference_type;
-			typedef	typename		allocator_type::size_type				size_type;
+			typedef				T										value_type;
+			typedef				Alloc									allocator_type;
+			typedef	typename 	allocator_type::reference				reference;
+			typedef	typename	allocator_type::pointer					pointer;
+			typedef	typename	allocator_type::const_pointer			const_pointer;
+			typedef	typename	allocator_type::const_reference			const_reference;
+			typedef	typename	allocator_type::difference_type			difference_type;
+			typedef	typename	allocator_type::size_type				size_type;
 
-		/*================================[ Iterator_types ]=====================================*/
+		/*===============================[ Iterator_types ]=====================================*/
 		public:
-			typedef					ft::iterator<value_type>				iterator;
-			typedef					ft::iterator<const value_type>			const_iterator;
-			typedef					ft::reverse_iterator<iterator>			reverse_iterator;
-			typedef					ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-		/**=======================================================================================
+			typedef				ft::iterator<value_type>				iterator;
+			typedef				ft::iterator<const value_type>			const_iterator;
+			typedef				ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef				ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+		/**======================================================================================
 		 ** @Private_members */
 		private:
 			pointer					_array;
@@ -386,7 +386,8 @@ namespace ft
 		}
 		
 		/**———————————————————————————————————————————————————————————*
-		**  @brief  Resizes the vector to the specified number of elements.
+		**  @brief  Resizes the vector to the specified number of
+		** elements.
 		**  @param  n  Number of elements the vector should contain.
 		**  @param  val  Data with which new elements should be populated.
 		**
@@ -443,10 +444,10 @@ namespace ft
 		}
 		
 		/**———————————————————————————————————————————————————————————*
-		**  Erases all the elements.  Note that this function only erases the
-		**  elements, and that if the elements themselves are pointers, the
-		**  pointed-to memory is not touched in any way.  Managing the pointer is
-		**  the user's responsibility.
+		**  Erases all the elements.  Note that this function only
+		**  erases the elements, and that if the elements themselves are
+		**  pointers, the pointed-to memory is not touched in any way.
+		**  Managing the pointer is the user's responsibility.
 		*/
 		void
 		clear() {
@@ -617,9 +618,11 @@ namespace ft
 		
 		/**———————————————————————————————————————————————————————————*
 		**  @brief  Swaps data with another vector.
-		**  @param  vec  A vector of the same element and allocator types.
+		**  @param  vec  A vector of the same element and allocator
+		** types.
 		**
-		**  This exchanges the elements between two vectors in constant time.
+		**  This exchanges the elements between two vectors in constant
+		** time.
 		*/
 		void
 		swap(vector& vec) {
@@ -641,8 +644,8 @@ namespace ft
 		**  @param  pos  Iterator pointing to element to be erased.
 		**  @return  An iterator pointing to the next element (or end()).
 		**
-		**  This function will erase the element at the given position and thus
-		**  shorten the vector by one.
+		**  This function will erase the element at the given position
+		** and thus shorten the vector by one.
 		**/
 		iterator
 		erase(iterator pos) {
@@ -709,8 +712,8 @@ namespace ft
 			if (_size == _capacity)
 				reserve(_capacity * 2);
 			
-			for (size_type i = _size; i >= val_pos; i--) {
-				/*
+			for (difference_type i = _size; i >= val_pos; i--) {
+				/**
 				 ** When adding the new value to the beginning
 				 ** of the array (val_pos = 0)
 				 ** then we break the loop to assign the new val.
@@ -748,7 +751,7 @@ namespace ft
 			for (size_type to_fill = 0; to_fill < n; to_fill++) {
 				if (_size == _capacity)
 					reserve(_capacity * 2);
-				for (size_type i = _size; i >= val_pos; i--) {
+				for (difference_type i = _size; i >= val_pos; i--) {
 					if (val_pos == 0 && i == 0)
 						break;
 					_array[i] = _array[i - 1];
@@ -783,10 +786,10 @@ namespace ft
 			difference_type val_pos = position - begin();
 			difference_type rng_iter = last - first;
 
-			for (size_type to_fill = 0; to_fill < rng_iter; to_fill++) {
+			for (difference_type to_fill = 0; to_fill < rng_iter; to_fill++) {
 				if (_size == _capacity)
 					reserve(_capacity * 2);
-				for (size_type i = _size; i >= val_pos; i--) {
+				for (difference_type i = _size; i >= val_pos; i--) {
 					if (val_pos == 0 && i == 0)
 						break;
 					_array[i] = _array[i - 1];
@@ -843,7 +846,8 @@ namespace ft
 	template <class T>
 	inline bool
 	operator< (const ft::vector<T>& lhs, const ft::vector<T>& rhs) {
-		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(),
+										   rhs.begin(), rhs.end());
 	}
 	
 	/**—————————————————————————————————————————————————————————————————————————————————**/

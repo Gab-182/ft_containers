@@ -34,7 +34,8 @@ endif
 
 NAME = ft_containers
 
-FILES = ./tests/vector_test.cpp\
+MY_VEC = 	./tests/vector_tests/vector_test.cpp
+ORG_VEC = 	./tests/vector_tests/Original.cpp
 
 OBJ = $(FILES:.cpp=.o)
 
@@ -54,7 +55,14 @@ CC = c++ -g
 #------------------------------------------------------------------------------------------------------
 all: $(NAME) $(OBJ) clean
 $(NAME): $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+# Compile MY_VEC and ORG_VEC files
+	@$(CC) $(FLAGS) $(MY_VEC) -o MY_VEC
+	@$(CC) $(ORG_VEC) -o ORG_VEC
+
+# Move MY_VEC and ORG_VEC to tests folder
+	@mv MY_VEC ORG_VEC ./tests/vector_tests
+
+
 	@echo "\033c"
 	@echo "$(R)≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ $(RS)"
 	@echo "$(R)║$(LP)░░░░████████░░████████░░░█████░░░███░█████████░█████████░░█████░░░███░░████████░████████░░░░░████████░░░$(R)║$(RS)"
@@ -69,6 +77,10 @@ $(NAME): $(OBJ)
 	@echo "                                    $(Y)          █▄█ █▀█ █▄█   $(RS)"
 	@echo "$                                    $(LP)  _____________________________$(RS)"
 	@echo "\n"
+
+test:
+# Compare MY_VEC and ORG_VEC outputs
+	@python3 Test_res_cmp.py
 
 #------------------------------------------------------------------------------------------------------
 leaks:
@@ -85,7 +97,7 @@ clean:
 
 #------------------------------------------------------------------------------------------------------
 fclean: clean
-	@rm -rf $(NAME)
+	@rm -rf ./tests/vector_tests/MY_VEC ./tests/vector_tests/ORG_VEC
 	@echo "\033c"
 	@echo "$(G)【OK】 $(RS)        $(R)❮ft_containers executable❯ DELETED$(RS)"
 
