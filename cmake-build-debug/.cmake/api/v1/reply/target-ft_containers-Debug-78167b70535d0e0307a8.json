@@ -53,7 +53,7 @@
 			"sourceIndexes" : 
 			[
 				1,
-				8
+				2
 			]
 		}
 	],
@@ -87,12 +87,14 @@
 			"sourceIndexes" : 
 			[
 				0,
-				2,
 				3,
 				4,
 				5,
 				6,
-				7
+				7,
+				8,
+				9,
+				10
 			]
 		},
 		{
@@ -100,7 +102,7 @@
 			"sourceIndexes" : 
 			[
 				1,
-				8
+				2
 			]
 		}
 	],
@@ -114,7 +116,13 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "tests/vector_test.cpp",
+			"path" : "tests/vector_tests/vector_test.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "tests/vector_tests/Original.cpp",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -149,9 +157,13 @@
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "tests/Original.cpp",
-			"sourceGroupIndex" : 1
+			"path" : "map/map.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "utils/pair.hpp",
+			"sourceGroupIndex" : 0
 		}
 	],
 	"type" : "EXECUTABLE"

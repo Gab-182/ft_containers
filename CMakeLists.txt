@@ -15,4 +15,4 @@ add_executable(ft_containers
         ./iterator/iterator_traits.hpp
         ./utils/enable_if.hpp
         ./utils/is_integral.hpp
-        ./utils/Algorithms.hpp)
+        ./utils/Algorithms.hpp map/map.hpp utils/pair.hpp)
