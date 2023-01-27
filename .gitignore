@@ -31,6 +31,9 @@ atlassian-ide-plugin.xml
 ./cmake-build-debug
 ./venv
 CMakeLists.txt
+.idea/git_toolbox_prj.xml
+./.idea
+
 
 modules.xml
 .idea/misc.xml
