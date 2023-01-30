@@ -8,7 +8,7 @@
   <img src="https://user-images.githubusercontent.com/83855149/214600672-3ff0531b-8237-419e-9dd2-b9ed87a3dffc.png" />
 </p>
 
-## - Description
+## ➤ Description
 
 #### The designer of STL chose a wonderful yet simple common approach - "The separation of data and operation".
 - The data is held and managed by the Container classes.
@@ -18,7 +18,7 @@
 
 In this project I'm re-implementation some of the standard C++ containers with the specific usage, such as vector, map, and stack, under the namespace "ft" instead of "std".
 
-## - Usage
+## ➤ Usage
 
 To use these container classes in your project, simply include the appropriate header file and use the "ft" namespace. For example:
 
@@ -39,11 +39,20 @@ int main() {
 
 ### re-implementation of:
 
-  **std::vector** -> [ft::vector](./vector/vector.hpp)
+  **➤ std::vector** -> [ft::vector](./vector/vector.hpp):
 
-  **std::map** -> [ft::map](./map/map.hpp)
+    ➤➤ It is implemented using a dynamic array, which is a contiguous block of memory that can be accessed using pointers.
+    The vector class is a dynamic array that can grow and shrink in size.
 
-  **std::stack** -> [ft::stack](./stack/stack.hpp)
+  **➤ std::map** -> [ft::map](./map/map.hpp) : 
+
+    ➤➤ The best type of tree data structure to implement a map container in C++ would be a self-balancing binary search tree (BST), such as a [Red-Black tree] or [AVL tree].
+    These trees provide O(log n) time for search, insertion, and deletion operations, and have a well-balanced structure that ensures O(log n) time for most operations, even in the worst case scenario.
+
+  **➤ std::stack** -> [ft::stack](./stack/stack.hpp) : 
+
+    ➤➤ The stack is implemented by using a LIFO (last-in first-out) data structure. 
+    Elements are pushed/popped from the "back" of the specific container, which is known as the top of the stack.
 
 Resources that helped me in this project:
 -----------------------------------------
