@@ -1,0 +1,4 @@
+/home/gab-182/clion-2022.3.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/gab-182/clion-2022.3.1/bin/ninja/linux/ninja -G Ninja -S /home/gab-182/Desktop/Containers/ft_container_D -B /home/gab-182/Desktop/Containers/ft_container_D/cmake-build-debug
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/gab-182/Desktop/Containers/ft_container_D/cmake-build-debug

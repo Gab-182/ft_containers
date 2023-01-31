@@ -37,7 +37,10 @@ NAME = ft_containers
 MY_VEC = 	./tests/vector_tests/vector_test.cpp
 ORG_VEC = 	./tests/vector_tests/Original.cpp
 
-OBJ = $(FILES:.cpp=.o)
+MY_TREE = 	./tests/map_tests/tree_test.cpp
+#MY_MAP = 	./tests/map_tests/map_test.cpp.cpp
+#ORG_MAP = 	./tests/map_tests/Original.cpp
+
 
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
@@ -50,18 +53,24 @@ FLAGS = -Wall -Wextra -Werror -std=c++98
 #SFLAGS = -fsanitize=address -fsanitize=undefined -fsanitize=leak -fsanitize=thread
 
 ####################################################################################
-CC = c++ -g
+CC = c++ -g3
 
 #------------------------------------------------------------------------------------------------------
 all: $(NAME) $(OBJ) clean
 $(NAME): $(OBJ)
 # Compile MY_VEC and ORG_VEC files
-	@$(CC) $(FLAGS) $(MY_VEC) -o MY_VEC
-	@$(CC) $(ORG_VEC) -o ORG_VEC
+#	@$(CC) $(FLAGS) $(MY_VEC) -o MY_VEC
+#	@$(CC) $(ORG_VEC) -o ORG_VEC
+
+# Compile MY_TREE files
+	@$(CC) $(FLAGS) $(MY_TREE) -o MY_TREE
+
 
 # Move MY_VEC and ORG_VEC to tests folder
-	@mv MY_VEC ORG_VEC ./tests/vector_tests
+#	@mv MY_VEC ORG_VEC ./tests/vector_tests
 
+# Move MY_TREE to tests folder
+	@mv MY_TREE ./tests/map_tests
 
 	@echo "\033c"
 	@echo "$(R)≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ $(RS)"
@@ -97,7 +106,8 @@ clean:
 
 #------------------------------------------------------------------------------------------------------
 fclean: clean
-	@rm -rf ./tests/vector_tests/MY_VEC ./tests/vector_tests/ORG_VEC
+#	@rm -rf ./tests/vector_tests/MY_VEC ./tests/vector_tests/ORG_VEC
+	@rm -rf ./tests/map_tests/MY_TREE
 	@echo "\033c"
 	@echo "$(G)【OK】 $(RS)        $(R)❮ft_containers executable❯ DELETED$(RS)"
 

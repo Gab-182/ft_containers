@@ -32,7 +32,7 @@ atlassian-ide-plugin.xml
 ./venv
 CMakeLists.txt
 .idea/git_toolbox_prj.xml
-./.idea
+.idea
 
 
 modules.xml

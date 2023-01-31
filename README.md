@@ -41,18 +41,24 @@ int main() {
 
   **➤ std::vector** -> [ft::vector](./vector/vector.hpp):
 
-    ➤➤ It is implemented using a dynamic array, which is a contiguous block of memory that can be accessed using pointers.
+    ➤➤ It is implemented using a dynamic array, which is a contiguous 
+    block of memory that can be accessed using pointers.
     The vector class is a dynamic array that can grow and shrink in size.
 
   **➤ std::map** -> [ft::map](./map/map.hpp) : 
 
-    ➤➤ The best type of tree data structure to implement a map container in C++ would be a self-balancing binary search tree (BST), such as a [Red-Black tree] or [AVL tree].
-    These trees provide O(log n) time for search, insertion, and deletion operations, and have a well-balanced structure that ensures O(log n) time for most operations, even in the worst case scenario.
+    ➤➤ The best type of tree data structure to implement a map container 
+    in C++ would be a self-balancing binary search tree (BST), such as 
+    a [Red-Black tree] or [AVL tree].
+    These trees provide O(log n) time for search, insertion, and deletion operations, 
+    and have a well-balanced structure that ensures O(log n) time for most operations, 
+    even in the worst case scenario.
 
   **➤ std::stack** -> [ft::stack](./stack/stack.hpp) : 
 
     ➤➤ The stack is implemented by using a LIFO (last-in first-out) data structure. 
-    Elements are pushed/popped from the "back" of the specific container, which is known as the top of the stack.
+    Elements are pushed/popped from the "back" of the specific container, 
+    which is known as the top of the stack.
 
 Resources that helped me in this project:
 -----------------------------------------
@@ -68,6 +74,7 @@ Resources that helped me in this project:
 - [The difference between the (allocator.destruct) and (allocator.deallocate) in allocator class](https://stackoverflow.com/questions/26667026/difference-between-destroy-destructor-deallocate-in-stdallocator)
 - [overloading with the usage of enable_if](https://akrzemi1.wordpress.com/examples/overloading-enable_if/)
 - [how to use enable_if with overloads](https://stackoverflow.com/questions/38908260/how-to-use-enable-if-with-overloads)
+- [The C++ std::map Associative Container](https://www.youtube.com/watch?v=KqxquJlQNds)
 -----------------------------------------
 Useful Notes: **[Notes](./resources/Notes.txt)**
 

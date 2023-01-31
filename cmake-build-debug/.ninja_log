@@ -1,0 +1,10 @@
+# ninja log v5
+583	698	1674655769195423924	ft_containers	29cb7d9caff2dd6
+34	610	1675163884660872716	CMakeFiles/ft_containers.dir/tests/vector_tests/Original.cpp.o	401e709a39bcb85
+0	25	1675164263845435633	build.ninja	1a67c274c913b6c9
+35	187	1675163884240868574	CMakeFiles/ft_containers.dir/tests/map_tests/tree_test.cpp.o	8f35c471f1757aba
+33	534	1675163884584871966	CMakeFiles/ft_containers.dir/tests/vector_tests/vector_test.cpp.o	c7175f0f8c64446
+34	56	1675163884108867272	CMakeFiles/ft_containers.dir/tests/map_tests/map_test.cpp.o	fae50e430c913252
+1	73	1675164269793634261	ft_containers	8fb43b7ad81a0835
+30	193	1675165490853488876	CMakeFiles/ft_containers.dir/tests/map_tests/tree_test.cpp.o	8f35c471f1757aba
+193	422	1675165491077495037	ft_containers	8fb43b7ad81a0835
