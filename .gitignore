@@ -28,13 +28,11 @@ atlassian-ide-plugin.xml
 
 # Others
 .clang-format
-./cmake-build-debug
-./venv
+cmake-build-debug
+venv
 CMakeLists.txt
-.idea/git_toolbox_prj.xml
 .idea
 
 
 modules.xml
-.idea/misc.xml
 *.ipr
