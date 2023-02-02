@@ -75,6 +75,9 @@ Resources that helped me in this project:
 - [overloading with the usage of enable_if](https://akrzemi1.wordpress.com/examples/overloading-enable_if/)
 - [how to use enable_if with overloads](https://stackoverflow.com/questions/38908260/how-to-use-enable-if-with-overloads)
 - [The C++ std::map Associative Container](https://www.youtube.com/watch?v=KqxquJlQNds)
+- [Class RedBlackTree java](https://www.andrew.cmu.edu/user/mm6/95-771/examples/RedBlackTreeProject/dist/javadoc/redblacktreeproject/RedBlackTree.html)
+- [Visualizing Red-Black Trees](https://www.cs.usfca.edu/~galles/visualization/RedBlack.html)
+- [what does (template) rebind<> do?](https://stackoverflow.com/questions/14148756/what-does-template-rebind-do)
 -----------------------------------------
 Useful Notes: **[Notes](./resources/Notes.txt)**
 

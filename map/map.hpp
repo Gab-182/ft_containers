@@ -2,8 +2,8 @@
 #define MAP_HPP
 
 # include "../utils/pair.hpp"
+# include "../utils/RedBlack/RedBlack.hpp"
 # include <string>
-# include <map>
 /*=============================================================================================================*/
 namespace ft {
 	
@@ -23,7 +23,7 @@ namespace ft {
 			class Key,
 			class T,
 			class Compare = std::less<Key>,
-			class Allocator = std::allocator<ft::pair<const Key, T> >
+			class Allocator = std::allocator<ft::pair<const Key, T> > >
 		class map {
 		
 	};
