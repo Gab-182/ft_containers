@@ -29,10 +29,7 @@ atlassian-ide-plugin.xml
 # Others
 .clang-format
 cmake-build-debug
-venv
 CMakeLists.txt
+venv
+MY_TREE.dSYM
 .idea
-
-
-modules.xml
-*.ipr

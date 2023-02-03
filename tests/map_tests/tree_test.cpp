@@ -17,8 +17,11 @@
 int main()
 {
 	// Create a tree with a custom compare function and a custom allocator
-	ft::RedBlack<std::string, int> my_tree(std::less<std::string>, std::allocator<ft::pair<std::string, int> >);
+	ft::RedBlack<std::string, int> *my_tree = new ft::RedBlack<std::string, int>(std::less<std::string>(), std::allocator<ft::pair<const std::string, int> >());
+	
+	std::cout << BOLDGREEN << my_tree->size() << RESET << std::endl;
 	std::cout << BOLDGREEN << "Red Black has been created" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Root is: " << my_tree.root() << RESET << std::endl;
+	std::cout << BOLDGREEN << "Is empty -> " << my_tree->empty() << RESET << std::endl;
+	my_tree->clear();
 	return 0;
 }

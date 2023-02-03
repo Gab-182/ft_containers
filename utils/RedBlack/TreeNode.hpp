@@ -23,15 +23,12 @@ namespace ft {
 	
 	enum Color {RED = false, BLACK = true};
 	
-//	template <class T, class Allocator = std::allocator<T> >
 	template <class T>
 	struct NODE {
 		/**———————————————————————————————[ Types ]————————————————————————————————————————**/
 		typedef 				T 													data_type;
 		typedef 				NODE<T>* 											node_pointer;
 		typedef 				NODE<T>& 											node_reference;
-//		typedef 				Allocator 											allocator_type;
-//		typedef 	typename 	allocator_type::template rebind<NODE>::other		node_allocator;
 		
 		/**———————————————————————————————[ Data Members ]—————————————————————————————————**/
 		data_type		paired_data;
@@ -63,8 +60,8 @@ namespace ft {
 		/**———————————————————————————————[ Get Minimum ]————————————————————————————————*
 		 * @brief Get the minimum node in the subtree, which is the far left node.
 		 */
-		node_pointer get_minimum() {
-			node_pointer current = this;
+		static node_pointer
+		get_minimum(node_pointer current) {
 			while (current->left != NULL)
 				current = current->left;
 			return current;
@@ -73,8 +70,8 @@ namespace ft {
 		/**———————————————————————————————[ Get Maximum ]————————————————————————————————*
 		 * @brief Get the maximum node in the subtree, which is the far right node.
 		 */
-		node_pointer get_maximum() {
-			node_pointer current = this;
+		static node_pointer
+		get_maximum(node_pointer current) {
 			while (current->right != NULL)
 				current = current->right;
 			return current;
@@ -83,7 +80,8 @@ namespace ft {
 		/**———————————————————————————————[ Change Color ]————————————————————————————————*
 		 * @brief Change the color of the node, if it's red, make it black, and vice versa.
 		 */
-		void change_color() {
+		void
+		change_color() {
 			if (this->color == RED)
 				this->color = BLACK;
 			else
