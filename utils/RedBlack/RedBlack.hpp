@@ -135,6 +135,7 @@ namespace ft {
 						 tmp = minNode->parent;
 						 _alloc_node.deallocate(minNode, 1);
 						 _alloc_node.destroy(minNode);
+						 _nodes_count--;
 						 minNode = tmp;
 					 }
 				 }
@@ -148,6 +149,7 @@ namespace ft {
 						temp = maxNode->parent;
 						_alloc_node.deallocate(maxNode, 1);
 						_alloc_node.destroy(maxNode);
+						_nodes_count--;
 						maxNode = temp;
 					}
 				}
@@ -157,6 +159,7 @@ namespace ft {
 				 if (_root) {
 					 _alloc_node.deallocate(_root, 1);
 					 _alloc_node.destroy(_root);
+					 _nodes_count--;
 					 _root = NULL;
 				 }
 			}
@@ -165,13 +168,47 @@ namespace ft {
 			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Iterators]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
 			
 			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Insert]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-			
+			void
+			insert(const paired_data& val) {
+				pointer newNode = _alloc_node.allocate(1);
+				_alloc_node.construct(newNode, node(val));
+				if (_root == NULL) {
+					_root = newNode;
+					_nodes_count++;
+					return;
+				}
+				pointer tmp = _root;
+				while (tmp) {
+					if (tmp->paired_data == val) {
+						_alloc_node.deallocate(newNode, 1);
+						_alloc_node.destroy(newNode);
+						return;
+					}
+					if (tmp->paired_data > val) {
+						if (tmp->left == NULL) {
+							tmp->left = newNode;
+							newNode->parent = tmp;
+							_nodes_count++;
+							return;
+						}
+						tmp = tmp->left;
+					} else {
+						if (tmp->right == NULL) {
+							tmp->right = newNode;
+							newNode->parent = tmp;
+							_nodes_count++;
+							return;
+						}
+						tmp = tmp->right;
+					}
+				}
+			}
 			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Erase]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
 			
 			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Swap]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
 			
 			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Search]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-		
+			
 	};
 /*=============================================================================================================*/
 }

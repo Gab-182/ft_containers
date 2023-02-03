@@ -22,6 +22,26 @@ int main()
 	std::cout << BOLDGREEN << my_tree->size() << RESET << std::endl;
 	std::cout << BOLDGREEN << "Red Black has been created" << RESET << std::endl;
 	std::cout << BOLDGREEN << "Is empty -> " << my_tree->empty() << RESET << std::endl;
+	
+	my_tree->insert(ft::make_pair("Hello", 1));
+	my_tree->insert(ft::make_pair("World", 2));
+	my_tree->insert(ft::make_pair("!", 3));
+	my_tree->insert(ft::make_pair("This", 4));
+	my_tree->insert(ft::make_pair("is", 5));
+	my_tree->insert(ft::make_pair("a", 6));
+	my_tree->insert(ft::make_pair("Red", 7));
+	my_tree->insert(ft::make_pair("Black", 8));
+	my_tree->insert(ft::make_pair("Tree", 9));
+	my_tree->insert(ft::make_pair("!", 10));
+	my_tree->insert(ft::make_pair("!", 11));
+	my_tree->insert(ft::make_pair("!", 12));
+	
+	std::cout << BOLDGREEN << "Is empty -> " << my_tree->empty() << RESET << std::endl;
+	std::cout << BOLDGREEN << my_tree->size() << RESET << std::endl;
+	
 	my_tree->clear();
+	
+	std::cout << BOLDGREEN << "Is empty -> " << my_tree->empty() << RESET << std::endl;
+	std::cout << BOLDGREEN << my_tree->size() << RESET << std::endl;
 	return 0;
 }
