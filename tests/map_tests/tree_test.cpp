@@ -1,4 +1,5 @@
 # include <iostream>
+# include <string>
 # include "../../utils/RedBlack/RedBlack.hpp"
 /*===============================================================================*/
 
@@ -8,27 +9,16 @@
 # define BOLDYELLOW		"\033[1m\033[33m"		/* Bold Yellow */
 # define BOLDRED		"\033[1m\033[31m"		/* Bold Red */
 /*===============================================================================*/
+
+//template<class Key,
+//		class T,
+//		class Compare = std::less<Key>,
+//		class Allocator = std::allocator<ft::pair<const Key, T> > >
 int main()
 {
-	
-	// allocator for string values
-	std::allocator<std::string> myAllocator;
-	
-	// allocate space for three strings
-	std::string* str = myAllocator.allocate(3);
-	
-	// construct these 3 strings
-	myAllocator.construct(str, "Geeks");
-	myAllocator.construct(str + 1, "for");
-	myAllocator.construct(str + 2, "Geeks");
-	
-	std::cout << str[0] << str[1] << str[2];
-	
-	// destroy these 3 strings
-	myAllocator.destroy(str);
-	myAllocator.destroy(str + 1);
-	myAllocator.destroy(str + 2);
-	
-	// deallocate space for 3 strings
-	myAllocator.deallocate(str, 3);
+	// Create a tree with a custom compare function and a custom allocator
+	ft::RedBlack<std::string, int> my_tree(std::less<std::string>, std::allocator<ft::pair<std::string, int> >);
+	std::cout << BOLDGREEN << "Red Black has been created" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Root is: " << my_tree.root() << RESET << std::endl;
+	return 0;
 }

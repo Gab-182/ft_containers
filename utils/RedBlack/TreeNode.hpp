@@ -23,23 +23,33 @@ namespace ft {
 	
 	enum Color {RED = false, BLACK = true};
 	
+//	template <class T, class Allocator = std::allocator<T> >
 	template <class T>
 	struct NODE {
-		T				paired_data;
+		/**———————————————————————————————[ Types ]————————————————————————————————————————**/
+		typedef 				T 													data_type;
+		typedef 				NODE<T>* 											node_pointer;
+		typedef 				NODE<T>& 											node_reference;
+//		typedef 				Allocator 											allocator_type;
+//		typedef 	typename 	allocator_type::template rebind<NODE>::other		node_allocator;
+		
+		/**———————————————————————————————[ Data Members ]—————————————————————————————————**/
+		data_type		paired_data;
 		int				height;
-		NODE*			parent;
-		NODE*			left;
-		NODE*			right;
+		node_pointer	parent;
+		node_pointer	left;
+		node_pointer	right;
 		Color 			color;
 		bool			is_nil;
 		
 		/**————————————————————————————[ Default Constructor ]———————————————————————————*
-		 * @brief Default constructor
+		 * @brief Default constructor, the node is going to be a leaf node.
+		 * and the default color will be black.
 		 */
 		NODE()
 				: paired_data(), height(0),
 				parent(NULL), left(NULL),
-				right(NULL), color(), is_nil(true){ }
+				right(NULL), color(BLACK), is_nil(true){ }
 		
 		/**———————————————————————————————[ Constructor ]————————————————————————————————*
 		 * @brief Parametrized Constructor, the default color will be red.
@@ -50,7 +60,38 @@ namespace ft {
 				parent(NULL), left(NULL),
 				right(NULL), color(RED), is_nil(false) { }
 		
-	};
+		/**———————————————————————————————[ Get Minimum ]————————————————————————————————*
+		 * @brief Get the minimum node in the subtree, which is the far left node.
+		 */
+		node_pointer get_minimum() {
+			node_pointer current = this;
+			while (current->left != NULL)
+				current = current->left;
+			return current;
+		}
+		
+		/**———————————————————————————————[ Get Maximum ]————————————————————————————————*
+		 * @brief Get the maximum node in the subtree, which is the far right node.
+		 */
+		node_pointer get_maximum() {
+			node_pointer current = this;
+			while (current->right != NULL)
+				current = current->right;
+			return current;
+		}
+		
+		/**———————————————————————————————[ Change Color ]————————————————————————————————*
+		 * @brief Change the color of the node, if it's red, make it black, and vice versa.
+		 */
+		void change_color() {
+			if (this->color == RED)
+				this->color = BLACK;
+			else
+				this->color = RED;
+		}
+		
+	};//struct NODE
+	
 /*=============================================================================================================*/
 }
 

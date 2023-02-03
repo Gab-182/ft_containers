@@ -63,7 +63,7 @@ $(NAME): $(OBJ)
 #	@$(CC) $(ORG_VEC) -o ORG_VEC
 
 # Compile MY_TREE files
-	@$(CC) $(FLAGS) $(MY_TREE) -o MY_TREE
+	$(CC) $(FLAGS) $(MY_TREE) -o MY_TREE
 
 
 # Move MY_VEC and ORG_VEC to tests folder
