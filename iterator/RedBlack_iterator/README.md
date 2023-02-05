@@ -52,7 +52,7 @@ int main() {
 ```
 #### The Red Black tree will take the following form:
 
-![Red black tree](Desktop/Containers/ft_container_D/iterator/RedBlack_iterator/Red-Black-Tree-Visualization.png "Iterator")
+![Red black tree](Red-Black-Tree-Visualization.png "Iterator")
 
 ---------------------------------
 So from the output we can understand that:
