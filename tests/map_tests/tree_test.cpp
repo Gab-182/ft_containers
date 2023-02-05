@@ -10,38 +10,33 @@
 # define BOLDRED		"\033[1m\033[31m"		/* Bold Red */
 /*===============================================================================*/
 
-//template<class Key,
-//		class T,
-//		class Compare = std::less<Key>,
-//		class Allocator = std::allocator<ft::pair<const Key, T> > >
 int main()
 {
 	// Create a tree with a custom compare function and a custom allocator
-	ft::RedBlack<std::string, int> *my_tree = new ft::RedBlack<std::string, int>(std::less<std::string>(), std::allocator<ft::pair<const std::string, int> >());
+	ft::RedBlack<int, std::string> my_tree;
 	
-	std::cout << BOLDGREEN << my_tree->size() << RESET << std::endl;
-	std::cout << BOLDGREEN << "Red Black has been created" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Is empty -> " << my_tree->empty() << RESET << std::endl;
+	/**———————————————————————————————————[Test]—————————————————————————————————————*/
+	std::cout << BOLDGREEN << "Before insert" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
 	
-	my_tree->insert(ft::make_pair("Hello", 1));
-	my_tree->insert(ft::make_pair("World", 2));
-	my_tree->insert(ft::make_pair("!", 3));
-	my_tree->insert(ft::make_pair("This", 4));
-	my_tree->insert(ft::make_pair("is", 5));
-	my_tree->insert(ft::make_pair("a", 6));
-	my_tree->insert(ft::make_pair("Red", 7));
-	my_tree->insert(ft::make_pair("Black", 8));
-	my_tree->insert(ft::make_pair("Tree", 9));
-	my_tree->insert(ft::make_pair("!", 10));
-	my_tree->insert(ft::make_pair("!", 11));
-	my_tree->insert(ft::make_pair("!", 12));
+	std::cout << BOLDWHITE << my_tree.size() << RESET << std::endl;
+	std::cout << BOLDWHITE << "Is empty -> " << my_tree.empty() << RESET << std::endl;
 	
-	std::cout << BOLDGREEN << "Is empty -> " << my_tree->empty() << RESET << std::endl;
-	std::cout << BOLDGREEN << my_tree->size() << RESET << std::endl;
+//	my_tree.insert(ft::make_pair(1, "Hello"));
+//	my_tree.insert(ft::make_pair(2, "World"));
+//
+	std::cout << BOLDGREEN << "After insert" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
 	
-	my_tree->clear();
+	std::cout << BOLDWHITE << "Is empty -> " << my_tree.empty() << RESET << std::endl;
+	std::cout << BOLDWHITE << my_tree.size() << RESET << std::endl;
 	
-	std::cout << BOLDGREEN << "Is empty -> " << my_tree->empty() << RESET << std::endl;
-	std::cout << BOLDGREEN << my_tree->size() << RESET << std::endl;
+//	my_tree.clear();
+	
+	std::cout << BOLDGREEN << "After clear" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
+	
+	std::cout << BOLDWHITE << "Is empty -> " << my_tree.empty() << RESET << std::endl;
+	std::cout << BOLDWHITE << my_tree.size() << RESET << std::endl;
 	return 0;
 }

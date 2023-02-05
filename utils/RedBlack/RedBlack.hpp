@@ -4,8 +4,9 @@
 /*=============================================================================================================*/
 # include "../pair.hpp"
 # include "./TreeNode.hpp"
-# include <iostream>
-# include <memory>
+# include <cstddef>		// for ptrdiff_t
+# include <memory>      // for allocator
+# include <map>
 /*=============================================================================================================*/
 namespace ft {
 /*=============================================================================================================*/
@@ -13,7 +14,7 @@ namespace ft {
 	 * @brief
 	 ** [map_data]: the data coming from the user, it is used to create the pair.
 	 ** [key]: the key used to compare the nodes, it is used to create the pair with the data.
-	 ** [paired_data]: created from the map_data and the key, it is the data that is going to
+	 ** [paired_data]: created from the (map_data, the key), it is the data that is going to
 	 ** 				be stored in the node.
 	 ** [compare]: the compare function, used to compare the keys.
 	 ** [allocator_type]: the allocator type, used to allocate the nodes.
@@ -33,29 +34,40 @@ namespace ft {
 			class Compare = std::less<Key>,
 			class Allocator = std::allocator<ft::pair<const Key, T> > >
 	class RedBlack {
-		/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Member_types]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
+		/**——————————————————————————————————[Member_types]————————————————————————————————————————*/
 		public:
-			typedef		T															map_data;
-			typedef		Key															key;
-			typedef		ft::pair<const key, map_data>								paired_data;
-			typedef		Compare														compare;
-			typedef		Allocator													allocator_type;
-			typedef		ft::NODE<paired_data>										node;
-			typedef		typename allocator_type::template rebind<node>::other		node_allocator;
-			typedef		node*														pointer;
-			typedef		const pointer												const_pointer;
-			typedef		std::size_t													size_type;
+		/**[Tree_types]*/
+			typedef				T														mapped_type;
+			typedef				Key														key_type;
+			typedef				ft::pair<const key_type, mapped_type>					value_type;
+			typedef				Compare													key_compare;
+			typedef				Allocator												allocator_type;
+			typedef	typename 	allocator_type::reference								reference;
+			typedef	typename 	allocator_type::const_reference							const_reference;
+			typedef typename 	allocator_type::pointer									pointer;
+			typedef typename 	allocator_type::const_pointer							const_pointer;
+			
+			/**[Iterator_types]*/
+
+			/**[Node_types]*/
+			typedef				ft::NODE<value_type>									node;
+			typedef	typename	allocator_type::template rebind<node>::other			node_allocator;
+			typedef	typename	node_allocator::pointer									node_pointer;
+			typedef typename 	allocator_type::const_pointer							const_node_pointer;
 		
-		/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Private Member]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
+			typedef				std::ptrdiff_t											difference_type;
+			typedef				std::size_t												size_type;
+		
+		/**———————————————————————————————————[Private Member]—————————————————————————————————————*/
 		private:
-			compare					_compare;
+			key_compare				_compare;
 			allocator_type			_alloc_data;
 			node_allocator			_alloc_node;
-			pointer 				_root;
+			node_pointer 			_root;
 			size_type				_nodes_count;
 
 		public:
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Default_Constructor]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
+			/**——————————————————————————————[Default_Constructor]—————————————————————————————————*/
 			/**
 			 ** @brief Default constructor
 			 ** NOTE:
@@ -65,14 +77,21 @@ namespace ft {
 			 ** @param comp
 			 ** @param alloc
 			 **/
-			explicit RedBlack(const compare& comp, const allocator_type& alloc)
+			explicit RedBlack(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
 				:	_compare(comp),
 					_alloc_data(alloc),
 					_alloc_node(alloc),
 					_root(),
 					_nodes_count(0) { }
-					
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Copy_Constructor]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
+		
+			/**——————————————————————————————[Range_Constructor]———————————————————————————————————*/
+//			template <class InputIterator>
+//			RedBlack (InputIterator first, InputIterator last,
+//					  const key_compare& comp = key_compare(),
+//					  const allocator_type& alloc = allocator_type()) {
+//
+//			}
+			/**——————————————————————————————[Copy_Constructor]————————————————————————————————————*/
 			/**
 			 ** @brief Copy constructor.
 			 ** NOTE:
@@ -87,11 +106,18 @@ namespace ft {
 					_alloc_node(copy._alloc_node),
 					_root(copy._root),
 					_nodes_count(copy._nodes_count) { }
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Destructor]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
+			/**———————————————————————————————————[Destructor]—————————————————————————————————————*/
 			~RedBlack() {
-				this->clear();
 			}
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Size]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
+		
+			/*——————————————————————————————————————————————————————————————————————————————————————*
+			——————————————————————————————————————[Capacity]—————————————————————————————————————————
+			—————————————————————————————————————————————————————————————————————————————————————————
+			**
+			**  🟢 1) size()
+			**  🟢 2) empty()
+			**  🟢 3) max_size()
+			**/
 			/**
 			 ** @brief Returns the number of nodes in the tree.
 			 ** @return size_type
@@ -100,8 +126,8 @@ namespace ft {
 			size() const {
 				return (_nodes_count);
 			}
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Empty]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-			/**
+		
+			/**———————————————————————————————————————————————————————————*
 			 ** @brief Returns true if the tree is empty, false otherwise.
 			 ** @return bool
 			 **/
@@ -109,8 +135,8 @@ namespace ft {
 			empty() const {
 				return (_nodes_count == 0);
 			}
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Max_Size]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-			/**
+		
+			/**———————————————————————————————————————————————————————————*
 			 * @brief Returns the maximum number of nodes the tree can hold,
 			 * and we can get that from the allocator object instance.
 			 * @return
@@ -119,97 +145,71 @@ namespace ft {
 			max_size() const {
 				return (_alloc_data.max_size());
 			}
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Clear]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
+			
+			/*——————————————————————————————————————————————————————————————————————————————————————*
+			——————————————————————————————————[Elements access]——————————————————————————————————————
+			—————————————————————————————————————————————————————————————————————————————————————————
+			**
+			**  🟢 1) operator[]
+			**  🟢 2) at
+			**/
+			/**———————————————————————————————————————————————————————————
+			 ** @brief
+			 ** - If k matches the key of an element in the container,
+			 ** the function returns a reference to its mapped value.
+			 ** - If k does not match the key of any element in the container,
+			 ** the function inserts a new element with that key and returns a reference to its mapped value.
+			 ** Note:
+			 ** =====
+			 ** That this always increases the container size by one,
+			 ** even if no mapped value is assigned to the element
+			 ** (the element is constructed using its default constructor).
+			 **
+			 **/
+			inline mapped_type&
+			operator[] (const key_type& k) {
+				return *(this->insert(make_pair(k,mapped_type())).first);
+			}
+			
+			/**———————————————————————————————————————————————————————————*/
+			
+			/*——————————————————————————————————————————————————————————————————————————————————————*
+			———————————————————————————————————————[Modifies]————————————————————————————————————————
+			—————————————————————————————————————————————————————————————————————————————————————————
+			**
+			**  🟢 1) insert
+			**  🟢 2) erase
+			**  🟢 3) swap
+			**  🟢 4) clear
+			**
+			**/
 			/**
-			 * @brief Clears the tree and deletes all nodes by deallocating them, then sets the root to null.
+			 * @brief Inserts a new node in the tree that holds the given value,
+			 * if the node already exists, it will not be inserted.
+			 * the tree will be balanced after insertion.
+			 * the value is created by ft::make_pair(key, mapped_type()) or if the value is already
+			 * created, it will be passed by reference, to avoid copying the value.
+			 *
+			 * @param val The paired_data that the new node will hold.
+			 * @return void
+			 *
+			 * @TODO: Check if the node already exists, by
+			 * @TODO: Balance the tree after insertion.
 			 */
-			void
-			clear() {
-				/**
-				 ** Destroy all nodes in the left tree.
-				 **/
-				 if (_root && _root->left) {
-					 pointer minNode = node::get_minimum(_root);
-					 pointer tmp = minNode->parent;
-					 while (tmp != _root) {
-						 tmp = minNode->parent;
-						 _alloc_node.deallocate(minNode, 1);
-						 _alloc_node.destroy(minNode);
-						 _nodes_count--;
-						 minNode = tmp;
-					 }
-				 }
-				/**
-				 ** Destroy all nodes in the right tree.
-				 **/
-				if (_root && _root->right) {
-					pointer maxNode = node::get_maximum(_root);
-					pointer temp = maxNode->parent;
-					while (temp != _root) {
-						temp = maxNode->parent;
-						_alloc_node.deallocate(maxNode, 1);
-						_alloc_node.destroy(maxNode);
-						_nodes_count--;
-						maxNode = temp;
-					}
-				}
-				/**
-				 ** Destroy the root node.
-				 **/
-				 if (_root) {
-					 _alloc_node.deallocate(_root, 1);
-					 _alloc_node.destroy(_root);
-					 _nodes_count--;
-					 _root = NULL;
-				 }
-			}
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Operator=]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-			
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Iterators]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-			
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Insert]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-			void
-			insert(const paired_data& val) {
-				pointer newNode = _alloc_node.allocate(1);
-				_alloc_node.construct(newNode, node(val));
-				if (_root == NULL) {
-					_root = newNode;
-					_nodes_count++;
-					return;
-				}
-				pointer tmp = _root;
-				while (tmp) {
-					if (tmp->paired_data == val) {
-						_alloc_node.deallocate(newNode, 1);
-						_alloc_node.destroy(newNode);
-						return;
-					}
-					if (tmp->paired_data > val) {
-						if (tmp->left == NULL) {
-							tmp->left = newNode;
-							newNode->parent = tmp;
-							_nodes_count++;
-							return;
-						}
-						tmp = tmp->left;
-					} else {
-						if (tmp->right == NULL) {
-							tmp->right = newNode;
-							newNode->parent = tmp;
-							_nodes_count++;
-							return;
-						}
-						tmp = tmp->right;
-					}
-				}
-			}
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Erase]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-			
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Swap]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-			
-			/**➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖[Search]➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖*/
-			
-	};
+//			void
+//			insert(const value_type& val) {
+//			}
+		
+			/**———————————————————————————————————————————————————————————*
+			* @brief Clears the tree and deletes all nodes by deallocating them, then sets the root to null.
+			*/
+//			void
+//			clear() {
+//			}
+			/**———————————————————————————————————————————————————————————*/
+			/**———————————————————————————————————————————————————————————*/
+			/**———————————————————————————————————————————————————————————*/
+};
 /*=============================================================================================================*/
 }
 /*=============================================================================================================*/
