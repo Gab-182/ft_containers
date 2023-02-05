@@ -1,6 +1,10 @@
 <h1> <p align="center"> FT_Containers </p> </h1>
 
-
+<p align="center">
+  <img alt="GitHub repo file count" src="https://img.shields.io/github/languages/count/gab-182/ft_containers?color=gree"> 
+  <img alt="GitHub repo file count" src="https://img.shields.io/github/languages/code-size/gab-182/ft_containers"> 
+  <img alt="GitHub repo file count" src="https://img.shields.io/github/directory-file-count/gab-182/ft_containers?color=gree">
+</p>
 
 <img src="UnderConstruction.jpg">
 
