@@ -33,3 +33,4 @@ CMakeLists.txt
 venv
 MY_TREE.dSYM
 .idea
+a.out

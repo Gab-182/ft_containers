@@ -43,16 +43,70 @@ namespace ft {
 			~RB_iterator() {};
 			
 			/**——————————————————————————————[Operator=]———————————————————————————————————————————*/
-			RB_iterator& operator=(const RB_iterator& copy) {
+			inline RB_iterator&
+			operator=(const RB_iterator& copy) {
 				if (this != &copy)
 					_ptr = copy._ptr;
 				return *this;
 			};
 			
 			/**——————————————————————————————[Operator*]———————————————————————————————————————————*/
-			value_reference operator*() const {
-				return _ptr->paired_data;
+			inline value_reference
+			operator*() const {
+				return (_ptr->paired_data);
 			};
+			
+			/**——————————————————————————————[Operator->]——————————————————————————————————————————*/
+			inline value_pointer
+			operator->() const {
+				return &(_ptr->paired_data);
+			};
+			
+			/**——————————————————————————————[Operator++]——————————————————————————————————————————*/
+			/**
+			 ** @brief Prefix increment operator, it returns the iterator to the next node.
+			 ** which have the larger key.
+			 ** @return RB_iterator&
+			 **/
+			inline RB_iterator&
+			operator++() {
+				if (_ptr->right != NULL) {
+					_ptr = _ptr->right;
+					while (_ptr->left != NULL)
+						_ptr = _ptr->left;
+				}
+				else {
+					while (_ptr->parent != NULL && _ptr->parent->right == _ptr)
+						_ptr = _ptr->parent;
+					_ptr = _ptr->parent;
+				}
+				return *this;
+			}
+			
+			/**——————————————————————————————[Operator--]——————————————————————————————————————————
+			 * @brief Prefix decrement operator, it returns the iterator to the previous node.
+			 * which have the smaller key.
+			 * @return RB_iterator&
+			 **/
+			inline RB_iterator&
+			operator--() {
+				// if the node has left child, then the previous node is the rightmost node of the left subtree.
+				if (_ptr->left != NULL) {
+					_ptr = _ptr->left;
+					while (_ptr->right != NULL)
+						_ptr = _ptr->right;
+				}
+				// if the node has no left child, then the previous node is the parent.
+				else {
+					// if the node is the right child of its parent, then the parent is the previous node.
+					while (_ptr->parent != NULL && _ptr->parent->left == _ptr)
+						_ptr = _ptr->parent;
+					_ptr = _ptr->parent;
+				}
+				return *this;
+			}
+			
+			/**———————————————————————————————————————————————————————————————————————————————————*/
 	};
 /*=============================================================================================================*/
 }

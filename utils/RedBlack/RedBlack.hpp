@@ -2,11 +2,13 @@
 #define REDBLACK_HPP
 
 /*=============================================================================================================*/
-# include "../pair.hpp"
-# include "./TreeNode.hpp"
 # include <cstddef>		// for ptrdiff_t
 # include <memory>      // for allocator
-# include <map>
+
+# include "../pair.hpp"
+# include "./TreeNode.hpp"
+# include "../../iterator/reverse_iterator.hpp"
+# include "../../iterator/RedBlack_iterator/RB_iterator.hpp"
 /*=============================================================================================================*/
 namespace ft {
 /*=============================================================================================================*/
@@ -46,15 +48,19 @@ namespace ft {
 			typedef	typename 	allocator_type::const_reference							const_reference;
 			typedef typename 	allocator_type::pointer									pointer;
 			typedef typename 	allocator_type::const_pointer							const_pointer;
-			
-			/**[Iterator_types]*/
 
 			/**[Node_types]*/
 			typedef				ft::NODE<value_type>									node;
 			typedef	typename	allocator_type::template rebind<node>::other			node_allocator;
 			typedef	typename	node_allocator::pointer									node_pointer;
 			typedef typename 	allocator_type::const_pointer							const_node_pointer;
-		
+			
+		/**[Iterator_types]*/
+			typedef				RB_iterator<node_pointer, value_type>					iterator;
+			typedef				RB_iterator<const_node_pointer, value_type>				const_iterator;
+			typedef				ft::reverse_iterator<iterator>							reverse_iterator;
+			typedef				ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+
 			typedef				std::ptrdiff_t											difference_type;
 			typedef				std::size_t												size_type;
 		
@@ -118,7 +124,7 @@ namespace ft {
 			**  🟢 2) empty()
 			**  🟢 3) max_size()
 			**/
-			/**
+			/**———————————————————————————————————————————————————————————*
 			 ** @brief Returns the number of nodes in the tree.
 			 ** @return size_type
 			 **/
@@ -145,7 +151,97 @@ namespace ft {
 			max_size() const {
 				return (_alloc_data.max_size());
 			}
+
+			/*——————————————————————————————————————————————————————————————————————————————————————*
+			—————————————————————————————————————[Iterators]—————————————————————————————————————————
+			—————————————————————————————————————————————————————————————————————————————————————————
+			**
+			**  🟢 1) begin()
+			**  🟢 2) end()
+			**  🟢 3) rbegin()
+			**  🟢 4) rend()
+			**/
+			/**———————————————————————————————————————————————————————————*
+			 * @brief Returns an iterator to the first element in the tree,
+			 * which is the left most node.
+			 */
+			inline iterator
+			begin() {
+				node_pointer MinNode = ft::NODE<value_type>::get_minimum_node(_root);
+				return (iterator(MinNode));
+			}
 			
+			/**———————————————————————————————————————————————————————————*
+			 * @brief Returns an iterator to the first element in the tree.
+			 */
+			inline const_iterator
+			begin() const {
+				node_pointer MinNode = ft::NODE<value_type>::get_minimum_node(_root);
+				return (const_iterator(MinNode));
+			}
+			
+			/**———————————————————————————————————————————————————————————*
+			 * @brief Returns an iterator to the last element in the tree,
+			 * which is the right most node.
+			 */
+			 
+			inline iterator
+			end() {
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum_node(_root);
+				return (iterator(MaxNode));
+			}
+		
+			/**———————————————————————————————————————————————————————————*
+			 * @brief Returns an iterator to the last element in the tree,
+			 * which is the right most node.
+			 */
+			
+			inline const_iterator
+			end() const {
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum_node(_root);
+				return (const_iterator(MaxNode));
+			}
+			
+			/**———————————————————————————————————————————————————————————*
+			 * @brief Returns a reverse iterator to the first element in the tree,
+			 * which is the right most node.
+			 */
+			inline reverse_iterator
+			rbegin() {
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum_node(_root);
+				return (reverse_iterator(MaxNode));
+			}
+			
+			/**———————————————————————————————————————————————————————————*
+			 * @brief Returns a reverse iterator to the first element in the tree,
+			 * which is the right most node.
+			 */
+			inline const_reverse_iterator
+			rbegin() const {
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum_node(_root);
+				return (const_reverse_iterator(MaxNode));
+			}
+
+			/**———————————————————————————————————————————————————————————*
+			 * @brief Returns a reverse iterator to the last element in the tree,
+			 * which is the left most node.
+			 */
+			inline reverse_iterator
+			rend() {
+				node_pointer MinNode = ft::NODE<value_type>::get_minimum_node(_root);
+				return (reverse_iterator(MinNode));
+			}
+			
+			/**———————————————————————————————————————————————————————————*
+			 * @brief Returns a reverse iterator to the last element in the tree,
+			 * which is the left most node.
+			 */
+			inline const_reverse_iterator
+			rend() const {
+				node_pointer MinNode = ft::NODE<value_type>::get_minimum_node(_root);
+				return (const_reverse_iterator(MinNode));
+			}
+
 			/*——————————————————————————————————————————————————————————————————————————————————————*
 			——————————————————————————————————[Elements access]——————————————————————————————————————
 			—————————————————————————————————————————————————————————————————————————————————————————
@@ -158,21 +254,22 @@ namespace ft {
 			 ** - If k matches the key of an element in the container,
 			 ** the function returns a reference to its mapped value.
 			 ** - If k does not match the key of any element in the container,
-			 ** the function inserts a new element with that key and returns a reference to its mapped value.
+			 ** the function inserts a new element with that key and returns a reference to its
+			 ** mapped value.
 			 ** Note:
 			 ** =====
 			 ** That this always increases the container size by one,
 			 ** even if no mapped value is assigned to the element
 			 ** (the element is constructed using its default constructor).
-			 **
+			 **@TODO: Need test: -> I think it is (mapped_type())).second), but the documentation is (mapped_type())).first)
 			 **/
 			inline mapped_type&
 			operator[] (const key_type& k) {
-				return *(this->insert(make_pair(k,mapped_type())).first);
+				return *(this->insert(make_pair(k,mapped_type())).second);
 			}
-			
+
 			/**———————————————————————————————————————————————————————————*/
-			
+
 			/*——————————————————————————————————————————————————————————————————————————————————————*
 			———————————————————————————————————————[Modifies]————————————————————————————————————————
 			—————————————————————————————————————————————————————————————————————————————————————————
@@ -193,7 +290,7 @@ namespace ft {
 			 * @param val The paired_data that the new node will hold.
 			 * @return void
 			 *
-			 * @TODO: Check if the node already exists, by
+			 * @TODO: Check if the node already exists.
 			 * @TODO: Balance the tree after insertion.
 			 */
 //			void

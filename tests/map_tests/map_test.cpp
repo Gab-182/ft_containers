@@ -5,16 +5,27 @@
 
 int main() {
 	std::map<int, std::string> my_map;
-	my_map.insert(std::make_pair(10, "A"));
-	my_map.insert(std::make_pair(9, "B"));
-	my_map.insert(std::make_pair(8, "C"));
-	my_map.insert(std::make_pair(7, "D"));
-	my_map.insert(std::make_pair(6, "E"));
-	my_map.insert(std::make_pair(5, "F"));
-	my_map.insert(std::make_pair(4, "G"));
-	my_map.insert(std::make_pair(3, "H"));
-	my_map.insert(std::make_pair(2, "I"));
-	my_map.insert(std::make_pair(1, "G"));
+	my_map.insert(std::make_pair(1, "A"));
+	my_map.insert(std::make_pair(2, "B"));
+	my_map.insert(std::make_pair(3, "C"));
+	my_map.insert(std::make_pair(4, "D"));
+	my_map.insert(std::make_pair(5, "E"));
+	my_map.insert(std::make_pair(6, "F"));
+	my_map.insert(std::make_pair(7, "G"));
+	my_map.insert(std::make_pair(8, "H"));
+	my_map.insert(std::make_pair(9, "I"));
+	my_map.insert(std::make_pair(10, "G"));
+	my_map.insert(std::make_pair(11, "K"));
+	my_map.insert(std::make_pair(12, "L"));
+	my_map.insert(std::make_pair(13, "M"));
+	my_map.insert(std::make_pair(14, "N"));
+	my_map.insert(std::make_pair(15, "O"));
+	my_map.insert(std::make_pair(16, "P"));
+	my_map.insert(std::make_pair(17, "Q"));
+	my_map.insert(std::make_pair(18, "R"));
+	my_map.insert(std::make_pair(19, "S"));
+	my_map.insert(std::make_pair(20, "T"));
+	
 	
 	std::map<int, std::string>::iterator it = my_map.begin();
 	std::map<int, std::string>::iterator ite = my_map.end();
@@ -25,3 +36,10 @@ int main() {
 	}
 	return 0;
 }
+
+/**
+ * operator ++:
+ *
+* The bigger node gonna be on the right:
+ * if the right is null-> then the bigger node (key) is the parrent.
+*/
