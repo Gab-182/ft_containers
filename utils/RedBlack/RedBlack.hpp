@@ -167,7 +167,7 @@ namespace ft {
 			 */
 			inline iterator
 			begin() {
-				node_pointer MinNode = ft::NODE<value_type>::get_minimum_node(_root);
+				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
 				return (iterator(MinNode));
 			}
 			
@@ -176,69 +176,73 @@ namespace ft {
 			 */
 			inline const_iterator
 			begin() const {
-				node_pointer MinNode = ft::NODE<value_type>::get_minimum_node(_root);
+				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
 				return (const_iterator(MinNode));
 			}
 			
 			/**———————————————————————————————————————————————————————————*
-			 * @brief Returns an iterator to the last element in the tree,
-			 * which is the right most node.
-			 */
+			 * @TODO: end() is not working properly, fix it.
+			 **				The original end() will return an iterator to the place after the last element in the tree,
+			 **				but mine will return an iterator to the last element in the tree.
+			 **
+			 ** @brief Returns an iterator to the last element in the tree,
+			 ** which is the right most node.
+			 **/
 			 
 			inline iterator
 			end() {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum_node(_root);
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
 				return (iterator(MaxNode));
 			}
 		
 			/**———————————————————————————————————————————————————————————*
-			 * @brief Returns an iterator to the last element in the tree,
-			 * which is the right most node.
-			 */
+			 ** @brief Returns an iterator to the last element in the tree,
+			 ** which is the right most node.
+			 **/
 			
 			inline const_iterator
 			end() const {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum_node(_root);
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
 				return (const_iterator(MaxNode));
 			}
 			
 			/**———————————————————————————————————————————————————————————*
-			 * @brief Returns a reverse iterator to the first element in the tree,
-			 * which is the right most node.
-			 */
+			 ** @brief Returns a reverse iterator to the first element in the tree,
+			 ** which is the right most node.
+			 **/
 			inline reverse_iterator
 			rbegin() {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum_node(_root);
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
 				return (reverse_iterator(MaxNode));
 			}
 			
 			/**———————————————————————————————————————————————————————————*
-			 * @brief Returns a reverse iterator to the first element in the tree,
-			 * which is the right most node.
-			 */
+			 ** @brief Returns a reverse iterator to the first element in the tree,
+			 ** which is the right most node.
+			 **/
 			inline const_reverse_iterator
 			rbegin() const {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum_node(_root);
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
 				return (const_reverse_iterator(MaxNode));
 			}
 
 			/**———————————————————————————————————————————————————————————*
-			 * @brief Returns a reverse iterator to the last element in the tree,
-			 * which is the left most node.
-			 */
+			 ** @brief Returns a reverse iterator to the last element in the tree,
+			 ** which is the left most node.
+			 **/
 			inline reverse_iterator
 			rend() {
-				node_pointer MinNode = ft::NODE<value_type>::get_minimum_node(_root);
+				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
 				return (reverse_iterator(MinNode));
 			}
 			
 			/**———————————————————————————————————————————————————————————*
-			 * @brief Returns a reverse iterator to the last element in the tree,
-			 * which is the left most node.
-			 */
+			 ** @brief Returns a reverse iterator to the last element in the tree,
+			 ** which is the left most node.
+			 **/
 			inline const_reverse_iterator
 			rend() const {
-				node_pointer MinNode = ft::NODE<value_type>::get_minimum_node(_root);
+				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
 				return (const_reverse_iterator(MinNode));
 			}
 
@@ -261,7 +265,7 @@ namespace ft {
 			 ** That this always increases the container size by one,
 			 ** even if no mapped value is assigned to the element
 			 ** (the element is constructed using its default constructor).
-			 **@TODO: Need test: -> I think it is (mapped_type())).second), but the documentation is (mapped_type())).first)
+			 **@TODO: Need test: -> I think it is (mapped_type())).second), but the documentation is(mapped_type())).first)
 			 **/
 			inline mapped_type&
 			operator[] (const key_type& k) {
@@ -280,29 +284,51 @@ namespace ft {
 			**  🟢 4) clear
 			**
 			**/
-			/**
-			 * @brief Inserts a new node in the tree that holds the given value,
-			 * if the node already exists, it will not be inserted.
-			 * the tree will be balanced after insertion.
-			 * the value is created by ft::make_pair(key, mapped_type()) or if the value is already
-			 * created, it will be passed by reference, to avoid copying the value.
-			 *
-			 * @param val The paired_data that the new node will hold.
-			 * @return void
-			 *
-			 * @TODO: Check if the node already exists.
-			 * @TODO: Balance the tree after insertion.
-			 */
-//			void
-//			insert(const value_type& val) {
-//			}
-		
 			/**———————————————————————————————————————————————————————————*
-			* @brief Clears the tree and deletes all nodes by deallocating them, then sets the root to null.
-			*/
-//			void
-//			clear() {
-//			}
+			 ** @brief Inserts a new node in the tree that holds the given value,
+			 ** if the node already exists, it will not be inserted.
+			 ** the tree will be balanced after insertion.
+			 ** the value is created by ft::make_pair(key, mapped_type()) or if the value is already
+			 ** created, it will be passed by reference, to avoid copying the value.
+			 **
+			 ** @param val The paired_data that the new node will hold.
+			 ** @return void
+			 **
+			 **/
+			inline iterator
+			insert(const value_type& value ) {
+				node_pointer new_node = new NODE<value_type>(value);
+				if (_root == nullptr) {
+					_root = new_node;
+					_nodes_count++;
+					return (iterator(new_node));
+				}
+				node_pointer current_node = _root;
+				while (current_node != nullptr) {
+					if (new_node->paired_data.first < current_node->paired_data.first) {
+						if (current_node->left == nullptr) {
+							current_node->left = new_node;
+							new_node->parent = current_node;
+							_nodes_count++;
+							return (iterator(new_node));
+						}
+						current_node = current_node->left;
+					} else if (new_node->paired_data.first > current_node->paired_data.first) {
+						if (current_node->right == nullptr) {
+							current_node->right = new_node;
+							new_node->parent = current_node;
+							_nodes_count++;
+							return (iterator(new_node));
+						}
+						current_node = current_node->right;
+					} else {
+						return (iterator(current_node));
+					}
+				}
+				return (iterator(new_node));
+			}
+		
+			/**———————————————————————————————————————————————————————————*/
 			/**———————————————————————————————————————————————————————————*/
 			/**———————————————————————————————————————————————————————————*/
 			/**———————————————————————————————————————————————————————————*/

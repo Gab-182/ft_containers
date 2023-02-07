@@ -22,21 +22,41 @@ int main()
 	std::cout << BOLDWHITE << my_tree.size() << RESET << std::endl;
 	std::cout << BOLDWHITE << "Is empty -> " << my_tree.empty() << RESET << std::endl;
 	
-//	my_tree.insert(ft::make_pair(1, "Hello"));
-//	my_tree.insert(ft::make_pair(2, "World"));
-//
+	my_tree.insert(ft::make_pair(1, "A"));
+	my_tree.insert(ft::make_pair(2, "B"));
+	my_tree.insert(ft::make_pair(3, "C"));
+	my_tree.insert(ft::make_pair(4, "D"));
+	my_tree.insert(ft::make_pair(5, "E"));
+	my_tree.insert(ft::make_pair(6, "F"));
+	my_tree.insert(ft::make_pair(7, "G"));
+	my_tree.insert(ft::make_pair(8, "H"));
+	my_tree.insert(ft::make_pair(9, "I"));
+	my_tree.insert(ft::make_pair(10, "G"));
+	my_tree.insert(ft::make_pair(11, "K"));
+	my_tree.insert(ft::make_pair(12, "L"));
+	my_tree.insert(ft::make_pair(13, "M"));
+	my_tree.insert(ft::make_pair(14, "N"));
+	my_tree.insert(ft::make_pair(15, "O"));
+	my_tree.insert(ft::make_pair(16, "P"));
+	my_tree.insert(ft::make_pair(17, "Q"));
+	my_tree.insert(ft::make_pair(18, "R"));
+	my_tree.insert(ft::make_pair(19, "S"));
+	my_tree.insert(ft::make_pair(20, "T"));
+	
+	ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
+	ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
+	
+	// Printing all the tree from the smallest key to the largest key
+	while (it != ite) {
+		std::cout << it->first << " " << it->second << std::endl;
+		it++;
+	}
+	
 	std::cout << BOLDGREEN << "After insert" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
 	
-	std::cout << BOLDWHITE << "Is empty -> " << my_tree.empty() << RESET << std::endl;
 	std::cout << BOLDWHITE << my_tree.size() << RESET << std::endl;
-	
-//	my_tree.clear();
-	
-	std::cout << BOLDGREEN << "After clear" << RESET << std::endl;
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
-	
 	std::cout << BOLDWHITE << "Is empty -> " << my_tree.empty() << RESET << std::endl;
-	std::cout << BOLDWHITE << my_tree.size() << RESET << std::endl;
+	
 	return 0;
 }

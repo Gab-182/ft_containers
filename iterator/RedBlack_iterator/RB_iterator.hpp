@@ -34,7 +34,7 @@ namespace ft {
 			RB_iterator()
 				: _ptr(NULL) {};
 			
-			RB_iterator(const node_pointer& ptr)
+			explicit RB_iterator(const node_pointer& ptr)
 				: _ptr(ptr) {};
 			
 			RB_iterator(const RB_iterator& copy)
@@ -42,6 +42,11 @@ namespace ft {
 		
 			~RB_iterator() {};
 			
+			/**————————————————————————————————[base()]————————————————————————————————————————————*/
+			inline node_pointer
+			base() const {
+				return _ptr;
+			};
 			/**——————————————————————————————[Operator=]———————————————————————————————————————————*/
 			inline RB_iterator&
 			operator=(const RB_iterator& copy) {
@@ -80,9 +85,31 @@ namespace ft {
 						_ptr = _ptr->parent;
 					_ptr = _ptr->parent;
 				}
-				return *this;
+				return (*this);
 			}
-			
+			/**————————————————————————————[Operator++(int)]———————————————————————————————————————*/
+			/**
+			 ** @brief Prefix increment operator, it returns the iterator to the next node.
+			 ** which have the larger key.
+			 ** @return RB_iterator&
+			 * @TODO: check if it is correct, should i return a reference of the iterator? or the iterator itself?
+			 **/
+			inline RB_iterator&
+			operator++(int) {
+				RB_iterator tmp(*this);
+				
+				if (_ptr->right != NULL) {
+					_ptr = _ptr->right;
+					while (_ptr->left != NULL)
+						_ptr = _ptr->left;
+				}
+				else {
+					while (_ptr->parent != NULL && _ptr->parent->right == _ptr)
+						_ptr = _ptr->parent;
+					_ptr = _ptr->parent;
+				}
+				return (tmp);
+			}
 			/**——————————————————————————————[Operator--]——————————————————————————————————————————
 			 * @brief Prefix decrement operator, it returns the iterator to the previous node.
 			 * which have the smaller key.
@@ -103,11 +130,17 @@ namespace ft {
 						_ptr = _ptr->parent;
 					_ptr = _ptr->parent;
 				}
-				return *this;
+				return RB_iterator(_ptr);
 			}
 			
 			/**———————————————————————————————————————————————————————————————————————————————————*/
 	};
+/*=============================================================================================================*/
+	template <class T, class val >
+	inline bool
+	operator!=(const RB_iterator<T, val>& lhs, const RB_iterator<T, val>& rhs) {
+		return (lhs.base() != rhs.base());
+	}
 /*=============================================================================================================*/
 }
 
