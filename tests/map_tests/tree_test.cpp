@@ -36,7 +36,7 @@ int main()
 	my_tree.insert(ft::make_pair(18, "R"));
 	my_tree.insert(ft::make_pair(19, "S"));
 	my_tree.insert(ft::make_pair(20, "T"));
-	
+	std::cout << BOLDYELLOW << "The tree size = " << BOLDRED << my_tree.size() << RESET << std::endl;
 	
 	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
 	std::cout << BOLDGREEN << "Testing Operators: 🧮📐📏" << RESET << std::endl;
@@ -126,6 +126,14 @@ int main()
 					  << RESET << std::endl;
 			it++;
 		}
+	}
+	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Testing count(): " << RESET << std::endl;
+	{
+		std::cout << BOLDYELLOW << "The tree size = " << BOLDRED << my_tree.size() << RESET << std::endl;
+		std::cout << BOLDWHITE << "count(1) = " << BOLDRED << my_tree.count(1) << RESET<< std::endl;
+		std::cout << BOLDWHITE << "count(22) = " << BOLDRED << my_tree.count(22) << RESET<< std::endl;
+		std::cout << BOLDWHITE << "count(23) = " << BOLDRED << my_tree.count(23) << RESET<< std::endl;
 	}
 	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
 

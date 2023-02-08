@@ -191,7 +191,13 @@ namespace ft {
 	operator!=(const RB_iterator<T, val>& lhs, const RB_iterator<T, val>& rhs) {
 		return (lhs.base() != rhs.base());
 	}
-
+	
+	/**——————————————————————————————[Operator(it1 == it2)]———————————————————————————————————————————*/
+	template <class T, class val >
+	inline bool
+	operator==(const RB_iterator<T, val>& lhs, const RB_iterator<T, val>& rhs) {
+		return (lhs.base() == rhs.base());
+	}
 /*=============================================================================================================*/
 }
 

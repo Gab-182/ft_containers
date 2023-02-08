@@ -349,9 +349,9 @@ namespace ft {
 		**/
 		/**———————————————————————————————————————————————————————————*
 		 ** @brief: Searches the container for an element with a key
-		 * equivalent to k and returns an iterator to it if found,
-		 * otherwise it returns an iterator to map::end.
-		 */
+		 ** equivalent to k and returns an iterator to it if found,
+		 ** otherwise it returns an iterator to map::end.
+		 **/
 		iterator find (const key_type& k) {
 			iterator it = begin();
 			iterator ite = end();
@@ -360,9 +360,22 @@ namespace ft {
 					return (it);
 				it++;
 			}
-			return (ite);
+			return end();
 		}
-};
+		/**———————————————————————————————————————————————————————————*
+		 ** @brief: Searches the container for elements with a key
+		 ** equivalent to k and returns the number of matches.
+		 ** Because all elements in a map container are unique,
+		 ** the function can only return 1 (if the element is found)
+		 ** or zero (otherwise).
+		 **/
+		size_type count (const key_type& k) {
+			if (find(k) == end())
+				return (0);
+			return (1);
+		}
+/*=============================================================================================================*/
+	};
 /*=============================================================================================================*/
 }
 /*=============================================================================================================*/
