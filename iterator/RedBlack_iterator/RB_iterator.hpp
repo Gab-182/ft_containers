@@ -10,13 +10,20 @@
 namespace ft {
 /*=============================================================================================================*/
 	/**
-	 * @brief Red-Black Tree Iterator, it is a random access iterator.
-	 * The member types are:
-	 * [node_pointer]: a pointer to the node.
-	 * [value_type]: the type of the value, which is passed as pair<const Key, T>.
-	 * @tparam T
-	 * @tparam val
-	 */
+	 ** @brief Red-Black Tree Iterator, it is a random access iterator.
+	 ** The member types are:
+	 ** [node_pointer]: a pointer to the node.
+	 ** [value_type]: the type of the value, which is passed as pair<const Key, T>.
+	 **
+	 ** Note:
+	 ** ======
+	 ** None of the operator are protected by exceptions,
+	 ** so if new position is (it + n) and new position is
+	 ** outside of the tree, (segmentation fault) gonna happen.
+	 **
+	 ** @tparam T
+	 ** @tparam val
+	 **/
 	template <class T, class val>
 	class RB_iterator {
 		public:
@@ -24,7 +31,7 @@ namespace ft {
 			typedef			val*								value_pointer;
 			typedef			val&								value_reference;
 			typedef			std::ptrdiff_t						difference_type;
-			typedef			ft::random_access_iterator_tag		iterator_category;
+			typedef			ft::bidirectional_iterator_tag		iterator_category;
 			
 		private:
 			node_pointer	_ptr;
@@ -32,15 +39,15 @@ namespace ft {
 		public:
 			/**——————————————————————————[Constructors && Destructor]——————————————————————————————*/
 			RB_iterator()
-				: _ptr(NULL) {};
+				: _ptr(NULL) { };
 			
 			explicit RB_iterator(const node_pointer& ptr)
-				: _ptr(ptr) {};
+				: _ptr(ptr) { };
 			
 			RB_iterator(const RB_iterator& copy)
-				: _ptr(copy._ptr) {};
+				: _ptr(copy._ptr) { };
 		
-			~RB_iterator() {};
+			~RB_iterator() { };
 			
 			/**————————————————————————————————[base()]————————————————————————————————————————————*/
 			inline node_pointer
@@ -91,29 +98,21 @@ namespace ft {
 			/**
 			 ** @brief Prefix increment operator, it returns the iterator to the next node.
 			 ** which have the larger key.
-			 ** @return RB_iterator&
-			 * @TODO: check if it is correct, should i return a reference of the iterator? or the iterator itself?
+			 ** @return RB_iterator
+			 ** Note:
+			 ** =====
+			 ** The operator++(int): return the iterator before increment, not a reference.
 			 **/
-			inline RB_iterator&
+			inline RB_iterator
 			operator++(int) {
 				RB_iterator tmp(*this);
-				
-				if (_ptr->right != NULL) {
-					_ptr = _ptr->right;
-					while (_ptr->left != NULL)
-						_ptr = _ptr->left;
-				}
-				else {
-					while (_ptr->parent != NULL && _ptr->parent->right == _ptr)
-						_ptr = _ptr->parent;
-					_ptr = _ptr->parent;
-				}
+				++(*this);
 				return (tmp);
 			}
 			/**——————————————————————————————[Operator--]——————————————————————————————————————————
-			 * @brief Prefix decrement operator, it returns the iterator to the previous node.
-			 * which have the smaller key.
-			 * @return RB_iterator&
+			 ** @brief Prefix decrement operator, it returns the iterator to the previous node.
+			 ** which have the smaller key.
+			 ** @return RB_iterator&
 			 **/
 			inline RB_iterator&
 			operator--() {
@@ -130,17 +129,69 @@ namespace ft {
 						_ptr = _ptr->parent;
 					_ptr = _ptr->parent;
 				}
-				return RB_iterator(_ptr);
+				return (*this);
 			}
-			
-			/**———————————————————————————————————————————————————————————————————————————————————*/
+		
+		/**——————————————————————————————[Operator--(int)]—————————————————————————————————————————
+		 ** @brief Prefix decrement operator, it returns the iterator to the previous node.
+		 ** which have the smaller key.
+		 ** @return RB_iterator
+		 ** Note:
+		 ** =====
+		 ** The operator++(int): return the iterator before increment, not a reference.
+		 **/
+		inline RB_iterator
+		operator--(int) {
+			RB_iterator tmp(*this);
+			--(*this);
+			return (tmp);
+		}
+		
+		/**——————————————————————————————[Operator+=]———————————————————————————————————————————*/
+		inline RB_iterator&
+		operator+=(difference_type n) {
+			if (n < 0)
+				return (*this -= -n);
+			while (n--)
+				++(*this);
+			return (*this);
+		}
+		
+		/**——————————————————————————————[Operator+]———————————————————————————————————————————*/
+		inline RB_iterator
+		operator+(difference_type n) const {
+			RB_iterator tmp(*this);
+			tmp += n;
+			return (tmp);
+		}
+		
+		/**——————————————————————————————[Operator-=]———————————————————————————————————————————*/
+		inline RB_iterator&
+		operator-=(difference_type n) {
+			if (n < 0)
+				return (*this += -n);
+			while (n--)
+				--(*this);
+			return (*this);
+		}
+		
+		/**——————————————————————————————[Operator-]———————————————————————————————————————————*/
+		inline RB_iterator
+		operator-(difference_type n) const {
+			RB_iterator tmp(*this);
+			tmp -= n;
+			return (tmp);
+		}
 	};
+
 /*=============================================================================================================*/
+	/**——————————————————————————————[Operator(it1 != it2)]———————————————————————————————————————————*/
 	template <class T, class val >
 	inline bool
 	operator!=(const RB_iterator<T, val>& lhs, const RB_iterator<T, val>& rhs) {
 		return (lhs.base() != rhs.base());
 	}
+
 /*=============================================================================================================*/
 }
 

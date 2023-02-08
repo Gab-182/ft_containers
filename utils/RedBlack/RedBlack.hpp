@@ -143,10 +143,10 @@ namespace ft {
 			}
 		
 			/**———————————————————————————————————————————————————————————*
-			 * @brief Returns the maximum number of nodes the tree can hold,
-			 * and we can get that from the allocator object instance.
-			 * @return
-			 */
+			 ** @brief Returns the maximum number of nodes the tree can hold,
+			 ** and we can get that from the allocator object instance.
+			 ** @return
+			 **/
 			size_type
 			max_size() const {
 				return (_alloc_data.max_size());
@@ -162,9 +162,9 @@ namespace ft {
 			**  🟢 4) rend()
 			**/
 			/**———————————————————————————————————————————————————————————*
-			 * @brief Returns an iterator to the first element in the tree,
-			 * which is the left most node.
-			 */
+			 ** @brief Returns an iterator to the first element in the tree,
+			 ** which is the left most node.
+			 **/
 			inline iterator
 			begin() {
 				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
@@ -172,8 +172,8 @@ namespace ft {
 			}
 			
 			/**———————————————————————————————————————————————————————————*
-			 * @brief Returns an iterator to the first element in the tree.
-			 */
+			 ** @brief Returns an iterator to the first element in the tree.
+			 **/
 			inline const_iterator
 			begin() const {
 				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
@@ -181,17 +181,18 @@ namespace ft {
 			}
 			
 			/**———————————————————————————————————————————————————————————*
-			 * @TODO: end() is not working properly, fix it.
-			 **				The original end() will return an iterator to the place after the last element in the tree,
-			 **				but mine will return an iterator to the last element in the tree.
-			 **
 			 ** @brief Returns an iterator to the last element in the tree,
 			 ** which is the right most node.
+			 ** Note:
+			 ** ======
+			 ** Referencing this iterator will result in undefined behavior,
+			 ** cause it's pointing ti the end of the tree (leaf).
 			 **/
 			 
 			inline iterator
 			end() {
 				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
+				MaxNode = MaxNode->right;
 				return (iterator(MaxNode));
 			}
 		
@@ -249,10 +250,10 @@ namespace ft {
 			/*——————————————————————————————————————————————————————————————————————————————————————*
 			——————————————————————————————————[Elements access]——————————————————————————————————————
 			—————————————————————————————————————————————————————————————————————————————————————————
-			**
-			**  🟢 1) operator[]
-			**  🟢 2) at
-			**/
+			 **
+			 **  🟢 1) operator[]
+			 **  🟢 2) at
+			 **/
 			/**———————————————————————————————————————————————————————————
 			 ** @brief
 			 ** - If k matches the key of an element in the container,
@@ -293,11 +294,11 @@ namespace ft {
 			 **
 			 ** @param val The paired_data that the new node will hold.
 			 ** @return void
-			 **
 			 **/
 			inline iterator
 			insert(const value_type& value ) {
-				node_pointer new_node = new NODE<value_type>(value);
+				node_pointer new_node = _alloc_node.allocate(sizeof(node));
+				_alloc_node.construct(new_node, node(value));
 				if (_root == nullptr) {
 					_root = new_node;
 					_nodes_count++;

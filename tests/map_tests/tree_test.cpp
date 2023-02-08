@@ -46,12 +46,53 @@ int main()
 	ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
 	ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
 	
-	// Printing all the tree from the smallest key to the largest key
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
+	// Testing (operator++)
+	std::cout << BOLDWHITE << "Testing Operator++" << RESET << std::endl;
+	std::cout << it->first << " " << it->second << std::endl;
+	it++;
+	std::cout << it->first << " " << it->second << std::endl;
+	it++;
+	std::cout << it->first << " " << it->second << std::endl;
+	it++;
+	std::cout << it->first << " " << it->second << std::endl;
+	it++;
+	std::cout << it->first << " " << it->second << std::endl;
+	
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
+	// Testing (operator--)
+	std::cout << BOLDWHITE << "Testing Operator--" << RESET << std::endl;
+	it--;
+	std::cout << it->first << " " << it->second << std::endl;
+	it+=5;
+	std::cout << it->first << " " << it->second << std::endl;
+	it-=5;
+	std::cout << it->first << " " << it->second << std::endl;
+	
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
+	std::cout << BOLDWHITE << "Testing Operator+" << RESET << std::endl;
+	// Testing (operator+)
+	it = it+5;
+	std::cout << it->first << " " << it->second << std::endl;
+	
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
+	// Testing (operator-)
+	std::cout << BOLDWHITE << "Testing Operator-" << RESET << std::endl;
+	it = it-2;
+	std::cout << it->first << " " << it->second << std::endl;
+	
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
+	it = my_tree.begin();
+	ite = my_tree.end();
+	
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
 	while (it != ite) {
-		std::cout << it->first << " " << it->second << std::endl;
+		std::cout << BOLDYELLOW << "Key = " << BOLDWHITE <<it->first << ", "
+				<< BOLDYELLOW << "Value = " << BOLDWHITE <<it->second
+				<< RESET << std::endl;
 		it++;
 	}
-	
+	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
 	std::cout << BOLDGREEN << "After insert" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
 	

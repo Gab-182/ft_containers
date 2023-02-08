@@ -62,7 +62,7 @@ namespace ft {
 		 */
 		static node_pointer
 		get_minimum(node_pointer current) {
-			while (current->left != NULL)
+			while (current->left != nullptr)
 				current = current->left;
 			return current;
 		}
@@ -72,7 +72,7 @@ namespace ft {
 		 */
 		static node_pointer
 		get_maximum(node_pointer current) {
-			while (current->right != NULL)
+			while (current->right != nullptr)
 				current = current->right;
 			return current;
 		}
