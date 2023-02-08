@@ -26,20 +26,17 @@ int main() {
 	my_map.insert(std::make_pair(19, "S"));
 	my_map.insert(std::make_pair(20, "T"));
 	
+	my_map[1] = "AA";
+	my_map[21] = "asd";
+	my_map[22] = "asdasd";
 	
 	std::map<int, std::string>::iterator it = my_map.begin();
 	std::map<int, std::string>::iterator ite = my_map.end();
 	
+	ite = my_map.find(23);
 	while (it != ite) {
 		std::cout << it->first << " " << it->second << std::endl;
 		it++;
 	}
 	return 0;
 }
-
-/**
- * operator ++:
- *
-* The bigger node gonna be on the right:
- * if the right is null-> then the bigger node (key) is the parrent.
-*/

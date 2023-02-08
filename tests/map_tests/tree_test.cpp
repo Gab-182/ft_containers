@@ -15,13 +15,7 @@ int main()
 	// Create a tree with a custom compare function and a custom allocator
 	ft::RedBlack<int, std::string> my_tree;
 	
-	/**———————————————————————————————————[Test]—————————————————————————————————————*/
-	std::cout << BOLDGREEN << "Before insert" << RESET << std::endl;
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
-	
-	std::cout << BOLDWHITE << my_tree.size() << RESET << std::endl;
-	std::cout << BOLDWHITE << "Is empty -> " << my_tree.empty() << RESET << std::endl;
-	
+	/**—————————————————————————[Test Red Black tree]————————————————————————————*/
 	my_tree.insert(ft::make_pair(1, "A"));
 	my_tree.insert(ft::make_pair(2, "B"));
 	my_tree.insert(ft::make_pair(3, "C"));
@@ -43,61 +37,98 @@ int main()
 	my_tree.insert(ft::make_pair(19, "S"));
 	my_tree.insert(ft::make_pair(20, "T"));
 	
-	ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
-	ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
 	
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
-	// Testing (operator++)
-	std::cout << BOLDWHITE << "Testing Operator++" << RESET << std::endl;
-	std::cout << it->first << " " << it->second << std::endl;
-	it++;
-	std::cout << it->first << " " << it->second << std::endl;
-	it++;
-	std::cout << it->first << " " << it->second << std::endl;
-	it++;
-	std::cout << it->first << " " << it->second << std::endl;
-	it++;
-	std::cout << it->first << " " << it->second << std::endl;
-	
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
-	// Testing (operator--)
-	std::cout << BOLDWHITE << "Testing Operator--" << RESET << std::endl;
-	it--;
-	std::cout << it->first << " " << it->second << std::endl;
-	it+=5;
-	std::cout << it->first << " " << it->second << std::endl;
-	it-=5;
-	std::cout << it->first << " " << it->second << std::endl;
-	
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
-	std::cout << BOLDWHITE << "Testing Operator+" << RESET << std::endl;
-	// Testing (operator+)
-	it = it+5;
-	std::cout << it->first << " " << it->second << std::endl;
-	
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
-	// Testing (operator-)
-	std::cout << BOLDWHITE << "Testing Operator-" << RESET << std::endl;
-	it = it-2;
-	std::cout << it->first << " " << it->second << std::endl;
-	
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
-	it = my_tree.begin();
-	ite = my_tree.end();
-	
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
-	while (it != ite) {
-		std::cout << BOLDYELLOW << "Key = " << BOLDWHITE <<it->first << ", "
-				<< BOLDYELLOW << "Value = " << BOLDWHITE <<it->second
-				<< RESET << std::endl;
+	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Testing Operators: 🧮📐📏" << RESET << std::endl;
+	{
+		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
+		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
+
+		// Testing (operator++)
+		std::cout << BOLDWHITE << "Testing Operator++" << RESET << std::endl;
+		std::cout << it->first << " " << it->second << std::endl;
 		it++;
+		std::cout << it->first << " " << it->second << std::endl;
+		it++;
+		std::cout << it->first << " " << it->second << std::endl;
+		it++;
+		std::cout << it->first << " " << it->second << std::endl;
+		it++;
+		std::cout << it->first << " " << it->second << std::endl;
+
+		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
+		// Testing (operator--)
+		std::cout << BOLDWHITE << "Testing Operator--" << RESET << std::endl;
+		it--;
+		std::cout << it->first << " " << it->second << std::endl;
+		it += 5;
+		std::cout << it->first << " " << it->second << std::endl;
+		it -= 5;
+		std::cout << it->first << " " << it->second << std::endl;
+
+		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
+		std::cout << BOLDWHITE << "Testing Operator+" << RESET << std::endl;
+		// Testing (operator+)
+		it = it + 5;
+		std::cout << it->first << " " << it->second << std::endl;
+
+		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
+		// Testing (operator-)
+		std::cout << BOLDWHITE << "Testing Operator-" << RESET << std::endl;
+		it = it - 2;
+		std::cout << it->first << " " << it->second << std::endl;
+
+		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
+		it = my_tree.begin();
+		ite = my_tree.end();
+		while (it != ite) {
+			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
+					  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
+					  << RESET << std::endl;
+			it++;
+		}
 	}
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
-	std::cout << BOLDGREEN << "After insert" << RESET << std::endl;
-	std::cout << BOLDYELLOW << "----------------------------------------" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Testing access operator[]: " << RESET << std::endl;
+	{
+		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
+		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
+		my_tree[1]= "AA";
+		my_tree[20] = "TT";
+		my_tree[21] = "OUT";
+		my_tree[22] = "REALLY OUT";
 	
-	std::cout << BOLDWHITE << my_tree.size() << RESET << std::endl;
-	std::cout << BOLDWHITE << "Is empty -> " << my_tree.empty() << RESET << std::endl;
+		while (it != ite) {
+			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
+					  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
+					  << RESET << std::endl;
+			it++;
+		}
+	}
+	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Testing find(): " << RESET << std::endl;
+	{
+		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
+		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
+		my_tree[1]= "AA";
+		my_tree[20] = "TT";
+		my_tree[21] = "OUT";
+		my_tree[22] = "REALLY OUT";
+		
+		it = my_tree.find(20);
+		
+// Here it should return end() iterator.
+//		it = my_tree.find(23);
+		
+		while (it != ite) {
+			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
+					  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
+					  << RESET << std::endl;
+			it++;
+		}
+	}
+	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
+
 	
 	return 0;
 }
