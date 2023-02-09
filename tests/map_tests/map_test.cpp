@@ -13,22 +13,17 @@ int main() {
 	my_map.insert(std::make_pair(6, "F"));
 	my_map.insert(std::make_pair(7, "G"));
 	my_map.insert(std::make_pair(8, "H"));
-	my_map.insert(std::make_pair(9, "I"));
-	my_map.insert(std::make_pair(10, "G"));
-	my_map.insert(std::make_pair(11, "K"));
-	my_map.insert(std::make_pair(12, "L"));
-	my_map.insert(std::make_pair(13, "M"));
-	my_map.insert(std::make_pair(14, "N"));
-	my_map.insert(std::make_pair(15, "O"));
+
+	
 	my_map.insert(std::make_pair(16, "P"));
 	my_map.insert(std::make_pair(17, "Q"));
 	my_map.insert(std::make_pair(18, "R"));
 	my_map.insert(std::make_pair(19, "S"));
 	my_map.insert(std::make_pair(20, "T"));
 	
-	std::map<int, std::string>::iterator it = my_map.begin();
-	std::map<int, std::string>::iterator ite = my_map.end();
+	my_map.equal_range(4);
 	
-	std::cout << my_map.count(20) << std::endl;
+//	std::cout << ite->first << " " << ite->second << std::endl;
+	
 	return 0;
 }

@@ -55,7 +55,8 @@ namespace ft {
 		NODE(T paired_data)
 				: paired_data(paired_data), height(1),
 				parent(NULL), left(NULL),
-				right(NULL), color(RED), is_nil(false) { }
+				right(NULL), color(RED), is_nil(false) {
+		}
 		
 		/**———————————————————————————————[ Get Minimum ]————————————————————————————————*
 		 * @brief Get the minimum node in the subtree, which is the far left node.

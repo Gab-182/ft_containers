@@ -192,8 +192,7 @@ namespace ft {
 			inline iterator
 			end() {
 				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-				MaxNode = MaxNode->right;
-				return (iterator(MaxNode));
+				return (iterator(MaxNode->right));
 			}
 		
 			/**———————————————————————————————————————————————————————————*
@@ -204,7 +203,7 @@ namespace ft {
 			inline const_iterator
 			end() const {
 				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-				return (const_iterator(MaxNode));
+				return (const_iterator(MaxNode->right));
 			}
 			
 			/**———————————————————————————————————————————————————————————*
@@ -352,7 +351,8 @@ namespace ft {
 		 ** equivalent to k and returns an iterator to it if found,
 		 ** otherwise it returns an iterator to map::end.
 		 **/
-		iterator find (const key_type& k) {
+		iterator
+		find (const key_type& k) {
 			iterator it = begin();
 			iterator ite = end();
 			while (it != ite) {
@@ -369,10 +369,68 @@ namespace ft {
 		 ** the function can only return 1 (if the element is found)
 		 ** or zero (otherwise).
 		 **/
-		size_type count (const key_type& k) {
+		size_type
+		count (const key_type& k) {
 			if (find(k) == end())
 				return (0);
 			return (1);
+		}
+		
+		/**———————————————————————————————————————————————————————————*
+		 ** @brief: Returns an iterator pointing to the first element
+		 ** in the container whose key is not considered to go before (k)
+		 ** (i.e., either it is equivalent or goes after).
+		 ** or map::end if all keys are considered to go before k.
+		 **/
+		iterator
+		lower_bound (const key_type& k) {
+			iterator find_k = find(k);
+			iterator it = begin();
+			
+			if (find_k != end())
+				return (find_k);
+			for (;it != end(); it++) {
+				if (it->first > k)
+					return it;
+			}
+			return end();
+		}
+		/**———————————————————————————————————————————————————————————*
+		 ** @brief: Returns an iterator pointing to the first element
+		 ** in the container whose key is considered to go after k.
+		 ** or map::end if no keys are considered to go after k.
+		 **/
+		iterator
+		upper_bound (const key_type& k) {
+			iterator it = begin();
+	
+			for (;it != end(); it++) {
+				if (it->first > k)
+					return it;
+			}
+			return end();
+		}
+		
+		/**———————————————————————————————————————————————————————————*
+		 ** @brief  Returns the bounds of a range that includes all the
+		 * elements in the container which have a key equivalent to k.
+		 * Because the elements in a map container have unique keys,
+		 * the range returned will contain a single element at most.
+		 * If no matches are found, the range returned has a length of zero,
+		 * with both iterators pointing to the first element that has a key
+		 * considered to go after k according to the container's internal
+		 * comparison object (key_compare).
+		 **/
+		pair<iterator,iterator>
+		equal_range (const key_type& k) {
+			iterator it_start = find(k);
+			iterator it_end = find(k);
+			
+			if (it_end == it_start == end()) {
+				it_start = upper_bound(k);
+				it_end = upper_bound(k);
+			}
+			return (ft::make_pair(it_start, it_end));
 		}
 /*=============================================================================================================*/
 	};
