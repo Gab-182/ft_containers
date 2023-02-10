@@ -2,6 +2,14 @@
 # include <iostream>
 # include <string>
 # include <iterator>
+/*===============================================================================*/
+
+# define BOLDWHITE		"\033[1m\033[37m"		/* Bold White */
+# define RESET			"\033[0m"				/* Reset the color */
+# define BOLDGREEN		"\033[1m\033[32m"		/* Bold Green */
+# define BOLDYELLOW		"\033[1m\033[33m"		/* Bold Yellow */
+# define BOLDRED		"\033[1m\033[31m"		/* Bold Red */
+/*===============================================================================*/
 
 int main() {
 	std::map<int, std::string> my_map;
@@ -21,9 +29,8 @@ int main() {
 	my_map.insert(std::make_pair(19, "S"));
 	my_map.insert(std::make_pair(20, "T"));
 	
-	my_map.equal_range(4);
-	
-//	std::cout << ite->first << " " << ite->second << std::endl;
+	std::map<int, std::string>::iterator it = my_map.begin();
+	std::map<int, std::string>::iterator ite = my_map.end();
 	
 	return 0;
 }

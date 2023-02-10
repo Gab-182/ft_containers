@@ -301,6 +301,7 @@ namespace ft {
 			insert(const value_type& value ) {
 				node_pointer new_node = _alloc_node.allocate(sizeof(node));
 				_alloc_node.construct(new_node, node(value));
+				
 				if (_root == nullptr) {
 					_root = new_node;
 					_nodes_count++;
@@ -402,9 +403,7 @@ namespace ft {
 		 **/
 		iterator
 		upper_bound (const key_type& k) {
-			iterator it = begin();
-	
-			for (;it != end(); it++) {
+			for (iterator it = begin(); it != end(); it++) {
 				if (it->first > k)
 					return it;
 			}
@@ -426,7 +425,7 @@ namespace ft {
 			iterator it_start = find(k);
 			iterator it_end = find(k);
 			
-			if (it_end == it_start == end()) {
+			if (it_start == end()) {
 				it_start = upper_bound(k);
 				it_end = upper_bound(k);
 			}

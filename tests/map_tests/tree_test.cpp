@@ -189,7 +189,25 @@ int main()
 //				  << RESET << std::endl;
 	}
 	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
+	std::cout << BOLDGREEN << "Testing equal_range(): " << RESET << std::endl;
+	{
+		ft::pair<ft::RedBlack<int, std::string>::iterator, ft::RedBlack<int, std::string>::iterator>
+				equal_range1 = my_tree.equal_range(21);
 
+		std::cout << BOLDYELLOW << "First iterator in the range" << std::endl;
+		std::cout << BOLDYELLOW << "The key= "
+			<< BOLDWHITE << equal_range1.first->first
+			<< ",The value= " << equal_range1.first->second
+			<< std::endl;
+		
+		std::cout << BOLDYELLOW << "Second iterator in the range" << std::endl;
+		std::cout << BOLDYELLOW << "The key= "
+				  << BOLDWHITE << equal_range1.first->first
+				  << BOLDYELLOW<< ",The value= "
+				  << BOLDWHITE << equal_range1.first->second
+				  << std::endl;
+	}
+	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
 	
 	return 0;
 }
