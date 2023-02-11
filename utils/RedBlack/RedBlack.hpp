@@ -114,6 +114,7 @@ namespace ft {
 					_nodes_count(copy._nodes_count) { }
 			/**———————————————————————————————————[Destructor]—————————————————————————————————————*/
 			~RedBlack() {
+//				clear();
 			}
 		
 			/*——————————————————————————————————————————————————————————————————————————————————————*
@@ -319,11 +320,14 @@ namespace ft {
 				_alloc_node.construct(new_node, node(value));
 				/**
 				** [1]
-				** If the tree is empty (_root == nullptr), the new node is set as the root of the tree,
-				** and the count of nodes in the tree is increased. An iterator pointing to the new node is returned.
+				** If the tree is empty (_root == nullptr),
+				** the new node is set as the root of the tree, and changing the node color to Black.
+				** and the count of nodes in the tree is increased.
+				** An iterator pointing to the new node is returned.
 				**/
 				if (_root == nullptr) {
 					_root = new_node;
+					_root->change_color();
 					_nodes_count++;
 					return (ft::make_pair(iterator(new_node), true));
 				}
@@ -337,12 +341,14 @@ namespace ft {
 					/**
 					 ** [2]
 					 ** If the value of the new node is less than the value of the current node,
-					 ** the function moves to the left child of the current node.
+					 ** the function moves to the left child of the current node,
+					 ** and calculate its height.
 					 */
 					if (new_node->paired_data.first < current_node->paired_data.first) {
 						if (current_node->left == nullptr) {
 							current_node->left = new_node;
 							new_node->parent = current_node;
+							new_node->height = new_node->parent->height + 1;
 							_nodes_count++;
 							return (ft::make_pair(iterator(new_node), true));
 						}
@@ -350,12 +356,14 @@ namespace ft {
 					}
 					/**
 					 ** [3]
-					 ** If the value of the new node is greater, the function moves to the right child.
+					 ** If the value of the new node is greater,
+					 * the function moves to the right child, and calculate its height.
 					 **/
 					else if (new_node->paired_data.first > current_node->paired_data.first) {
 						if (current_node->right == nullptr) {
 							current_node->right = new_node;
 							new_node->parent = current_node;
+							new_node->height = new_node->parent->height + 1;
 							_nodes_count++;
 							return (ft::make_pair(iterator(new_node), true));
 						}
@@ -380,7 +388,20 @@ namespace ft {
 			/**———————————————————————————————————————————————————————————*/
 			
 			/**———————————————————————————————————————————————————————————*/
-			
+			/**
+			 * @TODO: Rebalanced the tree before implementing clear function.
+			 */
+//			void
+//			clear() {
+//				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
+//				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
+//
+//				while (MinNode->paired_data.first != MaxNode->paired_data.first) {
+//					std::cout << MinNode->paired_data.first << std::endl;
+//					MinNode = MinNode->parent;
+//				}
+//				_nodes_count = 0;
+//			}
 			/*——————————————————————————————————————————————————————————————————————————————————————*
 			———————————————————————————————————————[Operations]——————————————————————————————————————
 			—————————————————————————————————————————————————————————————————————————————————————————
@@ -476,9 +497,36 @@ namespace ft {
 				return (ft::make_pair(it_start, it_end));
 			}
 /*=============================================================================================================*/
-	};
+			/**———————————————————————————————————————————————————————————
+			 ** @brief:  Returns a constant _root of the tree.
+			 **/
+			node_pointer
+			get_root() const {
+				return _root;
+			}
+			
+			/**———————————————————————————————————————————————————————————
+			 ** @brief: Prints the tree in order.
+			 **/
+			void
+			Inorder(node_pointer root) {
+				if (!root) {
+					return;
+				}
+				Inorder(root->left);
+				std::cout
+				<< " Key = [" << root->paired_data.first << "]"
+				<< "  |  Value = [" << root->paired_data.second << "]"
+				<< "  |  Color = [" << root->color << "]"
+				<< "  |  Height = [" << root->height << "]"
+				<< std::endl;
+				Inorder(root->right);
+			}
+			
 /*=============================================================================================================*/
-}
+	}; // RED_BLACK_TREE
+/*=============================================================================================================*/
+} // NAMESPACE FT
 /*=============================================================================================================*/
 
 #endif //REDBLACK_HPP

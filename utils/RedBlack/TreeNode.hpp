@@ -53,10 +53,10 @@ namespace ft {
 		 * @param paired_data
 		 */
 		NODE(T paired_data)
-				: paired_data(paired_data), height(1),
+				: paired_data(paired_data),
 				parent(NULL), left(NULL),
-				right(NULL), color(RED), is_nil(false) {
-		}
+				right(NULL), height(1),
+				color(RED), is_nil(false) { }
 		
 		/**———————————————————————————————[ Get Minimum ]————————————————————————————————*
 		 * @brief Get the minimum node in the subtree, which is the far left node.
@@ -69,8 +69,8 @@ namespace ft {
 		}
 		
 		/**———————————————————————————————[ Get Maximum ]————————————————————————————————*
-		 * @brief Get the maximum node in the subtree, which is the far right node.
-		 */
+		 *** @brief Get the maximum node in the subtree, which is the far right node.
+		 ***/
 		static node_pointer
 		get_maximum(node_pointer current) {
 			while (current->right != nullptr)
@@ -79,8 +79,8 @@ namespace ft {
 		}
 		
 		/**———————————————————————————————[ Change Color ]————————————————————————————————*
-		 * @brief Change the color of the node, if it's red, make it black, and vice versa.
-		 */
+		 ** @brief Change the color of the node, if it's red, make it black, and vice versa.
+		 **/
 		void
 		change_color() {
 			if (this->color == RED)
