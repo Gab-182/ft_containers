@@ -275,8 +275,19 @@ namespace ft {
 				return (it->second);
 			}
 
-			/**———————————————————————————————————————————————————————————*/
-
+			/**———————————————————————————————————————————————————————————
+			 ** @brief Returns a reference to the mapped value of the element identified with key k.
+			 * If k does not match the key of any element in the container,
+			 * the function throws an out_of_range exception.
+			 *
+			 **/
+			inline mapped_type&
+			at (const key_type& k) {
+				iterator it = find(k);
+				if (it == end())
+					throw std::out_of_range("map::at:  key not found");
+				return (it->second);
+			}
 			/*——————————————————————————————————————————————————————————————————————————————————————*
 			———————————————————————————————————————[Modifies]————————————————————————————————————————
 			—————————————————————————————————————————————————————————————————————————————————————————
@@ -294,6 +305,11 @@ namespace ft {
 			 ** the value is created by ft::make_pair(key, mapped_type()) or if the value is already
 			 ** created, it will be passed by reference, to avoid copying the value.
 			 **
+			 ** Once the correct location for the new node is found:
+			 **		## set the parent of the new node to the current node,
+			 **		## set the appropriate child of the current node to the new node.
+			 **		## increases the count of nodes in the tree.
+			 **
 			 ** @param val The paired_data that the new node will hold.
 			 ** @return void
 			 **/
@@ -301,14 +317,28 @@ namespace ft {
 			insert(const value_type& value ) {
 				node_pointer new_node = _alloc_node.allocate(sizeof(node));
 				_alloc_node.construct(new_node, node(value));
-				
+				/**
+				** [1]
+				** If the tree is empty (_root == nullptr), the new node is set as the root of the tree,
+				** and the count of nodes in the tree is increased. An iterator pointing to the new node is returned.
+				**/
 				if (_root == nullptr) {
 					_root = new_node;
 					_nodes_count++;
 					return (iterator(new_node));
 				}
+				/**
+				 ** If the tree is not empty, we start at the root of the tree
+				 ** and iterates down and compare the value of the new node
+				 ** with the value of the current node:
+				 **/
 				node_pointer current_node = _root;
 				while (current_node != nullptr) {
+					/**
+					 ** [2]
+					 ** If the value of the new node is less than the value of the current node,
+					 ** the function moves to the left child of the current node.
+					 */
 					if (new_node->paired_data.first < current_node->paired_data.first) {
 						if (current_node->left == nullptr) {
 							current_node->left = new_node;
@@ -317,7 +347,12 @@ namespace ft {
 							return (iterator(new_node));
 						}
 						current_node = current_node->left;
-					} else if (new_node->paired_data.first > current_node->paired_data.first) {
+					}
+					/**
+					 ** [3]
+					 ** If the value of the new node is greater, the function moves to the right child.
+					 **/
+					else if (new_node->paired_data.first > current_node->paired_data.first) {
 						if (current_node->right == nullptr) {
 							current_node->right = new_node;
 							new_node->parent = current_node;
@@ -325,13 +360,19 @@ namespace ft {
 							return (iterator(new_node));
 						}
 						current_node = current_node->right;
-					} else {
+					}
+					/**
+					 ** [4]
+					 ** If the value of the new node is equal to the value of the current node,
+					 ** the function returns an iterator pointing to the current node.
+					 **/
+					else {
 						return (iterator(current_node));
 					}
 				}
 				return (iterator(new_node));
 			}
-		
+			
 			/**———————————————————————————————————————————————————————————*/
 			/**———————————————————————————————————————————————————————————*/
 			/**———————————————————————————————————————————————————————————*/

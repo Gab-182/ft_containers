@@ -208,6 +208,25 @@ int main()
 				  << std::endl;
 	}
 	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
-	
+	std::cout << BOLDGREEN << "Testing access at(): " << RESET << std::endl;
+	try {
+		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
+		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
+		my_tree.at(1)= "AAA";
+		my_tree.at(20) = "TTT";
+		my_tree.at(21) = "OUT.OUT";
+		my_tree.at(22) = "REALLY OUT > Really";
+		my_tree.at(43) = "OUT."; // This will cause an exception, key not found.
+		
+		while (it != ite) {
+			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
+						<< BOLDYELLOW << "Value = " << BOLDWHITE << it->second
+						<< RESET << std::endl;
+			it++;
+		}
+	} catch (std::exception &e) {
+		std::cout << BOLDRED << e.what() << RESET << std::endl;
+	}
+	std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
 	return 0;
 }

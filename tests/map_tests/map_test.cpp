@@ -32,5 +32,15 @@ int main() {
 	std::map<int, std::string>::iterator it = my_map.begin();
 	std::map<int, std::string>::iterator ite = my_map.end();
 	
+	try {
+		my_map.at(1) = "AA";
+		my_map.at(2) = "AA";
+		my_map.at(19) = "AA";
+		my_map.at(20) = "AA";
+		my_map.at(21) = "AA";
+	} catch (std::exception(&e)) {
+		std::cout << BOLDRED << e.what() << std::endl;
+	}
+	
 	return 0;
 }
