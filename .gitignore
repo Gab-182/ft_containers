@@ -34,3 +34,6 @@ venv
 MY_TREE.dSYM
 .idea
 a.out
+tree_test.dSYM
+tree_test
+map_test
