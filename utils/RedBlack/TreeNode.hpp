@@ -40,27 +40,74 @@ namespace ft {
 		bool			is_nil;
 		
 		/**————————————————————————————[ Default Constructor ]———————————————————————————*
-		 * @brief Default constructor, the node is going to be a leaf node.
-		 * and the default color will be black.
-		 */
+		 ** @brief Default constructor, the node is going to be a leaf node.
+		 ** and the default color will be black.
+		 **/
 		NODE()
 				: paired_data(), height(0),
 				parent(NULL), left(NULL),
-				right(NULL), color(BLACK), is_nil(true){ }
+				right(NULL), color(BLACK), is_nil(true) { }
 		
 		/**———————————————————————————————[ Constructor ]————————————————————————————————*
-		 * @brief Parametrized Constructor, the default color will be red.
-		 * @param paired_data
-		 */
+		 ** @brief Parametrized Constructor, the default color will be red.
+		 ** @param paired_data
+		 **/
 		NODE(T paired_data)
 				: paired_data(paired_data),
 				parent(NULL), left(NULL),
 				right(NULL), height(1),
 				color(RED), is_nil(false) { }
 		
+		/**———————————————————————————————[ Grand Parent ]———————————————————————————————*
+		 ** @brief Get the grand parent for the node.
+		 **/
+		node_pointer
+		grandparent() {
+			// if the node is the tree root.
+			if (parent == nullptr)
+				return nullptr;
+			// else return the parent of the parent.
+			return parent->parent;
+		}
+		
+		/**—————————————————————————————————[ Uncle ]————————————————————————————————————*
+		 ** @brief Get the Uncle for the node.
+		 **/
+		node_pointer
+		uncle() {
+			node_pointer grand_parent = grandparent();
+			
+			// if the parent is the tree root, then there is no uncle.
+			if (grand_parent == nullptr)
+				return nullptr;
+			// if the parent is the left child of the grandparent,
+			// then the uncle is the right child for the grandparent.
+			if (parent == grand_parent->left)
+				return grand_parent->right;
+			// if the parent is the right child of the grandparent,
+			// then the uncle is the left child for the grandparent.
+			else
+				return grand_parent->left;
+		}
+		
+		/**—————————————————————————————————[ Brother ]————————————————————————————————————*
+		 ** @brief Get the brother for the node.
+		 **/
+		 node_pointer
+		 brother() {
+			// if the node is tree root
+			if (parent == nullptr)
+		 		return nullptr;
+			// if the node is the left child
+		 	if (this == parent->left)
+		 		return parent->right;
+			// if the node is the right child
+		 	else
+		 		return parent->left;
+		 }
 		/**———————————————————————————————[ Get Minimum ]————————————————————————————————*
-		 * @brief Get the minimum node in the subtree, which is the far left node.
-		 */
+		 ** @brief Get the minimum node in the subtree, which is the far left node.
+		 **/
 		static node_pointer
 		get_minimum(node_pointer current) {
 			while (current->left != nullptr)
@@ -69,8 +116,8 @@ namespace ft {
 		}
 		
 		/**———————————————————————————————[ Get Maximum ]————————————————————————————————*
-		 *** @brief Get the maximum node in the subtree, which is the far right node.
-		 ***/
+		 ** @brief Get the maximum node in the subtree, which is the far right node.
+		 **/
 		static node_pointer
 		get_maximum(node_pointer current) {
 			while (current->right != nullptr)
@@ -88,7 +135,7 @@ namespace ft {
 			else
 				this->color = RED;
 		}
-		
+/*=============================================================================================================*/
 	};//struct NODE
 	
 /*=============================================================================================================*/
