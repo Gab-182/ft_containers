@@ -37,7 +37,6 @@ namespace ft {
 		node_pointer	left;
 		node_pointer	right;
 		Color 			color;
-		bool			is_nil;
 		
 		/**————————————————————————————[ Default Constructor ]———————————————————————————*
 		 ** @brief Default constructor, the node is going to be a leaf node.
@@ -46,7 +45,7 @@ namespace ft {
 		NODE()
 				: paired_data(), height(0),
 				parent(NULL), left(NULL),
-				right(NULL), color(BLACK), is_nil(true) { }
+				right(NULL), color(BLACK) { }
 		
 		/**———————————————————————————————[ Constructor ]————————————————————————————————*
 		 ** @brief Parametrized Constructor, the default color will be red.
@@ -56,7 +55,7 @@ namespace ft {
 				: paired_data(paired_data),
 				parent(NULL), left(NULL),
 				right(NULL), height(1),
-				color(RED), is_nil(false) { }
+				color(RED) { }
 		
 		/**———————————————————————————————[ Grand Parent ]———————————————————————————————*
 		 ** @brief Get the grand parent for the node.

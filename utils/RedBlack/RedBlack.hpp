@@ -71,6 +71,7 @@ namespace ft {
 			allocator_type			_alloc_data;
 			node_allocator			_alloc_node;
 			node_pointer 			_root;
+			node_pointer 			_nil;
 			size_type				_nodes_count;
 
 		public:
@@ -88,7 +89,8 @@ namespace ft {
 				:	_compare(comp),
 					_alloc_data(alloc),
 					_alloc_node(alloc),
-					_root(),
+					_root(nullptr),
+					_nil(nullptr),
 					_nodes_count(0) { }
 		
 			/**——————————————————————————————[Range_Constructor]———————————————————————————————————*/
@@ -112,10 +114,10 @@ namespace ft {
 					_alloc_data(copy._alloc_data),
 					_alloc_node(copy._alloc_node),
 					_root(copy._root),
+					_nil(copy._nil),
 					_nodes_count(copy._nodes_count) { }
 			/**———————————————————————————————————[Destructor]—————————————————————————————————————*/
 			~RedBlack() {
-//				clear();
 			}
 		
 			/*——————————————————————————————————————————————————————————————————————————————————————*
@@ -312,6 +314,7 @@ namespace ft {
 			 **		## set the appropriate child of the current node to the new node.
 			 **		## increases the count of nodes in the tree.
 			 **
+			 ** Implemented according to the pseudo code in "Introduction to Algorithms" by Thomas H. (p. 414)
 			 ** @param val The paired_data that the new node will hold.
 			 ** @return void
 			 **/
@@ -319,77 +322,42 @@ namespace ft {
 			insert(const value_type& value ) {
 				node_pointer new_node = _alloc_node.allocate(sizeof(node));
 				_alloc_node.construct(new_node, node(value));
-				/**
-				** [1]
-				** If the tree is empty (_root == nullptr),
-				** the new node is set as the root of the tree, and changing the node color to Black.
-				** and the count of nodes in the tree is increased.
-				** An iterator pointing to the new node is returned.
-				**/
-				if (_root == nullptr) {
+				
+				node_pointer y = nullptr;
+				node_pointer x = _root;
+				
+				while (x != nullptr) {
+					y = x;
+					if (new_node->paired_data.first < x->paired_data.first)
+						x = x->left;
+					else if (new_node->paired_data.first > x->paired_data.first)
+						x = x->right;
+					else
+						return (ft::make_pair(iterator(x), false));
+				}
+				new_node->parent = y;
+				if (y == nullptr) {
 					_root = new_node;
-					_root->change_color();
-					_nodes_count++;
-					return (ft::make_pair(iterator(new_node), true));
+					++_nodes_count;
+					return (ft::make_pair(iterator(_root), false));
 				}
-				/**
-				 ** If the tree is not empty, we start at the root of the tree
-				 ** and iterates down and compare the value of the new node
-				 ** with the value of the current node:
-				 **/
-				node_pointer current_node = _root;
-				while (current_node != nullptr) {
-					/**
-					 ** [2]
-					 ** If the value of the new node is less than the value of the current node,
-					 ** the function moves to the left child of the current node,
-					 ** and calculate its height.
-					 */
-					if (new_node->paired_data.first < current_node->paired_data.first) {
-						if (current_node->left == nullptr) {
-							current_node->left = new_node;
-							new_node->parent = current_node;
-							new_node->height = new_node->parent->height + 1;
-							_nodes_count++;
-							return (ft::make_pair(iterator(new_node), true));
-						}
-						current_node = current_node->left;
-					}
-					/**
-					 ** [3]
-					 ** If the value of the new node is greater,
-					 * the function moves to the right child, and calculate its height.
-					 **/
-					else if (new_node->paired_data.first > current_node->paired_data.first) {
-						if (current_node->right == nullptr) {
-							current_node->right = new_node;
-							new_node->parent = current_node;
-							new_node->height = new_node->parent->height + 1;
-							_nodes_count++;
-							return (ft::make_pair(iterator(new_node), true));
-						}
-						current_node = current_node->right;
-					}
-					/**
-					 ** [4]
-					 ** If the value of the new node is equal to the value of the current node,
-					 ** the function returns an iterator pointing to the current node.
-					 **/
-					else {
-						return (ft::make_pair(iterator(new_node), false));
-					}
-				}
+				else if (new_node->paired_data.first < y->paired_data.first)
+					y->left = new_node;
+				else
+					y->right = new_node;
+				++_nodes_count;
+				InsertFixup(new_node);
 				return (ft::make_pair(iterator(new_node), false));
 			}
 		
 			/**—————————————————————————————————[ LeftRotation ]——————————————————————————————————*
-			 * @brief Rotates the node to the left.
-			 * @param node
-			 */
+			 ** @brief Rotates the node to the left.
+			 ** Implementation of the algorithm described in the book "Introduction to Algorithms" by Thomas H. Cormen.
+			 ** @param node
+			 **/
 			void
 			LeftRotation(node_pointer node) {
 				node_pointer right_child = node->right;
-				
 				node->right = right_child->left;
 				
 				if (right_child->left != nullptr)
@@ -411,18 +379,82 @@ namespace ft {
 			}
 			
 			/**—————————————————————————————————[ RightRotation ]—————————————————————————————————*
-			 * @brief Rotates the node to the right.
-			 * @param node
-			 */
+			 ** @brief Rotates the node to the right.
+			 ** Implementation of the algorithm described in the book "Introduction to Algorithms" by Thomas H. Cormen.
+			 ** @param node
+			 **/
 			void
-			RightRotation() {
-			
+			RightRotation(node_pointer node) {
+				node_pointer left_child = node->left;
+				node->left = left_child->right;
+				
+				if (left_child->right != nullptr)
+					left_child->right->parent = node;
+				left_child->parent = node->parent;
+				
+				if (node->parent == nullptr) // if node is the root
+					_root = left_child;
+				else if (node == node->parent->right) // if node is right child
+					node->parent->right = left_child;
+				else // if node is left child
+					node->parent->left = left_child;
+				left_child->right = node;
+				node->parent = left_child;
+				
+				// update height
+				node->height = std::max(node->left->height, node->right->height) + 1;
+				left_child->height = std::max(left_child->left->height, left_child->right->height) + 1;
 			}
+			/**——————————————————————————————————[ InsertFixup ]——————————————————————————————————*
+			 ** @brief Fixing the tree after insertion, to keep the tree balanced.
+			 ** Implemented from the book "Introduction to Algorithms" by Thomas H. Cormen. (p. 415)
+			 ** @param node
+			 **/
+			void
+			InsertFixup(node_pointer node) {
+				 while (node->parent->color == RED) {
+					 if (node->parent == node->parent->parent->left) {
+						 node_pointer uncle = node->parent->parent->right;
+						 if (uncle->color == RED) {
+							 node->parent->color = BLACK;
+							 uncle->color = BLACK;
+							 node->parent->parent->color = RED;
+							 node = node->parent->parent;
+						 }
+						 else {
+							 if (node == node->parent->right) {
+								 node = node->parent;
+								 LeftRotation(node);
+							 }
+							 node->parent->color = BLACK;
+							 node->parent->parent->color = RED;
+							 RightRotation(node->parent->parent);
+						 }
+					 } else {
+						 node_pointer uncle = node->parent->parent->left;
+						 if (uncle->color == RED) {
+							 node->parent->color = BLACK;
+							 uncle->color = BLACK;
+							 node->parent->parent->color = RED;
+							 node = node->parent->parent;
+						 } else {
+							 if (node == node->parent->left) {
+								 node = node->parent;
+								 RightRotation(node);
+							 }
+							 node->parent->color = BLACK;
+							 node->parent->parent->color = RED;
+							 LeftRotation(node->parent->parent);
+						 }
+					 }
+				 }
+				 _root->color = BLACK;
+			 }
 			
 			/**———————————————————————————————————————————————————————————*/
 			/**
-			 * @TODO: Rebalanced the tree before implementing clear function.
-			 */
+			 ** @TODO: Rebalanced the tree before implementing clear function.
+			 **/
 //			void
 //			clear() {
 //				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
