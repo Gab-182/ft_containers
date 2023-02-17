@@ -63,8 +63,8 @@ namespace ft {
 		node_pointer
 		grandparent() {
 			// if the node is the tree root.
-			if (parent == nullptr)
-				return nullptr;
+			if (parent == NULL)
+				return NULL;
 			// else return the parent of the parent.
 			return parent->parent;
 		}
@@ -77,8 +77,8 @@ namespace ft {
 			node_pointer grand_parent = grandparent();
 			
 			// if the parent is the tree root, then there is no uncle.
-			if (grand_parent == nullptr)
-				return nullptr;
+			if (grand_parent == NULL)
+				return NULL;
 			// if the parent is the left child of the grandparent,
 			// then the uncle is the right child for the grandparent.
 			if (parent == grand_parent->left)
@@ -95,8 +95,8 @@ namespace ft {
 		 node_pointer
 		 brother() {
 			// if the node is tree root
-			if (parent == nullptr)
-		 		return nullptr;
+			if (parent == NULL)
+		 		return NULL;
 			// if the node is the left child
 		 	if (this == parent->left)
 		 		return parent->right;
@@ -109,7 +109,7 @@ namespace ft {
 		 **/
 		static node_pointer
 		get_minimum(node_pointer current) {
-			while (current->left != nullptr)
+			while (current->left != NULL)
 				current = current->left;
 			return current;
 		}
@@ -119,7 +119,7 @@ namespace ft {
 		 **/
 		static node_pointer
 		get_maximum(node_pointer current) {
-			while (current->right != nullptr)
+			while (current->right != NULL)
 				current = current->right;
 			return current;
 		}

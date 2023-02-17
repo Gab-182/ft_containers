@@ -89,8 +89,8 @@ namespace ft {
 				:	_compare(comp),
 					_alloc_data(alloc),
 					_alloc_node(alloc),
-					_root(nullptr),
-					_nil(nullptr),
+					_root(NULL),
+					_nil(NULL),
 					_nodes_count(0) { }
 		
 			/**——————————————————————————————[Range_Constructor]———————————————————————————————————*/
@@ -323,31 +323,29 @@ namespace ft {
 				node_pointer new_node = _alloc_node.allocate(sizeof(node));
 				_alloc_node.construct(new_node, node(value));
 				
-				node_pointer y = nullptr;
-				node_pointer x = _root;
-				
-				while (x != nullptr) {
-					y = x;
-					if (new_node->paired_data.first < x->paired_data.first)
-						x = x->left;
-					else if (new_node->paired_data.first > x->paired_data.first)
-						x = x->right;
-					else
-						return (ft::make_pair(iterator(x), false));
+				node_pointer current = _root;
+				node_pointer parent = NULL;
+				while (current != NULL) {
+					parent = current;
+					if (new_node->paired_data.first < current->paired_data.first)
+						current = current->left;
+					else if (new_node->paired_data.first > current->paired_data.first)
+						current = current->right;
+					else {
+						delete new_node;
+						return (ft::make_pair(iterator(current), false));
+					}
 				}
-				new_node->parent = y;
-				if (y == nullptr) {
+				new_node->parent = parent;
+				if (parent == NULL)
 					_root = new_node;
-					++_nodes_count;
-					return (ft::make_pair(iterator(_root), false));
-				}
-				else if (new_node->paired_data.first < y->paired_data.first)
-					y->left = new_node;
+				else if (new_node->paired_data.first < parent->paired_data.first)
+					parent->left = new_node;
 				else
-					y->right = new_node;
+					parent->right = new_node;
 				++_nodes_count;
 				InsertFixup(new_node);
-				return (ft::make_pair(iterator(new_node), false));
+				return (ft::make_pair(iterator(new_node), true));
 			}
 		
 			/**—————————————————————————————————[ LeftRotation ]——————————————————————————————————*
@@ -360,11 +358,11 @@ namespace ft {
 				node_pointer right_child = node->right;
 				node->right = right_child->left;
 				
-				if (right_child->left != nullptr)
+				if (right_child->left != NULL)
 					right_child->left->parent = node;
 				right_child->parent = node->parent;
 				
-				if (node->parent == nullptr) // if node is the root
+				if (node->parent == NULL) // if node is the root
 					_root = right_child;
 				else if (node == node->parent->left) // if node is left child
 					node->parent->left = right_child;
@@ -374,8 +372,8 @@ namespace ft {
 				node->parent = right_child;
 				
 				// update height
-				node->height = std::max(node->left->height, node->right->height) + 1;
-				right_child->height = std::max(right_child->left->height, right_child->right->height) + 1;
+//				node->height = std::max(node->left->height, node->right->height) + 1;
+//				right_child->height = std::max(right_child->left->height, right_child->right->height) + 1;
 			}
 			
 			/**—————————————————————————————————[ RightRotation ]—————————————————————————————————*
@@ -388,11 +386,11 @@ namespace ft {
 				node_pointer left_child = node->left;
 				node->left = left_child->right;
 				
-				if (left_child->right != nullptr)
+				if (left_child->right != NULL)
 					left_child->right->parent = node;
 				left_child->parent = node->parent;
 				
-				if (node->parent == nullptr) // if node is the root
+				if (node->parent == NULL) // if node is the root
 					_root = left_child;
 				else if (node == node->parent->right) // if node is right child
 					node->parent->right = left_child;
@@ -402,8 +400,8 @@ namespace ft {
 				node->parent = left_child;
 				
 				// update height
-				node->height = std::max(node->left->height, node->right->height) + 1;
-				left_child->height = std::max(left_child->left->height, left_child->right->height) + 1;
+//				node->height = std::max(node->left->height, node->right->height) + 1;
+//				left_child->height = std::max(left_child->left->height, left_child->right->height) + 1;
 			}
 			/**——————————————————————————————————[ InsertFixup ]——————————————————————————————————*
 			 ** @brief Fixing the tree after insertion, to keep the tree balanced.
@@ -412,44 +410,66 @@ namespace ft {
 			 **/
 			void
 			InsertFixup(node_pointer node) {
-				 while (node->parent->color == RED) {
-					 if (node->parent == node->parent->parent->left) {
-						 node_pointer uncle = node->parent->parent->right;
-						 if (uncle->color == RED) {
-							 node->parent->color = BLACK;
-							 uncle->color = BLACK;
-							 node->parent->parent->color = RED;
-							 node = node->parent->parent;
-						 }
-						 else {
-							 if (node == node->parent->right) {
-								 node = node->parent;
-								 LeftRotation(node);
-							 }
-							 node->parent->color = BLACK;
-							 node->parent->parent->color = RED;
-							 RightRotation(node->parent->parent);
-						 }
-					 } else {
-						 node_pointer uncle = node->parent->parent->left;
-						 if (uncle->color == RED) {
-							 node->parent->color = BLACK;
-							 uncle->color = BLACK;
-							 node->parent->parent->color = RED;
-							 node = node->parent->parent;
-						 } else {
-							 if (node == node->parent->left) {
-								 node = node->parent;
-								 RightRotation(node);
-							 }
-							 node->parent->color = BLACK;
-							 node->parent->parent->color = RED;
-							 LeftRotation(node->parent->parent);
-						 }
-					 }
-				 }
-				 _root->color = BLACK;
-			 }
+				node_pointer parent = NULL;
+				node_pointer grand_parent = node->grandparent();
+				
+				while ((node != _root) && (node->color != BLACK) && (node->parent->color == RED)) {
+					parent = node->parent;
+					grand_parent = parent->parent;
+					
+					/* If parent is left child of grandparent */
+					if (parent == grand_parent->left) {
+						node_pointer uncle = grand_parent->right;
+						
+						/* Case 1: Uncle is also red */
+						if (uncle != NULL && uncle->color == RED) {
+							grand_parent->color = RED;
+							parent->color = BLACK;
+							uncle->color = BLACK;
+							node = grand_parent;
+						}
+						else {
+							/* Case 2: Node is right child of its parent */
+							if (node == parent->right) {
+								LeftRotation(parent);
+								node = parent;
+								parent = node->parent;
+							}
+							/* Case 3: Node is left child of its parent */
+							RightRotation(grand_parent);
+							grand_parent->change_color();
+							parent->change_color();
+							node = parent;
+						}
+					}
+					/* If parent is right child of grandparent */
+					else {
+						node_pointer uncle = grand_parent->left;
+						
+						/* Case 1: Uncle is also red */
+						if (uncle != NULL && uncle->color == RED) {
+							grand_parent->color = RED;
+							parent->color = BLACK;
+							uncle->color = BLACK;
+							node = grand_parent;
+						}
+						else {
+							/* Case 2: Node is left child of its parent */
+							if (node == parent->left) {
+								RightRotation(parent);
+								node = parent;
+								parent = node->parent;
+							}
+							/* Case 3: Node is right child of its parent */
+							LeftRotation(grand_parent);
+							grand_parent->change_color();
+							parent->change_color();
+							node = parent;
+						}
+					}
+				}
+				_root->color = BLACK;
+			}
 			
 			/**———————————————————————————————————————————————————————————*/
 			/**
