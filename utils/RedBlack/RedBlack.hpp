@@ -98,8 +98,8 @@ namespace ft {
 				:	_compare(comp),
 					_alloc_data(alloc),
 					_alloc_node(alloc),
-					_root(NULL),
-					_nil(NULL),
+					_root(nullptr),
+					_nil(nullptr),
 					_nodes_count(0) { }
 		
 			/**——————————————————————————————[Range_Constructor]———————————————————————————————————*/
@@ -127,7 +127,8 @@ namespace ft {
 					_nodes_count(copy._nodes_count) { }
 			/**———————————————————————————————————[Destructor]—————————————————————————————————————*/
 			~RedBlack() {
-				clear();
+				if (!empty())
+					clear();
 			}
 		
 			/*——————————————————————————————————————————————————————————————————————————————————————*
@@ -307,9 +308,8 @@ namespace ft {
 			—————————————————————————————————————————————————————————————————————————————————————————
 			**
 			**  🟢☑️ 1) insert
-			**  🟢 2) erase
-			**  🟢 3) swap
-			**  🟢☑️ 4) clear
+			**  🟢☑️ 2) erase
+			**  🟢☑️ 3) clear
 			**
 			**/
 			/**————————————————————————————————————[ insert ]—————————————————————————————————————*
@@ -392,7 +392,8 @@ namespace ft {
 				InsertFixup(new_node);
 				return (ft::make_pair(iterator(new_node), true));
 			}
-			
+		
+			/**——————————————————————————————————————————————————————————————————————————————————*/
 		private:
 			/**—————————————————————————————————[ LeftRotation ]——————————————————————————————————*
 			 ** @brief Rotates the node to the left, used as a helper function for InsertFixup().
@@ -422,11 +423,11 @@ namespace ft {
 				node_pointer right_child = node->right;
 				node->right = right_child->left;
 				
-				if (right_child->left != NULL)
+				if (right_child->left != nullptr)
 					right_child->left->parent = node;
 				right_child->parent = node->parent;
 				
-				if (node->parent == NULL) // if node is the root
+				if (node->parent == nullptr) // if node is the root
 					_root = right_child;
 				else if (node == node->parent->left) // if node is left child
 					node->parent->left = right_child;
@@ -445,11 +446,11 @@ namespace ft {
 				node_pointer left_child = node->left;
 				node->left = left_child->right;
 				
-				if (left_child->right != NULL)
+				if (left_child->right != nullptr)
 					left_child->right->parent = node;
 				left_child->parent = node->parent;
 				
-				if (node->parent == NULL) // if node is the root
+				if (node->parent == nullptr) // if node is the root
 					_root = left_child;
 				else if (node == node->parent->right) // if node is right child
 					node->parent->right = left_child;
@@ -549,11 +550,16 @@ namespace ft {
 				}
 				_root->color = BLACK;
 			}
-			
-		public:
+		
+			/**——————————————————————————————————————————————————————————————————————————————————*/
+		private:
 			/**——————————————————————————————————[ successor ]———————————————————————————————————*
 			 ** @brief return the successor of the given node.
 			 ** @param node
+			 **
+			 ** The "successor" of a node is the next node with the smallest
+			 ** key that is greater than the key of the input node. For example, if you have a tree
+			 ** with keys 1, 3, 5, 7, and 9, then the successor of 5 is 7.
 			 **/
 			node_pointer
 			successor(node_pointer node) {
@@ -566,6 +572,9 @@ namespace ft {
 				}
 				return parent;
 			}
+			
+			/**——————————————————————————————————————————————————————————————————————————————————*/
+		public:
 			/**—————————————————————————————————[ delete_subtree ]————————————————————————————————*
 			 ** @brief Deleting the left subtree, then the right subtree,
 			 ** recursively, used as a helper function for the clear() function.
@@ -636,6 +645,7 @@ namespace ft {
 				_alloc_node.deallocate(y, 1);
 			}
 			
+		private:
 			/**——————————————————————————————————[ eraseFixup ]———————————————————————————————————*
 			 ** @brief Fixing the tree after deleting a node.
 			 ** @param node
@@ -710,7 +720,8 @@ namespace ft {
 				if (node)
 					node->color = BLACK;
 			}
-
+		
+			/**——————————————————————————————————————————————————————————————————————————————————*/
 		private:
 			/**—————————————————————————————————[ delete_subtree ]————————————————————————————————*
 			 ** @brief Deleting the left subtree, then the right subtree,
@@ -721,12 +732,18 @@ namespace ft {
 				if (node == nullptr) {
 					return;
 				}
-				delete_subtree(node->left);
-				delete_subtree(node->right);
-				_alloc_node.destroy(node);
-				_alloc_node.deallocate(node, 1);
+				if (node->left != nullptr)
+					delete_subtree(node->left);
+				if (node->right != nullptr)
+					delete_subtree(node->right);
+				if (node != nullptr) {
+					_alloc_node.destroy(node);
+					_alloc_node.deallocate(node, sizeof(node));
+					node = nullptr;
+				}
 			}
-
+			
+			/**——————————————————————————————————————————————————————————————————————————————————*/
 		public:
 			/**—————————————————————————————————————[ clear ]—————————————————————————————————————*
 			 * @brief Deleting all nodes in the tree, starting from the Minimum node
@@ -738,6 +755,7 @@ namespace ft {
 				if (_root == nullptr)
 					return;
 				delete_subtree(_root);
+				_nodes_count = 0;
 			}
 			
 			/*——————————————————————————————————————————————————————————————————————————————————————*
@@ -775,7 +793,7 @@ namespace ft {
 			node_pointer
 			find_node(const key_type& k) {
 				node_pointer node = _root;
-				while (node != NULL) {
+				while (node != nullptr) {
 					if (node->paired_data.first == k)
 						return node;
 					else if (node->paired_data.first < k)
@@ -783,7 +801,7 @@ namespace ft {
 					else
 						node = node->left;
 				}
-				return NULL;
+				return nullptr;
 			}
 			
 			/**—————————————————————————————————————[ count ]—————————————————————————————————————*
