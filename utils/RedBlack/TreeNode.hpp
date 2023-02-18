@@ -32,7 +32,6 @@ namespace ft {
 		
 		/**———————————————————————————————[ Data Members ]—————————————————————————————————**/
 		data_type		paired_data;
-		int				height;
 		node_pointer	parent;
 		node_pointer	left;
 		node_pointer	right;
@@ -43,7 +42,7 @@ namespace ft {
 		 ** and the default color will be black.
 		 **/
 		NODE()
-				: paired_data(), height(0),
+				: paired_data(),
 				parent(NULL), left(NULL),
 				right(NULL), color(BLACK) { }
 		
@@ -54,8 +53,7 @@ namespace ft {
 		NODE(T paired_data)
 				: paired_data(paired_data),
 				parent(NULL), left(NULL),
-				right(NULL), height(1),
-				color(RED) { }
+				right(NULL), color(RED) { }
 		
 		/**———————————————————————————————[ Grand Parent ]———————————————————————————————*
 		 ** @brief Get the grand parent for the node.

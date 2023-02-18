@@ -16,16 +16,17 @@ int main()
 	ft::RedBlack<int, std::string> my_tree;
 	
 	/**—————————————————————————[Test Red Black tree]————————————————————————————*/
+	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair1  = my_tree.insert(ft::make_pair(1, "A"));
+	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair2  = my_tree.insert(ft::make_pair(2, "B"));
+	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair3  = my_tree.insert(ft::make_pair(3, "C"));
+	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair4  = my_tree.insert(ft::make_pair(4, "D"));
 	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair5  = my_tree.insert(ft::make_pair(5, "E"));
 	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair6  = my_tree.insert(ft::make_pair(6, "F"));
 	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair7  = my_tree.insert(ft::make_pair(7, "G"));
 	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair8  = my_tree.insert(ft::make_pair(8, "H"));
 	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair9  = my_tree.insert(ft::make_pair(9, "I"));
-	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair1  = my_tree.insert(ft::make_pair(1, "A"));
-	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair2  = my_tree.insert(ft::make_pair(2, "B"));
-	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair3  = my_tree.insert(ft::make_pair(3, "C"));
-	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair4  = my_tree.insert(ft::make_pair(4, "D"));
-//	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair10 = my_tree.insert(ft::make_pair(10, "J"));
+
+	//	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair10 = my_tree.insert(ft::make_pair(10, "J"));
 //	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair11 = my_tree.insert(ft::make_pair(11, "K"));
 //	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair12 = my_tree.insert(ft::make_pair(12, "L"));
 //	ft::pair<ft::RedBlack<int, std::string>::iterator, bool> pair13 = my_tree.insert(ft::make_pair(13, "M"));
@@ -47,15 +48,16 @@ int main()
 	std::cout << BOLDGREEN << "Testing Insert(): 🧮📐📏" << RESET << std::endl;
 	{
 		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair1.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair1.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair2.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair2.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair3.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair3.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair4.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair4.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair5.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair5.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair6.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair6.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair7.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair7.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair8.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair8.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair9.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair9.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair10.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair10.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair2.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair2.first->second << ",  Inserted? " << pair2.second << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair3.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair3.first->second << ",  Inserted? " << pair3.second << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair4.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair4.first->second << ",  Inserted? " << pair4.second << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair5.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair5.first->second << ",  Inserted? " << pair5.second << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair6.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair6.first->second << ",  Inserted? " << pair6.second << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair7.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair7.first->second << ",  Inserted? " << pair7.second << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair8.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair8.first->second << ",  Inserted? " << pair8.second << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair9.first->first << BOLDYELLOW << ",  Val= " << BOLDWHITE << pair9.first->second << ",  Inserted? " << pair9.second << RESET << std::endl;
+
+		//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair10.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair10.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
 //		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair11.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair11.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
 //		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair12.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair12.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
 //		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair13.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair13.first->second << ", Inserted? " << pair1.second << RESET << std::endl;

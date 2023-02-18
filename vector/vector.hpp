@@ -772,7 +772,7 @@ namespace ft
 		 */
 		template <class Iter>
 		void
-		insert (iterator position, Iter first, Iter last) {
+		insert (iterator position, Iter first, Iter last, typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = 0) {
 			difference_type val_pos = position - begin();
 			difference_type rng_iter = last - first;
 

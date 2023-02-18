@@ -9,6 +9,15 @@
 # include "./TreeNode.hpp"
 # include "../../iterator/reverse_iterator.hpp"
 # include "../../iterator/RedBlack_iterator/RB_iterator.hpp"
+/*===============================================================================*/
+# include <iomanip>
+# define BOLDWHITE		"\033[1m\033[37m"		/* Bold White */
+# define RESET			"\033[0m"				/* Reset the color */
+# define BOLDGREEN		"\033[1m\033[32m"		/* Bold Green */
+# define BOLDYELLOW		"\033[1m\033[33m"		/* Bold Yellow */
+# define BOLDRED		"\033[1m\033[31m"		/* Bold Red */
+/*===============================================================================*/
+
 /*=============================================================================================================*/
 namespace ft {
 /*=============================================================================================================*/
@@ -118,6 +127,7 @@ namespace ft {
 					_nodes_count(copy._nodes_count) { }
 			/**———————————————————————————————————[Destructor]—————————————————————————————————————*/
 			~RedBlack() {
+				clear();
 			}
 		
 			/*——————————————————————————————————————————————————————————————————————————————————————*
@@ -309,49 +319,102 @@ namespace ft {
 			 ** the value is created by ft::make_pair(key, mapped_type()) or if the value is already
 			 ** created, it will be passed by reference, to avoid copying the value.
 			 **
-			 ** Once the correct location for the new node is found:
-			 **		## set the parent of the new node to the current node,
-			 **		## set the appropriate child of the current node to the new node.
-			 **		## increases the count of nodes in the tree.
-			 **
-			 ** Implemented according to the pseudo code in "Introduction to Algorithms" by Thomas H. (p. 414)
 			 ** @param val The paired_data that the new node will hold.
 			 ** @return void
+			 **
+			 ** THE INSERTION FUNCTION IS IMPLEMENTED ACCORDING TO
+			 ** THE PSEUDO CODE IN "INTRODUCTION TO ALGORITHMS" BY THOMAS H. (P. 414)
+			 **
+
+			 	RB-INSERT(T, new_node)
+					parent ← nil
+					current ← root
+					
+					while (current ≠ nil)
+						do (parent ← current)
+							if (key[new_node] < key[current])
+								(current ← left[current])
+							else
+								current ← right[current]
+					p[new_node]←parent
+					if (parent = nil)
+						(root ← new_node)
+					else if( key[new_node] < key[parent])
+						(left[parent] ← new_node)
+					else
+						right[parent] ← new_node
+						
+					left[new_node] ← nil
+					right[new_node] ← nil
+					color[new_node] ← RED
+					RB-INSERT-FIXUP(T, new_node)
+
 			 **/
 			ft::pair<iterator, bool>
 			insert(const value_type& value ) {
+				// Allocate a new node, and set its value to the given value.
 				node_pointer new_node = _alloc_node.allocate(sizeof(node));
 				_alloc_node.construct(new_node, node(value));
 				
+				node_pointer parent = _nil;
 				node_pointer current = _root;
-				node_pointer parent = NULL;
-				while (current != NULL) {
+				// find the correct location for the new node, and set the parent of the new node.
+				while (current != _nil) {
 					parent = current;
 					if (new_node->paired_data.first < current->paired_data.first)
 						current = current->left;
-					else if (new_node->paired_data.first > current->paired_data.first)
-						current = current->right;
 					else {
-						delete new_node;
-						return (ft::make_pair(iterator(current), false));
+						current = current->right;
 					}
 				}
 				new_node->parent = parent;
-				if (parent == NULL)
+				// if the tree is empty, the new node will be the root.
+				if (parent == _nil)
 					_root = new_node;
+				// if the key of the new node is less than the parent, it will be the left child.
 				else if (new_node->paired_data.first < parent->paired_data.first)
 					parent->left = new_node;
-				else
+				// if the key of the new node is greater than the parent, it will be the right child.
+				else if (new_node->paired_data.first > parent->paired_data.first)
 					parent->right = new_node;
+				// if the key already exists:
+				//		- delete the new node.
+				//		- return an iterator to the existing node.
+				else {
+					_alloc_node.destroy(new_node);
+					_alloc_node.deallocate(new_node, sizeof(node));
+					return (ft::make_pair(iterator(parent), false));
+				}
+				new_node->left = _nil;
+				new_node->right = _nil;
+				new_node->color = RED;
 				++_nodes_count;
 				InsertFixup(new_node);
 				return (ft::make_pair(iterator(new_node), true));
 			}
-		
+		private:
 			/**—————————————————————————————————[ LeftRotation ]——————————————————————————————————*
 			 ** @brief Rotates the node to the left.
-			 ** Implementation of the algorithm described in the book "Introduction to Algorithms" by Thomas H. Cormen.
 			 ** @param node
+			 **
+			 ** IMPLEMENTED ACCORDING TO THE PSEUDO CODE IN
+			 ** "INTRODUCTION TO ALGORITHMS" BY THOMAS H. (P. 312)
+			 **
+
+			 LEFT-ROTATE(T, x)
+				y ← right[x] 						▹ Set y.
+				right[x] ← left[y] 					▹ Turn y's left subtree into x's right subtree.
+			 	p[left[y]] ← x
+				p[y] ← p[x] 						▹ Link x's parent to y.
+				if p[x] = nil[T]
+					root[T] ← y
+				else if x = left[p[x]]
+					left[p[x]] ← y
+				else
+			 		right[p[x]] ← y
+			 	left[y]←x 							▹Put x on y's left.
+				p[x]←y
+
 			 **/
 			void
 			LeftRotation(node_pointer node) {
@@ -370,15 +433,10 @@ namespace ft {
 					node->parent->right = right_child;
 				right_child->left = node;
 				node->parent = right_child;
-				
-				// update height
-//				node->height = std::max(node->left->height, node->right->height) + 1;
-//				right_child->height = std::max(right_child->left->height, right_child->right->height) + 1;
 			}
 			
 			/**—————————————————————————————————[ RightRotation ]—————————————————————————————————*
 			 ** @brief Rotates the node to the right.
-			 ** Implementation of the algorithm described in the book "Introduction to Algorithms" by Thomas H. Cormen.
 			 ** @param node
 			 **/
 			void
@@ -398,19 +456,38 @@ namespace ft {
 					node->parent->left = left_child;
 				left_child->right = node;
 				node->parent = left_child;
-				
-				// update height
-//				node->height = std::max(node->left->height, node->right->height) + 1;
-//				left_child->height = std::max(left_child->left->height, left_child->right->height) + 1;
 			}
 			/**——————————————————————————————————[ InsertFixup ]——————————————————————————————————*
 			 ** @brief Fixing the tree after insertion, to keep the tree balanced.
-			 ** Implemented from the book "Introduction to Algorithms" by Thomas H. Cormen. (p. 415)
 			 ** @param node
+			 **
+			 ** THE INSERTION FUNCTION IS IMPLEMENTED ACCORDING TO
+			 ** THE PSEUDO CODE IN "INTRODUCTION TO ALGORITHMS" BY THOMAS H. (P. 415)
+			 **
+
+			 RB-INSERT-FIXUP(T, z)
+				while (color[p[z]] = RED)
+					if p[z] = left[p[p[z]]]				▹ If z's parent is a left child.
+						y ← right[p[p[z]]]
+					if (color[y] = RED)
+						color[p[z]] ← BLACK				▹ Case 1
+						color[y] ← BLACK				▹ Case 1
+						color[p[p[z]]] ← RED			▹ Case 1
+						z ← p[p[z]]						▹ Case 1
+					else if (z = right[p[z]])
+						z←p[z] 							▹Case2
+						LEFT-ROTATE(T, z)				▹Case2
+						color[p[z]] ← BLACK				▹Case3
+						color[p[p[z]]] ← RED			▹Case3
+						RIGHT-ROTATE(T, p[p[z]])		▹Case3
+					else
+						(same as then clause with "right" and "left" exchanged)
+					color[root[T]] ← BLACK
+
 			 **/
 			void
 			InsertFixup(node_pointer node) {
-				node_pointer parent = NULL;
+				node_pointer parent = _nil;
 				node_pointer grand_parent = node->grandparent();
 				
 				while ((node != _root) && (node->color != BLACK) && (node->parent->color == RED)) {
@@ -422,7 +499,7 @@ namespace ft {
 						node_pointer uncle = grand_parent->right;
 						
 						/* Case 1: Uncle is also red */
-						if (uncle != NULL && uncle->color == RED) {
+						if (uncle != _nil && uncle->color == RED) {
 							grand_parent->color = RED;
 							parent->color = BLACK;
 							uncle->color = BLACK;
@@ -447,7 +524,7 @@ namespace ft {
 						node_pointer uncle = grand_parent->left;
 						
 						/* Case 1: Uncle is also red */
-						if (uncle != NULL && uncle->color == RED) {
+						if (uncle != _nil && uncle->color == RED) {
 							grand_parent->color = RED;
 							parent->color = BLACK;
 							uncle->color = BLACK;
@@ -470,22 +547,35 @@ namespace ft {
 				}
 				_root->color = BLACK;
 			}
-			
-			/**———————————————————————————————————————————————————————————*/
-			/**
-			 ** @TODO: Rebalanced the tree before implementing clear function.
+		private:
+			/**——————————————————————————————————[ delete_subtree ]————————————————————————————————
+			 ** @brief Returns the nest node in the tree, used as a helper function for the
+			 ** clear() function.
 			 **/
-//			void
-//			clear() {
-//				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
-//				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-//
-//				while (MinNode->paired_data.first != MaxNode->paired_data.first) {
-//					std::cout << MinNode->paired_data.first << std::endl;
-//					MinNode = MinNode->parent;
-//				}
-//				_nodes_count = 0;
-//			}
+			void
+			delete_subtree(node_pointer node) {
+				if (node == nullptr) {
+					return;
+				}
+				delete_subtree(node->left);
+				delete_subtree(node->right);
+				_alloc_node.destroy(node);
+				_alloc_node.deallocate(node, 1);
+			}
+
+		public:
+			/**—————————————————————————————————————[ clear ]—————————————————————————————————————*
+			 * @brief Deleting all nodes in the tree, starting from the Minimum node
+			 * to the root node, then from the Maximum node to the root node.
+			 * then deleting the root node.
+			 */
+			void
+			clear() {
+				if (_root == nullptr)
+					return;
+				delete_subtree(_root);
+			}
+			
 			/*——————————————————————————————————————————————————————————————————————————————————————*
 			———————————————————————————————————————[Operations]——————————————————————————————————————
 			—————————————————————————————————————————————————————————————————————————————————————————
@@ -598,11 +688,16 @@ namespace ft {
 				}
 				Inorder(root->left);
 				std::cout
-				<< " Key = [" << root->paired_data.first << "]"
-				<< "  |  Value = [" << root->paired_data.second << "]"
-				<< "  |  Color = [" << root->color << "]"
-				<< "  |  Height = [" << root->height << "]"
-				<< std::endl;
+				<< std::setfill(' ') << std::setw(10)
+				<< BOLDYELLOW << " Key = "
+				<< BOLDRED << "[" << BOLDWHITE << root->paired_data.first << BOLDRED << "]"
+				<< std::setfill(' ') << std::setw(10)
+				<< BOLDYELLOW << " | Value = "
+				<< BOLDRED << "[" << BOLDWHITE << root->paired_data.second << BOLDRED << "]"
+				<< std::setfill(' ') << std::setw(10)
+				<< BOLDYELLOW << " | Color = "
+				<< BOLDRED << "[" << BOLDWHITE << root->color << BOLDRED << "]"
+				<< RESET << std::endl;
 				Inorder(root->right);
 			}
 			
