@@ -27,7 +27,7 @@ namespace ft {
 		 **  respective default constructors.
 		 * */
 		pair()
-			: first(), second() {}
+			: first(), second() { }
 
 		/**———————————————————————————————————————————————————————————**/
 		/**
@@ -46,11 +46,9 @@ namespace ft {
 			
 		/**———————————————————————————————————————————————————————————**/
 		inline pair&
-		operator=( const pair& other ) {
-			if (this == &other) {
-				this->first = other.first;
-				this->second = other.second;
-			}
+		operator=( pair const& other ) {
+			first = other.first;
+			second = other.second;
 			return *this;
 		}
 		

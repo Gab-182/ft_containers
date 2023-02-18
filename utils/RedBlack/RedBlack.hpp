@@ -43,14 +43,14 @@ namespace ft {
 	template<class Key,
 			class T,
 			class Compare = std::less<Key>,
-			class Allocator = std::allocator<ft::pair<const Key, T> > >
+			class Allocator = std::allocator<ft::pair<Key, T> > >
 	class RedBlack {
 		/**——————————————————————————————————[Member_types]————————————————————————————————————————*/
 		public:
 		/**[Tree_types]*/
 			typedef				T														mapped_type;
 			typedef				Key														key_type;
-			typedef				ft::pair<const key_type, mapped_type>					value_type;
+			typedef				ft::pair<key_type, mapped_type>							value_type;
 			typedef				Compare													key_compare;
 			typedef				Allocator												allocator_type;
 			typedef	typename 	allocator_type::reference								reference;
@@ -306,10 +306,10 @@ namespace ft {
 			———————————————————————————————————————[Modifies]————————————————————————————————————————
 			—————————————————————————————————————————————————————————————————————————————————————————
 			**
-			**  🟢 1) insert
+			**  🟢☑️ 1) insert
 			**  🟢 2) erase
 			**  🟢 3) swap
-			**  🟢 4) clear
+			**  🟢☑️ 4) clear
 			**
 			**/
 			/**————————————————————————————————————[ insert ]—————————————————————————————————————*
@@ -392,9 +392,10 @@ namespace ft {
 				InsertFixup(new_node);
 				return (ft::make_pair(iterator(new_node), true));
 			}
+			
 		private:
 			/**—————————————————————————————————[ LeftRotation ]——————————————————————————————————*
-			 ** @brief Rotates the node to the left.
+			 ** @brief Rotates the node to the left, used as a helper function for InsertFixup().
 			 ** @param node
 			 **
 			 ** IMPLEMENTED ACCORDING TO THE PSEUDO CODE IN
@@ -436,7 +437,7 @@ namespace ft {
 			}
 			
 			/**—————————————————————————————————[ RightRotation ]—————————————————————————————————*
-			 ** @brief Rotates the node to the right.
+			 ** @brief Rotates the node to the right, used as a helper function for InsertFixup().
 			 ** @param node
 			 **/
 			void
@@ -459,6 +460,7 @@ namespace ft {
 			}
 			/**——————————————————————————————————[ InsertFixup ]——————————————————————————————————*
 			 ** @brief Fixing the tree after insertion, to keep the tree balanced.
+			 ** Used as a helper function for insert().
 			 ** @param node
 			 **
 			 ** THE INSERTION FUNCTION IS IMPLEMENTED ACCORDING TO
@@ -497,7 +499,7 @@ namespace ft {
 					/* If parent is left child of grandparent */
 					if (parent == grand_parent->left) {
 						node_pointer uncle = grand_parent->right;
-						
+
 						/* Case 1: Uncle is also red */
 						if (uncle != _nil && uncle->color == RED) {
 							grand_parent->color = RED;
@@ -547,6 +549,168 @@ namespace ft {
 				}
 				_root->color = BLACK;
 			}
+			
+		public:
+			/**——————————————————————————————————[ successor ]———————————————————————————————————*
+			 ** @brief return the successor of the given node.
+			 ** @param node
+			 **/
+			node_pointer
+			successor(node_pointer node) {
+				if (node->right != _nil)
+					return ft::NODE<value_type>::get_minimum(node->right);
+				node_pointer parent = node->parent;
+				while (parent != _nil && node == parent->right) {
+					node = parent;
+					parent = parent->parent;
+				}
+				return parent;
+			}
+			/**—————————————————————————————————[ delete_subtree ]————————————————————————————————*
+			 ** @brief Deleting the left subtree, then the right subtree,
+			 ** recursively, used as a helper function for the clear() function.
+			 **
+			 ** IMPLEMENTED ACCORDING TO THE PSEUDO CODE
+			 ** IN "INTRODUCTION TO ALGORITHMS" BY THOMAS H. (P. 424)
+			 *
+
+			 RB-DELETE(T, z)
+				 if (left[z] = nil || right[z] = nil)
+				 	y←z
+				else
+			 		y ← TREE-SUCCESSOR(z)
+				if left[y] ≠ nil[T]
+			 		x ← left[y]
+			 	else
+			 		x ← right[y]
+				p[x] ← p[y]
+				if p[y] = nil[T]
+					root[T] ← x
+				else if y = left[p[y]]
+					left[p[y]] ← x
+				else
+			 		right[p[y]] ← x
+			 	if y ≠ z
+					key[z] ← key[y]
+				copy y's satellite data into z
+				if color[y] = BLACK
+					RB-DELETE-FIXUP(T, x)
+				return y
+
+			 **/
+			void
+			erase(const key_type& k) {
+				node_pointer z = find_node(k);
+				if (z == _nil)
+					return ;
+				node_pointer y = z;
+				node_pointer x;
+				if (z->left == _nil || z->right == _nil) {
+					y = z;
+				} else {
+					y = successor(z);
+				}
+				if (y->left != _nil) {
+					x = y->left;
+				} else {
+					x = y->right;
+				}
+				if (x != _nil) {
+					x->parent = y->parent;
+				}
+				if (y->parent == _nil) {
+					_root = x;
+				} else if (y == y->parent->left) {
+					y->parent->left = x;
+				} else {
+					y->parent->right = x;
+				}
+				if (y != z) {
+					z->paired_data.first = y->paired_data.first;
+					z->paired_data.second = y->paired_data.second;
+				}
+				if (y->color == BLACK) {
+					eraseFixup(x);
+				}
+				_alloc_node.destroy(y);
+				_alloc_node.deallocate(y, 1);
+			}
+			
+			/**——————————————————————————————————[ eraseFixup ]———————————————————————————————————*
+			 ** @brief Fixing the tree after deleting a node.
+			 ** @param node
+			 ** IMPLEMENTED ACCORDING TO THE PSEUDO CODE
+			 ** IN "INTRODUCTION TO ALGORITHMS" BY THOMAS H. (P. 425)
+			 **/
+			void
+			eraseFixup(node_pointer node) {
+				while (node && node != _root && node->color == BLACK) {
+					if (node == node->parent->left) {
+						node_pointer sibling = node->parent->right;
+						/* Case 1: Sibling is red */
+						if (sibling->color == RED) {
+							sibling->color = BLACK;
+							node->parent->color = RED;
+							LeftRotation(node->parent);
+							sibling = node->parent->right;
+						}
+						/* Case 2: Sibling is black and both of its children are black */
+						if (sibling->left && sibling->left->color == BLACK && sibling->right && sibling->right->color == BLACK) {
+							sibling->color = RED;
+							node = node->parent;
+						}
+						else {
+							/* Case 3: Sibling is black, its right child is black and its left child is red */
+							if (sibling->right && sibling->right->color == BLACK) {
+								sibling->left->color = BLACK;
+								sibling->color = RED;
+								RightRotation(sibling);
+								sibling = node->parent->right;
+							}
+							/* Case 4: Sibling is black and its right child is red */
+							sibling->color = node->parent->color;
+							node->parent->color = BLACK;
+							if (sibling->right)
+								sibling->right->color = BLACK;
+							LeftRotation(node->parent);
+							node = _root;
+						}
+					}
+					else {
+						node_pointer sibling = node->parent->left;
+						/* Case 1: Sibling is red */
+						if (sibling && sibling->color == RED) {
+							sibling->color = BLACK;
+							node->parent->color = RED;
+							RightRotation(node->parent);
+							sibling = node->parent->left;
+						}
+						/* Case 2: Sibling is black and both of its children are black */
+						if (sibling->right && sibling->right->color == BLACK && sibling->left && sibling->left->color == BLACK) {
+							sibling->color = RED;
+							node = node->parent;
+						}
+						else {
+							/* Case 3: Sibling is black, its left child is black and its right child is red */
+							if (sibling->left && sibling->left->color == BLACK) {
+								sibling->right->color = BLACK;
+								sibling->color = RED;
+								LeftRotation(sibling);
+								sibling = node->parent->left;
+							}
+							/* Case 4: Sibling is black and its left child is red */
+							sibling->color = node->parent->color;
+							node->parent->color = BLACK;
+							sibling->left->color = BLACK;
+							RightRotation(node->parent);
+							node = _root;
+						}
+					}
+				}
+				if (node)
+					node->color = BLACK;
+			}
+
 		private:
 			/**—————————————————————————————————[ delete_subtree ]————————————————————————————————*
 			 ** @brief Deleting the left subtree, then the right subtree,
@@ -602,6 +766,26 @@ namespace ft {
 				}
 				return end();
 			}
+		
+			/**——————————————————————————————————[ find_node ]————————————————————————————————————*
+			 ** @brief: Searches the container for an element with a key
+			 ** equivalent to k and returns a pointer to it if found,
+			 ** otherwise it returns a null.
+			 **/
+			node_pointer
+			find_node(const key_type& k) {
+				node_pointer node = _root;
+				while (node != NULL) {
+					if (node->paired_data.first == k)
+						return node;
+					else if (node->paired_data.first < k)
+						node = node->right;
+					else
+						node = node->left;
+				}
+				return NULL;
+			}
+			
 			/**—————————————————————————————————————[ count ]—————————————————————————————————————*
 			 ** @brief: Searches the container for elements with a key
 			 ** equivalent to k and returns the number of matches.
