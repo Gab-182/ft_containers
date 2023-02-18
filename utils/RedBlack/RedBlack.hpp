@@ -548,9 +548,9 @@ namespace ft {
 				_root->color = BLACK;
 			}
 		private:
-			/**——————————————————————————————————[ delete_subtree ]————————————————————————————————
-			 ** @brief Returns the nest node in the tree, used as a helper function for the
-			 ** clear() function.
+			/**—————————————————————————————————[ delete_subtree ]————————————————————————————————*
+			 ** @brief Deleting the left subtree, then the right subtree,
+			 ** recursively, used as a helper function for the clear() function.
 			 **/
 			void
 			delete_subtree(node_pointer node) {
