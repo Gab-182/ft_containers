@@ -27,6 +27,7 @@ namespace ft {
 	template <class T, class val>
 	class RB_iterator {
 		public:
+		
 			typedef			T									node_pointer;
 			typedef			val*								value_pointer;
 			typedef			val&								value_reference;
@@ -44,11 +45,12 @@ namespace ft {
 			explicit RB_iterator(const node_pointer& ptr)
 				: _ptr(ptr) { };
 			
-			RB_iterator(const RB_iterator& copy)
-				: _ptr(copy._ptr) { };
-		
+			template<class NodePointer, class Val>
+			RB_iterator(RB_iterator<NodePointer, Val>& copy)
+				: _ptr(copy.base()) { };
+
 			~RB_iterator() { };
-			
+
 			/**————————————————————————————————[base()]————————————————————————————————————————————*/
 			inline node_pointer
 			base() const {
@@ -159,7 +161,7 @@ namespace ft {
 		
 		/**——————————————————————————————[Operator+]———————————————————————————————————————————*/
 		inline RB_iterator
-		operator+(difference_type n) const {
+		operator+(difference_type n) {
 			RB_iterator tmp(*this);
 			tmp += n;
 			return (tmp);
@@ -177,7 +179,7 @@ namespace ft {
 		
 		/**——————————————————————————————[Operator-]———————————————————————————————————————————*/
 		inline RB_iterator
-		operator-(difference_type n) const {
+		operator-(difference_type n) {
 			RB_iterator tmp(*this);
 			tmp -= n;
 			return (tmp);

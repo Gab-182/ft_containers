@@ -9,6 +9,7 @@
 # include "./TreeNode.hpp"
 # include "../../iterator/reverse_iterator.hpp"
 # include "../../iterator/RedBlack_iterator/RB_iterator.hpp"
+# include "../../iterator/RedBlack_iterator/RB_const_iterator.hpp"
 /*===============================================================================*/
 # include <iomanip>
 # define BOLDWHITE		"\033[1m\033[37m"		/* Bold White */
@@ -51,6 +52,7 @@ namespace ft {
 			typedef				T														mapped_type;
 			typedef				Key														key_type;
 			typedef				ft::pair<key_type, mapped_type>							value_type;
+			typedef				ft::pair<key_type, mapped_type>					const_value_type;
 			typedef				Compare													key_compare;
 			typedef				Allocator												allocator_type;
 			typedef	typename 	allocator_type::reference								reference;
@@ -63,11 +65,11 @@ namespace ft {
 			typedef	typename	allocator_type::template rebind<node>::other			node_allocator;
 			typedef	typename	node_allocator::pointer									node_pointer;
 			typedef	typename	node_allocator::reference								node_reference;
-			typedef typename 	allocator_type::const_pointer							const_node_pointer;
+			typedef typename 	node_allocator::const_pointer							const_node_pointer;
 			
 		/**[Iterator_types]*/
 			typedef				RB_iterator<node_pointer, value_type>					iterator;
-			typedef				RB_iterator<const_node_pointer, value_type>				const_iterator;
+			typedef				RB_const_iterator<const node_pointer, const value_type>				const_iterator;
 			typedef				ft::reverse_iterator<iterator>							reverse_iterator;
 			typedef				ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
@@ -180,12 +182,12 @@ namespace ft {
 			 ** @brief Returns an iterator to the first element in the tree,
 			 ** which is the left most node.
 			 **/
-			inline iterator
-			begin() {
-				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
-				return (iterator(MinNode));
-			}
-		
+//			inline iterator
+//			begin() {
+//				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
+//				return (iterator(MinNode));
+//			}
+
 			/**—————————————————————————————————————[ begin ]—————————————————————————————————————*
 			 ** @brief Returns an iterator to the first element in the tree.
 			 **/
@@ -204,11 +206,11 @@ namespace ft {
 			 ** cause it's pointing ti the end of the tree (leaf).
 			 **/
 			 
-			inline iterator
-			end() {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-				return (iterator(MaxNode->right));
-			}
+//			inline iterator
+//			end() {
+//				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
+//				return (iterator(MaxNode->right));
+//			}
 		
 			/**——————————————————————————————————————[ end ]——————————————————————————————————————*
 			 ** @brief Returns an iterator to the last element in the tree,
@@ -217,7 +219,7 @@ namespace ft {
 			
 			inline const_iterator
 			end() const {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
+				const_node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
 				return (const_iterator(MaxNode->right));
 			}
 		

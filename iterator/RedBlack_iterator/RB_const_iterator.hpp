@@ -21,8 +21,8 @@ namespace ft {
 	class RB_const_iterator {
 	public:
 		typedef			T										node_pointer;
-		typedef			const val*								const_value_pointer;
-		typedef			const val&								const_value_reference;
+		typedef			val*								const_value_pointer;
+		typedef			val&								const_value_reference;
 		typedef			std::ptrdiff_t							difference_type;
 		typedef			ft::random_access_iterator_tag			iterator_category;
 	
@@ -34,10 +34,11 @@ namespace ft {
 		RB_const_iterator()
 				: _ptr(NULL) {};
 		
-		RB_const_iterator(const node_pointer& ptr)
+		explicit RB_const_iterator(const node_pointer& ptr)
 				: _ptr(ptr) {};
 		
-		RB_const_iterator(const RB_const_iterator& copy)
+		template <class NodePointer, class Val>
+		RB_const_iterator(const RB_const_iterator<NodePointer, Val>& copy)
 				: _ptr(copy._ptr) {};
 		
 		~RB_const_iterator() {};
@@ -80,13 +81,27 @@ namespace ft {
 					_ptr = _ptr->parent;
 				_ptr = _ptr->parent;
 			}
-			return *this;
+			return (*this);
 		}
-		
+		/**————————————————————————————[Operator++(int)]———————————————————————————————————————*/
+		/**
+		 ** @brief Prefix increment operator, it returns the iterator to the next node.
+		 ** which have the larger key.
+		 ** @return RB_iterator
+		 ** Note:
+		 ** =====
+		 ** The operator++(int): return the iterator before increment, not a reference.
+		 **/
+		inline RB_const_iterator
+		operator++(int) {
+			RB_const_iterator tmp(*this);
+			++(*this);
+			return (tmp);
+		}
 		/**——————————————————————————————[Operator--]——————————————————————————————————————————
-		 * @brief Prefix decrement operator, it returns the iterator to the previous node.
-		 * which have the smaller key.
-		 * @return RB_iterator&
+		 ** @brief Prefix decrement operator, it returns the iterator to the previous node.
+		 ** which have the smaller key.
+		 ** @return RB_iterator&
 		 **/
 		inline RB_const_iterator&
 		operator--() {
@@ -103,11 +118,76 @@ namespace ft {
 					_ptr = _ptr->parent;
 				_ptr = _ptr->parent;
 			}
-			return *this;
+			return (*this);
 		}
 		
-		/**———————————————————————————————————————————————————————————————————————————————————*/
+		/**——————————————————————————————[Operator--(int)]—————————————————————————————————————————
+		 ** @brief Prefix decrement operator, it returns the iterator to the previous node.
+		 ** which have the smaller key.
+		 ** @return RB_iterator
+		 ** Note:
+		 ** =====
+		 ** The operator++(int): return the iterator before increment, not a reference.
+		 **/
+		inline RB_const_iterator
+		operator--(int) {
+			RB_const_iterator tmp(*this);
+			--(*this);
+			return (tmp);
+		}
+		
+		/**——————————————————————————————[Operator+=]———————————————————————————————————————————*/
+		inline RB_const_iterator&
+		operator+=(difference_type n) {
+			if (n < 0)
+				return (*this -= -n);
+			while (n--)
+				++(*this);
+			return (*this);
+		}
+		
+		/**——————————————————————————————[Operator+]———————————————————————————————————————————*/
+		inline RB_const_iterator
+		operator+(difference_type n) {
+			RB_const_iterator tmp(*this);
+			tmp += n;
+			return (tmp);
+		}
+		
+		/**——————————————————————————————[Operator-=]———————————————————————————————————————————*/
+		inline RB_const_iterator&
+		operator-=(difference_type n) {
+			if (n < 0)
+				return (*this += -n);
+			while (n--)
+				--(*this);
+			return (*this);
+		}
+		
+		/**——————————————————————————————[Operator-]———————————————————————————————————————————*/
+		inline RB_const_iterator
+		operator-(difference_type n) {
+			RB_const_iterator tmp(*this);
+			tmp -= n;
+			return (tmp);
+		}
 	};
+
+/*=============================================================================================================*/
+	/**——————————————————————————————[Operator(it1 != it2)]———————————————————————————————————————————*/
+	template <class T, class val >
+	inline bool
+	operator!=(const RB_const_iterator<T, val>& lhs, const RB_const_iterator<T, val>& rhs) {
+		return (lhs.base() != rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 == it2)]———————————————————————————————————————————*/
+	template <class T, class val >
+	inline bool
+	operator==(const RB_const_iterator<T, val>& lhs, const RB_const_iterator<T, val>& rhs) {
+		return (lhs.base() == rhs.base());
+	}
 /*=============================================================================================================*/
 }
-#endif //RB_CONST_ITERATOR_HPP
+
+#endif

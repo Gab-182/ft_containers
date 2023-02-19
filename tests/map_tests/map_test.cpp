@@ -66,20 +66,16 @@ int main() {
 	std:: cout << BOLDRED << "Key= " << pair22.first->first << ", Val= " << pair22.first->second << ", " << pair22.second << RESET << std::endl;
 	std:: cout << BOLDRED << "Key= " << pair23.first->first << ", Val= " << pair23.first->second << ", " << pair23.second << RESET << std::endl;
 	std::cout << std::endl;
-//
-	std::map<int, std::string>::iterator it = my_map.begin();
-	std::map<int, std::string>::iterator ite = my_map.end();
+
+	std::map<int, std::string>::const_iterator it = my_map.begin();
+	std::map<int, std::string>::const_iterator ite = my_map.end();
 	
-	try {
-		my_map.at(1) = "AA";
-		my_map.at(2) = "AA";
-		my_map.at(19) = "AA";
-		my_map.at(20) = "AA";
-		my_map.at(21) = "AA";
-	} catch (std::exception(&e)) {
-		std::cout << BOLDRED << e.what() << std::endl;
+	while (it != ite)
+	{
+		std::cout << BOLDGREEN << "Key= " << BOLDWHITE << it->first << BOLDGREEN << ", Val= " << BOLDWHITE << it->second << RESET << std::endl;
+		it->first = 0;
+		++it;
 	}
-	
 	
 	return 0;
 }
