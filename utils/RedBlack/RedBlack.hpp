@@ -48,33 +48,34 @@ namespace ft {
 	class RedBlack {
 		/**——————————————————————————————————[Member_types]————————————————————————————————————————*/
 		public:
-		/**[Tree_types]*/
-			typedef				T														mapped_type;
-			typedef				Key														key_type;
-			typedef				ft::pair<key_type, mapped_type>							value_type;
-			typedef				ft::pair<key_type, mapped_type>					const_value_type;
-			typedef				Compare													key_compare;
-			typedef				Allocator												allocator_type;
-			typedef	typename 	allocator_type::reference								reference;
-			typedef	typename 	allocator_type::const_reference							const_reference;
-			typedef typename 	allocator_type::pointer									pointer;
-			typedef typename 	allocator_type::const_pointer							const_pointer;
+			/**[Tree_types]*/
+			typedef				T																				mapped_type;
+			typedef				Key																				key_type;
+			typedef				ft::pair<key_type, mapped_type>													value_type;
+			typedef				ft::pair<key_type, mapped_type>													const_value_type;
+			typedef				Compare																			key_compare;
+			typedef				Allocator																		allocator_type;
+			typedef	typename 	allocator_type::reference														reference;
+			typedef	typename 	allocator_type::const_reference													const_reference;
+			typedef typename 	allocator_type::pointer															pointer;
+			typedef typename 	allocator_type::const_pointer													const_pointer;
 
 			/**[Node_types]*/
-			typedef				ft::NODE<value_type>									node;
-			typedef	typename	allocator_type::template rebind<node>::other			node_allocator;
-			typedef	typename	node_allocator::pointer									node_pointer;
-			typedef	typename	node_allocator::reference								node_reference;
-			typedef typename 	node_allocator::const_pointer							const_node_pointer;
+			typedef				ft::NODE<value_type>															node;
+			typedef	typename	allocator_type::template rebind<node>::other									node_allocator;
+			typedef	typename	node_allocator::pointer															node_pointer;
+			typedef	typename	node_allocator::reference														node_reference;
+			typedef typename 	node_allocator::const_pointer													const_node_pointer;
 			
-		/**[Iterator_types]*/
-			typedef				RB_iterator<node_pointer, value_type>					iterator;
-			typedef				RB_const_iterator<const node_pointer, const value_type>				const_iterator;
-			typedef				ft::reverse_iterator<iterator>							reverse_iterator;
-			typedef				ft::reverse_iterator<const_iterator>					const_reverse_iterator;
+			typedef				std::ptrdiff_t																	difference_type;
+			typedef				std::size_t																		size_type;
+			
+			/**[Iterator_types]*/
+			typedef				ft::RB_iterator<node_pointer, value_type, difference_type>						iterator;
+			typedef				ft::RB_const_iterator<const node_pointer, const value_type, difference_type>	const_iterator;
+			typedef				ft::reverse_iterator<iterator>													reverse_iterator;
+			typedef				ft::reverse_iterator<const_iterator>											const_reverse_iterator;
 
-			typedef				std::ptrdiff_t											difference_type;
-			typedef				std::size_t												size_type;
 		
 		/**———————————————————————————————————[Private Member]—————————————————————————————————————*/
 		private:
@@ -182,11 +183,11 @@ namespace ft {
 			 ** @brief Returns an iterator to the first element in the tree,
 			 ** which is the left most node.
 			 **/
-//			inline iterator
-//			begin() {
-//				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
-//				return (iterator(MinNode));
-//			}
+			inline iterator
+			begin() {
+				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
+				return iterator(MinNode);
+			}
 
 			/**—————————————————————————————————————[ begin ]—————————————————————————————————————*
 			 ** @brief Returns an iterator to the first element in the tree.
@@ -194,7 +195,7 @@ namespace ft {
 			inline const_iterator
 			begin() const {
 				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
-				return (const_iterator(MinNode));
+				return const_iterator(MinNode);
 			}
 		
 			/**——————————————————————————————————————[ end ]——————————————————————————————————————*
@@ -206,11 +207,11 @@ namespace ft {
 			 ** cause it's pointing ti the end of the tree (leaf).
 			 **/
 			 
-//			inline iterator
-//			end() {
-//				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-//				return (iterator(MaxNode->right));
-//			}
+			inline iterator
+			end() {
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
+				return (iterator(MaxNode->right));
+			}
 		
 			/**——————————————————————————————————————[ end ]——————————————————————————————————————*
 			 ** @brief Returns an iterator to the last element in the tree,
@@ -229,8 +230,7 @@ namespace ft {
 			 **/
 			inline reverse_iterator
 			rbegin() {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-				return (reverse_iterator(MaxNode));
+				return reverse_iterator(end());
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -239,8 +239,7 @@ namespace ft {
 			 **/
 			inline const_reverse_iterator
 			rbegin() const {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-				return (const_reverse_iterator(MaxNode));
+				return const_reverse_iterator(end());
 			}
 		
 			/**—————————————————————————————————————[ rend ]——————————————————————————————————————*
@@ -249,8 +248,7 @@ namespace ft {
 			 **/
 			inline reverse_iterator
 			rend() {
-				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
-				return (reverse_iterator(MinNode));
+				return reverse_iterator(begin());
 			}
 		
 			/**—————————————————————————————————————[ rend ]——————————————————————————————————————*
@@ -259,8 +257,7 @@ namespace ft {
 			 **/
 			inline const_reverse_iterator
 			rend() const {
-				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
-				return (const_reverse_iterator(MinNode));
+				return const_reverse_iterator(begin());
 			}
 
 			/*——————————————————————————————————————————————————————————————————————————————————————*

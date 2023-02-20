@@ -4,7 +4,8 @@
 /**===================================================================================================*/
 # include "./iterator.hpp"
 # include "./iterator_traits.hpp"
-
+# include "./RedBlack_iterator/RB_iterator.hpp"
+# include "./RedBlack_iterator/RB_const_iterator.hpp"
 /**===================================================================================================*/
 namespace ft {
 /**===================================================================================================*/
@@ -12,14 +13,16 @@ namespace ft {
 	class reverse_iterator {
 		public:
 		/*=====================================[Member types]=====================================*/
+
+
 			/**
 			 * iterator_type: A type that provides the underlying iterator for a reverse_iterator. */
 		 	typedef 				T												iterator_type;
 			typedef typename		ft::iterator_traits<T>::value_type				value_type;
 			/**
 			 * A type that provides a pointer to an element addressed by a reverse_iterator. */
-			typedef typename		ft::iterator_traits<T>::pointer					pointer;
-			typedef typename		ft::iterator_traits<T>::reference				reference;
+			typedef typename		ft::iterator_traits<T>::value_pointer			pointer;
+			typedef typename		ft::iterator_traits<T>::value_reference			reference;
 			
 			/**
 			 * difference_type: A type that provides the difference between two reverse_iterators
@@ -53,7 +56,7 @@ namespace ft {
 			explicit
 			reverse_iterator (const reverse_iterator<Iter>& rev_it)
 				: _current_iter(rev_it.base()) { }
-			
+				
 			/*———————————————————————————————————[Base]————————————————————————————————————————————*
 			 * @Member_function
 			 * Recovers the underlying iterator from its reverse_iterator.

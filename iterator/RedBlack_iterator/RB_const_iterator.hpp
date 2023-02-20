@@ -5,7 +5,7 @@
 #include <iostream>
 # include <cstddef>		// for ptrdiff_t
 # include "../iterator_traits.hpp"
-
+# include <map>
 /*=============================================================================================================*/
 namespace ft {
 /*=============================================================================================================*/
@@ -17,14 +17,15 @@ namespace ft {
 	 * @tparam T a pointer to the node.
 	 * @tparam val the value.
 	 */
-	template <class T, class val>
+	template <class T, class val, class DeffType>
 	class RB_const_iterator {
 	public:
-		typedef			T										node_pointer;
-		typedef			val*								const_value_pointer;
-		typedef			val&								const_value_reference;
-		typedef			std::ptrdiff_t							difference_type;
-		typedef			ft::random_access_iterator_tag			iterator_category;
+		typedef 		val											value_type;
+		typedef			T											node_pointer;
+		typedef			val*										value_pointer;
+		typedef			val&										value_reference;
+		typedef			DeffType									difference_type;
+		typedef			ft::random_access_iterator_tag				iterator_category;
 	
 	private:
 		node_pointer	_ptr;
@@ -34,14 +35,25 @@ namespace ft {
 		RB_const_iterator()
 				: _ptr(NULL) {};
 		
-		explicit RB_const_iterator(const node_pointer& ptr)
+		explicit
+		RB_const_iterator(const node_pointer& ptr)
 				: _ptr(ptr) {};
 		
-		template <class NodePointer, class Val>
-		RB_const_iterator(const RB_const_iterator<NodePointer, Val>& copy)
-				: _ptr(copy._ptr) {};
+		template <class NodePointer, class Val, class Diff>
+		RB_const_iterator(const RB_iterator<NodePointer, Val, Diff>& copy)
+				: _ptr(copy.base()) {};
+		
+		template <class NodePointer, class Val, class Diff>
+		RB_const_iterator(const RB_const_iterator<NodePointer, Val, Diff>& copy)
+				: _ptr(copy.base()) {};
 		
 		~RB_const_iterator() {};
+		
+		/**————————————————————————————————[base()]————————————————————————————————————————————*/
+		inline node_pointer
+		base() const {
+			return _ptr;
+		}
 		
 		/**——————————————————————————————[Operator=]———————————————————————————————————————————*/
 		inline RB_const_iterator&
@@ -52,13 +64,13 @@ namespace ft {
 		};
 		
 		/**——————————————————————————————[Operator*]———————————————————————————————————————————*/
-		inline const_value_reference
+		inline value_reference
 		operator*() const {
 			return (_ptr->paired_data);
 		};
 		
 		/**——————————————————————————————[Operator->]——————————————————————————————————————————*/
-		inline const_value_pointer
+		inline value_pointer
 		operator->() const {
 			return &(_ptr->paired_data);
 		};
@@ -175,16 +187,16 @@ namespace ft {
 
 /*=============================================================================================================*/
 	/**——————————————————————————————[Operator(it1 != it2)]———————————————————————————————————————————*/
-	template <class T, class val >
+	template <class T, class val, class Diff>
 	inline bool
-	operator!=(const RB_const_iterator<T, val>& lhs, const RB_const_iterator<T, val>& rhs) {
+	operator!=(const RB_const_iterator<T, val, Diff>& lhs, const RB_const_iterator<T, val, Diff>& rhs) {
 		return (lhs.base() != rhs.base());
 	}
 	
 	/**——————————————————————————————[Operator(it1 == it2)]———————————————————————————————————————————*/
-	template <class T, class val >
+	template <class T, class val, class Diff>
 	inline bool
-	operator==(const RB_const_iterator<T, val>& lhs, const RB_const_iterator<T, val>& rhs) {
+	operator==(const RB_const_iterator<T, val, Diff>& lhs, const RB_const_iterator<T, val, Diff>& rhs) {
 		return (lhs.base() == rhs.base());
 	}
 /*=============================================================================================================*/

@@ -24,14 +24,15 @@ namespace ft {
 	 ** @tparam T
 	 ** @tparam val
 	 **/
-	template <class T, class val>
+	template <class T, class val, class DeffType>
 	class RB_iterator {
 		public:
 		
+			typedef 		val									value_type;
 			typedef			T									node_pointer;
 			typedef			val*								value_pointer;
 			typedef			val&								value_reference;
-			typedef			std::ptrdiff_t						difference_type;
+			typedef			DeffType							difference_type;
 			typedef			ft::bidirectional_iterator_tag		iterator_category;
 			
 		private:
@@ -45,9 +46,9 @@ namespace ft {
 			explicit RB_iterator(const node_pointer& ptr)
 				: _ptr(ptr) { };
 			
-			template<class NodePointer, class Val>
-			RB_iterator(RB_iterator<NodePointer, Val>& copy)
-				: _ptr(copy.base()) { };
+			template<class NodePointer, class Val, class Diff>
+			RB_iterator(RB_iterator<NodePointer, Val, Diff>& copy)
+				: _ptr((copy.base())) { };
 
 			~RB_iterator() { };
 
@@ -188,16 +189,16 @@ namespace ft {
 
 /*=============================================================================================================*/
 	/**——————————————————————————————[Operator(it1 != it2)]———————————————————————————————————————————*/
-	template <class T, class val >
+	template <class T, class val, class Diff>
 	inline bool
-	operator!=(const RB_iterator<T, val>& lhs, const RB_iterator<T, val>& rhs) {
+	operator!=(const RB_iterator<T, val, Diff>& lhs, const RB_iterator<T, val, Diff>& rhs) {
 		return (lhs.base() != rhs.base());
 	}
 	
 	/**——————————————————————————————[Operator(it1 == it2)]———————————————————————————————————————————*/
-	template <class T, class val >
+	template <class T, class val, class Diff>
 	inline bool
-	operator==(const RB_iterator<T, val>& lhs, const RB_iterator<T, val>& rhs) {
+	operator==(const RB_iterator<T, val, Diff>& lhs, const RB_iterator<T, val, Diff>& rhs) {
 		return (lhs.base() == rhs.base());
 	}
 /*=============================================================================================================*/
