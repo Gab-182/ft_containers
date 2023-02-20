@@ -230,7 +230,8 @@ namespace ft {
 			 **/
 			inline reverse_iterator
 			rbegin() {
-				return reverse_iterator(end());
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
+				return reverse_iterator(iterator(MaxNode));
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -239,7 +240,8 @@ namespace ft {
 			 **/
 			inline const_reverse_iterator
 			rbegin() const {
-				return const_reverse_iterator(end());
+				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
+				return const_reverse_iterator(iterator(MaxNode));
 			}
 		
 			/**—————————————————————————————————————[ rend ]——————————————————————————————————————*

@@ -53,7 +53,6 @@ namespace ft {
 			 * @param rev_it
 			 */
 			template <class Iter>
-			explicit
 			reverse_iterator (const reverse_iterator<Iter>& rev_it)
 				: _current_iter(rev_it.base()) { }
 				
@@ -187,6 +186,34 @@ namespace ft {
 /**===================================================================================================*/
 	}; // reverse_iterator
 /**===================================================================================================*/
+	/*---------------------------------------------------------------------------------------------------*/
+	template<class T >
+	std::ostream&
+	operator<<(std::ostream& os, const reverse_iterator<T> &it) {
+		os << *it;
+		return (os);
+	}
+	
+	/*---------------------------------------------------------------------------------------------------*/
+	template <class Iter >
+	inline typename reverse_iterator<Iter>::difference_type
+	operator-(const reverse_iterator<Iter>& lhs, const reverse_iterator<Iter>& rhs) {
+		return (lhs.base() - rhs.base());
+	}
+	/*---------------------------------------------------------------------------------------------------*/
+	template <class Iter >
+	inline bool
+	operator!=(const reverse_iterator<Iter>& lhs, const reverse_iterator<Iter>& rhs) {
+		return (lhs.base() != rhs.base());
+	}
+	
+	/*---------------------------------------------------------------------------------------------------*/
+	template <class Iter >
+	inline reverse_iterator<Iter>
+	operator+(const reverse_iterator<Iter>& lhs, typename reverse_iterator<Iter>::difference_type rhs) {
+		return (lhs.base() + rhs);
+	}
+	
 } // name space ft
 /**===================================================================================================*/
 #endif //FT_REVERSE_ITERATOR_HPP

@@ -45,7 +45,8 @@ int main()
 		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
 		while (it != ite) {
 			std::cout << it->first << " ";
-			it->first = 100;
+			// Here if you tried to change the value of the key, you can.
+//			it->first = it->first + 100;
 			++it;
 		}
 		std::cout << std::endl;
@@ -67,257 +68,264 @@ int main()
 	{
 		ft::RedBlack<int, std::string>::reverse_iterator it = my_tree.rbegin();
 		ft::RedBlack<int, std::string>::reverse_iterator ite = my_tree.rend();
+		while (it != ite) {
+			std::cout << it->first << " ";
+			++it;
+		}
+		std::cout << std::endl;
 	}
 	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
 	std::cout << BOLDGREEN << "Testing const rbegin() && const rend(): 🧮📐📏" << RESET << std::endl;
 	{
 		ft::RedBlack<int, std::string>::const_reverse_iterator it = my_tree.rbegin();
 		ft::RedBlack<int, std::string>::const_reverse_iterator ite = my_tree.rend();
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	
-	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
-	std::cout << BOLDRED << "Testing RedBlack Methods: 🧮📐📏" << RESET << std::endl;
-	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing Insert(): 🧮📐📏" << RESET << std::endl;
-	{
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair1.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair1.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair2.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair2.first->second << ",  Inserted? " << pair2.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair3.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair3.first->second << ",  Inserted? " << pair3.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair4.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair4.first->second << ",  Inserted? " << pair4.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair5.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair5.first->second << ",  Inserted? " << pair5.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair6.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair6.first->second << ",  Inserted? " << pair6.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair7.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair7.first->second << ",  Inserted? " << pair7.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair8.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair8.first->second << ",  Inserted? " << pair8.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair9.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair9.first->second << ",  Inserted? " << pair9.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair10.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair10.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair11.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair11.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair12.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair12.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair13.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair13.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair14.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair14.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair15.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair15.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair16.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair16.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair17.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair17.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair18.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair18.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair19.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair19.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair20.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair20.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
-
-		std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
-		std::cout << BOLDYELLOW << "The tree size = " << BOLDRED << my_tree.size() << RESET << std::endl;
-		my_tree.Inorder(my_tree.get_root());
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing Operators: 🧮" << RESET << std::endl;
-	{
-		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
-		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
-
-		// Testing (operator++)
-		std::cout << BOLDWHITE << "Testing Operator++" << RESET << std::endl;
-		std::cout << it->first << " " << it->second << std::endl;
-		it++;
-		std::cout << it->first << " " << it->second << std::endl;
-		it++;
-		std::cout << it->first << " " << it->second << std::endl;
-		it++;
-		std::cout << it->first << " " << it->second << std::endl;
-		it++;
-		std::cout << it->first << " " << it->second << std::endl;
-
-		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
-		// Testing (operator--)
-		std::cout << BOLDWHITE << "Testing Operator--" << RESET << std::endl;
-		it--;
-		std::cout << it->first << " " << it->second << std::endl;
-		it += 5;
-		std::cout << it->first << " " << it->second << std::endl;
-		it -= 5;
-		std::cout << it->first << " " << it->second << std::endl;
-
-		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
-		std::cout << BOLDWHITE << "Testing Operator+" << RESET << std::endl;
-		// Testing (operator+)
-		it = it + 5;
-		std::cout << it->first << " " << it->second << std::endl;
-
-		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
-		// Testing (operator-)
-		std::cout << BOLDWHITE << "Testing Operator-" << RESET << std::endl;
-		it = it - 2;
-		std::cout << it->first << " " << it->second << std::endl;
-
-		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
-		it = my_tree.begin();
-		ite = my_tree.end();
 		while (it != ite) {
-			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
-					  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
-					  << RESET << std::endl;
-			it++;
+			std::cout << it->first << " ";
+			++it;
 		}
 	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing access operator[]: " << RESET << std::endl;
-	{
-		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
-		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
-		my_tree[1]= "AA";
-		my_tree[20] = "TT";
-		my_tree[21] = "OUT";
-		my_tree[22] = "REALLY OUT";
-
-		while (it != ite) {
-			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
-					  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
-					  << RESET << std::endl;
-			it++;
-		}
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing find(): " << RESET << std::endl;
-	{
-		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
-		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
-		my_tree[1]= "AA";
-		my_tree[20] = "TT";
-		my_tree[21] = "OUT";
-		my_tree[22] = "REALLY OUT";
-
-		it = my_tree.find(20);
-
-// Here it should return end() iterator.
-//		it = my_tree.find(23);
-
-		while (it != ite) {
-			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
-					  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
-					  << RESET << std::endl;
-			it++;
-		}
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing count(): " << RESET << std::endl;
-	{
-		std::cout << BOLDYELLOW << "The tree size = " << BOLDRED << my_tree.size() << RESET << std::endl;
-		std::cout << BOLDWHITE << "count(1) = " << BOLDRED << my_tree.count(1) << RESET<< std::endl;
-		std::cout << BOLDWHITE << "count(22) = " << BOLDRED << my_tree.count(22) << RESET<< std::endl;
-		std::cout << BOLDWHITE << "count(23) = " << BOLDRED << my_tree.count(23) << RESET<< std::endl;
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing lower_bound(): " << RESET << std::endl;
-	{
-		ft::RedBlack<int, std::string>::iterator it_lower1 = my_tree.lower_bound(3);
-		ft::RedBlack<int, std::string>::iterator it_lower2 = my_tree.lower_bound(20);
-		ft::RedBlack<int, std::string>::iterator it_lower3 = my_tree.lower_bound(23); // Not in tree, Going to return end().
-
-		std::cout << BOLDGREEN << "it_lower1 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_lower1->first << ", "
-				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_lower1->second
-				  << RESET << std::endl;
-		std::cout << BOLDGREEN << "it_lower2 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_lower2->first << ", "
-				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_lower2->second
-				  << RESET << std::endl;
-
-		///NOTE:
-		///=====
-		/// If you try to Dereference these iterators, SigFault gonna occur,
-		/// cause you are trying to dereference an end() iterator
-
-//		std::cout << BOLDGREEN << "it_lower3 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_lower3->first << ", "
-//				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_lower3->second
+//	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
+//	std::cout << BOLDRED << "Testing RedBlack Methods: 🧮📐📏" << RESET << std::endl;
+//	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing Insert(): 🧮📐📏" << RESET << std::endl;
+//	{
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair1.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair1.first->second << ",  Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair2.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair2.first->second << ",  Inserted? " << pair2.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair3.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair3.first->second << ",  Inserted? " << pair3.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair4.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair4.first->second << ",  Inserted? " << pair4.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair5.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair5.first->second << ",  Inserted? " << pair5.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair6.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair6.first->second << ",  Inserted? " << pair6.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair7.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair7.first->second << ",  Inserted? " << pair7.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair8.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair8.first->second << ",  Inserted? " << pair8.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair9.first->first  << BOLDYELLOW << ", Val= " << BOLDWHITE << pair9.first->second << ",  Inserted? " << pair9.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair10.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair10.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair11.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair11.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair12.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair12.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair13.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair13.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair14.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair14.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair15.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair15.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair16.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair16.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair17.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair17.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair18.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair18.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair19.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair19.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "Key= " << BOLDWHITE << pair20.first->first << BOLDYELLOW << ", Val= " << BOLDWHITE << pair20.first->second << ", Inserted? " << pair1.second << RESET << std::endl;
+//
+//		std::cout << BOLDYELLOW << "=============================================" << RESET << std::endl;
+//		std::cout << BOLDYELLOW << "The tree size = " << BOLDRED << my_tree.size() << RESET << std::endl;
+//		my_tree.Inorder(my_tree.get_root());
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing Operators: 🧮" << RESET << std::endl;
+//	{
+//		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
+//		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
+//
+//		// Testing (operator++)
+//		std::cout << BOLDWHITE << "Testing Operator++" << RESET << std::endl;
+//		std::cout << it->first << " " << it->second << std::endl;
+//		it++;
+//		std::cout << it->first << " " << it->second << std::endl;
+//		it++;
+//		std::cout << it->first << " " << it->second << std::endl;
+//		it++;
+//		std::cout << it->first << " " << it->second << std::endl;
+//		it++;
+//		std::cout << it->first << " " << it->second << std::endl;
+//
+//		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
+//		// Testing (operator--)
+//		std::cout << BOLDWHITE << "Testing Operator--" << RESET << std::endl;
+//		it--;
+//		std::cout << it->first << " " << it->second << std::endl;
+//		it += 5;
+//		std::cout << it->first << " " << it->second << std::endl;
+//		it -= 5;
+//		std::cout << it->first << " " << it->second << std::endl;
+//
+//		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
+//		std::cout << BOLDWHITE << "Testing Operator+" << RESET << std::endl;
+//		// Testing (operator+)
+//		it = it + 5;
+//		std::cout << it->first << " " << it->second << std::endl;
+//
+//		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
+//		// Testing (operator-)
+//		std::cout << BOLDWHITE << "Testing Operator-" << RESET << std::endl;
+//		it = it - 2;
+//		std::cout << it->first << " " << it->second << std::endl;
+//
+//		std::cout << BOLDYELLOW << "------------------------------" << RESET << std::endl;
+//		it = my_tree.begin();
+//		ite = my_tree.end();
+//		while (it != ite) {
+//			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
+//					  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
+//					  << RESET << std::endl;
+//			it++;
+//		}
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing access operator[]: " << RESET << std::endl;
+//	{
+//		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
+//		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
+//		my_tree[1]= "AA";
+//		my_tree[20] = "TT";
+//		my_tree[21] = "OUT";
+//		my_tree[22] = "REALLY OUT";
+//
+//		while (it != ite) {
+//			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
+//					  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
+//					  << RESET << std::endl;
+//			it++;
+//		}
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing find(): " << RESET << std::endl;
+//	{
+//		ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
+//		ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
+//		my_tree[1]= "AA";
+//		my_tree[20] = "TT";
+//		my_tree[21] = "OUT";
+//		my_tree[22] = "REALLY OUT";
+//
+//		it = my_tree.find(20);
+//
+//// Here it should return end() iterator.
+////		it = my_tree.find(23);
+//
+//		while (it != ite) {
+//			std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
+//					  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
+//					  << RESET << std::endl;
+//			it++;
+//		}
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing count(): " << RESET << std::endl;
+//	{
+//		std::cout << BOLDYELLOW << "The tree size = " << BOLDRED << my_tree.size() << RESET << std::endl;
+//		std::cout << BOLDWHITE << "count(1) = " << BOLDRED << my_tree.count(1) << RESET<< std::endl;
+//		std::cout << BOLDWHITE << "count(22) = " << BOLDRED << my_tree.count(22) << RESET<< std::endl;
+//		std::cout << BOLDWHITE << "count(23) = " << BOLDRED << my_tree.count(23) << RESET<< std::endl;
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing lower_bound(): " << RESET << std::endl;
+//	{
+//		ft::RedBlack<int, std::string>::iterator it_lower1 = my_tree.lower_bound(3);
+//		ft::RedBlack<int, std::string>::iterator it_lower2 = my_tree.lower_bound(20);
+//		ft::RedBlack<int, std::string>::iterator it_lower3 = my_tree.lower_bound(23); // Not in tree, Going to return end().
+//
+//		std::cout << BOLDGREEN << "it_lower1 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_lower1->first << ", "
+//				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_lower1->second
 //				  << RESET << std::endl;
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing upper_bound(): " << RESET << std::endl;
-	{
-		ft::RedBlack<int, std::string>::iterator it_upper1 = my_tree.upper_bound(15);
-		ft::RedBlack<int, std::string>::iterator it_upper2 = my_tree.upper_bound(18);
-		ft::RedBlack<int, std::string>::iterator it_upper3 = my_tree.upper_bound(20);
-		ft::RedBlack<int, std::string>::iterator it_upper4 = my_tree.upper_bound(23); // Not in tree, Going to return end().
-		ft::RedBlack<int, std::string>::iterator it_upper5 = my_tree.upper_bound(34); // Not in tree, Going to return end().
-
-		std::cout << BOLDGREEN << "it_upper1 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper1->first << ", "
-				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper1->second
-				  << RESET << std::endl;
-		std::cout << BOLDGREEN << "it_upper2 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper2->first << ", "
-				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper2->second
-				  << RESET << std::endl;
-		std::cout << BOLDGREEN << "it_upper3 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper3->first << ", "
-				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper3->second
-				  << RESET << std::endl;
-		///NOTE:
-		///=====
-		/// If you try to Dereference these iterators, SigFault gonna occur,
-		/// cause you are trying to dereference an end() iterator
-
-//		std::cout << BOLDGREEN << "it_upper4 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper4->first << ", "
-//				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper4->second
+//		std::cout << BOLDGREEN << "it_lower2 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_lower2->first << ", "
+//				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_lower2->second
 //				  << RESET << std::endl;
-//		std::cout << BOLDGREEN << "it_upper5 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper5->first << ", "
-//				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper5->second
+//
+//		///NOTE:
+//		///=====
+//		/// If you try to Dereference these iterators, SigFault gonna occur,
+//		/// cause you are trying to dereference an end() iterator
+//
+////		std::cout << BOLDGREEN << "it_lower3 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_lower3->first << ", "
+////				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_lower3->second
+////				  << RESET << std::endl;
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing upper_bound(): " << RESET << std::endl;
+//	{
+//		ft::RedBlack<int, std::string>::iterator it_upper1 = my_tree.upper_bound(15);
+//		ft::RedBlack<int, std::string>::iterator it_upper2 = my_tree.upper_bound(18);
+//		ft::RedBlack<int, std::string>::iterator it_upper3 = my_tree.upper_bound(20);
+//		ft::RedBlack<int, std::string>::iterator it_upper4 = my_tree.upper_bound(23); // Not in tree, Going to return end().
+//		ft::RedBlack<int, std::string>::iterator it_upper5 = my_tree.upper_bound(34); // Not in tree, Going to return end().
+//
+//		std::cout << BOLDGREEN << "it_upper1 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper1->first << ", "
+//				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper1->second
 //				  << RESET << std::endl;
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing equal_range(): " << RESET << std::endl;
-	{
-		ft::pair<ft::RedBlack<int, std::string>::iterator, ft::RedBlack<int, std::string>::iterator>
-				equal_range1 = my_tree.equal_range(21);
-
-		std::cout << BOLDYELLOW << "First iterator in the range" << std::endl;
-		std::cout << BOLDYELLOW << "The key= "
-			<< BOLDWHITE << equal_range1.first->first
-			<< ",The value= " << equal_range1.first->second
-			<< std::endl;
-
-		std::cout << BOLDYELLOW << "Second iterator in the range" << std::endl;
-		std::cout << BOLDYELLOW << "The key= "
-				  << BOLDWHITE << equal_range1.first->first
-				  << BOLDYELLOW<< ",The value= "
-				  << BOLDWHITE << equal_range1.first->second
-				  << std::endl;
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing access at(): " << RESET << std::endl;
-	{
-		try {
-			ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
-			ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
-			my_tree.at(1) = "AAA";
-			my_tree.at(20) = "TTT";
-			my_tree.at(21) = "OUT.OUT";
-			my_tree.at(22) = "REALLY OUT > Really";
-			my_tree.at(43) = "OUT."; // This will cause an exception, key not found.
-
-			while (it != ite) {
-				std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
-						  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
-						  << RESET << std::endl;
-				it++;
-			}
-		} catch (std::exception &e) {
-			std::cout << BOLDRED << e.what() << RESET << std::endl;
-		}
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing the erase()" << RESET << std::endl;
-	{
-		my_tree.erase(1);
-		my_tree.erase(2);
-		my_tree.erase(3);
-		my_tree.erase(4);
-		my_tree.erase(5);
-		my_tree.erase(6);
-		my_tree.erase(7);
-		my_tree.erase(8);
-		my_tree.erase(9);
-		my_tree.erase(10);
-
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing access clear(): " << RESET << std::endl;
-	{
-		my_tree.clear();
-	}
-	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
+//		std::cout << BOLDGREEN << "it_upper2 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper2->first << ", "
+//				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper2->second
+//				  << RESET << std::endl;
+//		std::cout << BOLDGREEN << "it_upper3 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper3->first << ", "
+//				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper3->second
+//				  << RESET << std::endl;
+//		///NOTE:
+//		///=====
+//		/// If you try to Dereference these iterators, SigFault gonna occur,
+//		/// cause you are trying to dereference an end() iterator
+//
+////		std::cout << BOLDGREEN << "it_upper4 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper4->first << ", "
+////				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper4->second
+////				  << RESET << std::endl;
+////		std::cout << BOLDGREEN << "it_upper5 ->" << BOLDYELLOW << "Key = " << BOLDWHITE << it_upper5->first << ", "
+////				  << BOLDYELLOW << "Value = " << BOLDWHITE << it_upper5->second
+////				  << RESET << std::endl;
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing equal_range(): " << RESET << std::endl;
+//	{
+//		ft::pair<ft::RedBlack<int, std::string>::iterator, ft::RedBlack<int, std::string>::iterator>
+//				equal_range1 = my_tree.equal_range(21);
+//
+//		std::cout << BOLDYELLOW << "First iterator in the range" << std::endl;
+//		std::cout << BOLDYELLOW << "The key= "
+//			<< BOLDWHITE << equal_range1.first->first
+//			<< ",The value= " << equal_range1.first->second
+//			<< std::endl;
+//
+//		std::cout << BOLDYELLOW << "Second iterator in the range" << std::endl;
+//		std::cout << BOLDYELLOW << "The key= "
+//				  << BOLDWHITE << equal_range1.first->first
+//				  << BOLDYELLOW<< ",The value= "
+//				  << BOLDWHITE << equal_range1.first->second
+//				  << std::endl;
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing access at(): " << RESET << std::endl;
+//	{
+//		try {
+//			ft::RedBlack<int, std::string>::iterator it = my_tree.begin();
+//			ft::RedBlack<int, std::string>::iterator ite = my_tree.end();
+//			my_tree.at(1) = "AAA";
+//			my_tree.at(20) = "TTT";
+//			my_tree.at(21) = "OUT.OUT";
+//			my_tree.at(22) = "REALLY OUT > Really";
+//			my_tree.at(43) = "OUT."; // This will cause an exception, key not found.
+//
+//			while (it != ite) {
+//				std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
+//						  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
+//						  << RESET << std::endl;
+//				it++;
+//			}
+//		} catch (std::exception &e) {
+//			std::cout << BOLDRED << e.what() << RESET << std::endl;
+//		}
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing the erase()" << RESET << std::endl;
+//	{
+//		my_tree.erase(1);
+//		my_tree.erase(2);
+//		my_tree.erase(3);
+//		my_tree.erase(4);
+//		my_tree.erase(5);
+//		my_tree.erase(6);
+//		my_tree.erase(7);
+//		my_tree.erase(8);
+//		my_tree.erase(9);
+//		my_tree.erase(10);
+//
+//	}
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing access clear(): " << RESET << std::endl;
+//	{
+//		my_tree.clear();
+//	}
+//	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
 
 	return 0;
 }
