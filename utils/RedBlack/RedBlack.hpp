@@ -72,7 +72,7 @@ namespace ft {
 			
 			/**[Iterator_types]*/
 			typedef				ft::RB_iterator<node_pointer, value_type, difference_type>						iterator;
-			typedef				ft::RB_const_iterator<const node_pointer, const value_type, difference_type>	const_iterator;
+			typedef				ft::RB_const_iterator<node_pointer, const value_type, difference_type>			const_iterator;
 			typedef				ft::reverse_iterator<iterator>													reverse_iterator;
 			typedef				ft::reverse_iterator<const_iterator>											const_reverse_iterator;
 
@@ -190,6 +190,7 @@ namespace ft {
 			}
 
 			/**—————————————————————————————————————[ begin ]—————————————————————————————————————*
+			 *
 			 ** @brief Returns an iterator to the first element in the tree.
 			 **/
 			inline const_iterator

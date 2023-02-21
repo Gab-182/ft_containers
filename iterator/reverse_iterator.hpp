@@ -82,7 +82,7 @@ namespace ft {
 			 **/
 			inline pointer
 			operator->() const {
-				return (&(operator*()));
+				return &(operator*());
 			}
 			
 			/**——————————————————————————————[Operator++]———————————————————————————————————————————*

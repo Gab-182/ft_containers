@@ -2,9 +2,10 @@
 #define RB_CONST_ITERATOR_HPP
 
 /*=============================================================================================================*/
-#include <iostream>
+# include <iostream>
 # include <cstddef>		// for ptrdiff_t
 # include "../iterator_traits.hpp"
+# include "../reverse_iterator.hpp"
 # include <map>
 /*=============================================================================================================*/
 namespace ft {
@@ -25,10 +26,23 @@ namespace ft {
 		typedef			val*										value_pointer;
 		typedef			val&										value_reference;
 		typedef			DeffType									difference_type;
-		typedef			ft::random_access_iterator_tag				iterator_category;
+		typedef			ft::bidirectional_iterator_tag				iterator_category;
 	
 	private:
 		node_pointer	_ptr;
+		
+		/**
+		 * @brief By using const_cast, _ptr_non_const converts the const-qualified _ptr into
+		 * a non-const pointer and returns it as a node_pointer.
+		 * This allows other member functions that require a non-const pointer to
+		 * the node to modify it without violating the
+		 * const-correctness of the const iterator.
+		 * @return
+		 */
+		node_pointer _ptr_to_non_const() const {
+			return const_cast<node_pointer>(_ptr);
+		}
+	
 	
 	public:
 		/**——————————————————————————[Constructors && Destructor]——————————————————————————————*/
@@ -111,7 +125,7 @@ namespace ft {
 			return (tmp);
 		}
 		/**——————————————————————————————[Operator--]——————————————————————————————————————————
-		 ** @brief Prefix decrement operator, it returns the iterator to the previous node.
+		 ** @brief Postfix decrement operator, it returns the iterator to the previous node.
 		 ** which have the smaller key.
 		 ** @return RB_iterator&
 		 **/
@@ -132,9 +146,9 @@ namespace ft {
 			}
 			return (*this);
 		}
-		
+
 		/**——————————————————————————————[Operator--(int)]—————————————————————————————————————————
-		 ** @brief Prefix decrement operator, it returns the iterator to the previous node.
+		 ** @brief Postfix decrement operator, it returns the iterator to the previous node.
 		 ** which have the smaller key.
 		 ** @return RB_iterator
 		 ** Note:
