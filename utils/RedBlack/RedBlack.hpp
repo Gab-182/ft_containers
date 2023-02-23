@@ -105,13 +105,22 @@ namespace ft {
 					_nil(nullptr),
 					_nodes_count(0) { }
 		
-			/**——————————————————————————————[Range_Constructor]———————————————————————————————————*/
-//			template <class InputIterator>
-//			RedBlack (InputIterator first, InputIterator last,
-//					  const key_compare& comp = key_compare(),
-//					  const allocator_type& alloc = allocator_type()) {
-//
-//			}
+			/**——————————————————————————————[Range_Constructor]———————————————————————————————————*
+			 ** Constructs the container with the contents of the range [first, last).
+			 * If multiple elements in the range have keys that compare equivalent,
+			 * it is unspecified which element is inserted
+			 **/
+			template <class InputIterator>
+			RedBlack (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) 
+				:	_compare(comp),
+					_alloc_data(alloc),
+					_alloc_node(alloc),
+					_root(nullptr),
+					_nil(nullptr),
+					_nodes_count(0){
+				this->insert(first, last);
+			}
+			
 			/**——————————————————————————————[Copy_Constructor]————————————————————————————————————*/
 			/**
 			 ** @brief Copy constructor.
@@ -122,12 +131,33 @@ namespace ft {
 			 ** @param copy: the tree to copy from.
 			 **/
 			RedBlack(const RedBlack& copy)
-				:	_compare(copy._compare),
-					_alloc_data(copy._alloc_data),
-					_alloc_node(copy._alloc_node),
-					_root(copy._root),
-					_nil(copy._nil),
-					_nodes_count(copy._nodes_count) { }
+					:	_compare(copy._compare),
+						 _alloc_data(copy._alloc_data),
+						 _alloc_node(copy._alloc_node),
+						 _root(nullptr),
+						 _nil(nullptr),
+						 _nodes_count(copy._nodes_count) {
+				this->insert(copy.begin(), copy.end());
+			}
+			
+			/**——————————————————————————————[Assignment_Operator]—————————————————————————————————*/
+			/**
+			 ** @brief Assignment operator.
+			 ** @param copy: the tree to copy from.
+			 ** @return RedBlack&
+			 **/
+			template<class NodePointer, class Val, class Diff>
+			RedBlack&
+			operator=(const RedBlack& copy) {
+				if (this != &copy) {
+					_compare = copy._compare;
+					_alloc_data = copy._alloc_data;
+					_alloc_node = copy._alloc_node;
+					_nodes_count = copy._nodes_count;
+					insert(copy.begin(), copy.end());
+					return (*this);
+				}
+			}
 			/**———————————————————————————————————[Destructor]—————————————————————————————————————*/
 			~RedBlack() {
 				if (!empty())
@@ -395,6 +425,22 @@ namespace ft {
 				return (ft::make_pair(iterator(new_node), true));
 			}
 		
+			/**—————————————————————————————————[ range insert ]——————————————————————————————————*
+			 ** @brief Inserts elements from range [first, last). If multiple elements in the
+			 ** range have keys that compare equivalent, it is unspecified which element is inserted
+			 ** @param first, last
+			 **/
+			template< class Iter >
+			void insert( Iter first, Iter last ) {
+				value_type val;
+				while (first != last) {
+					val.first = first->first;
+					val.second = first->second;
+					insert(val);
+					++first;
+				}
+			}
+			
 			/**——————————————————————————————————————————————————————————————————————————————————*/
 		private:
 			/**—————————————————————————————————[ LeftRotation ]——————————————————————————————————*
