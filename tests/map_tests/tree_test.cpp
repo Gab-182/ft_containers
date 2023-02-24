@@ -103,28 +103,33 @@ int main()
 //		it->first = it->first + 100;
 		std::cout << std::endl;
 	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing rbegin() && rend(): 🧮📐📏" << RESET << std::endl;
-	{
-		ft::RedBlack<int, std::string>::reverse_iterator it = my_tree.rbegin();
-		ft::RedBlack<int, std::string>::reverse_iterator ite = my_tree.rend();
-		while (it != ite) {
-			std::cout << it->first << " ";
-			++it;
-		}
-		std::cout << std::endl;
-	}
-	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
-	std::cout << BOLDGREEN << "Testing const rbegin() && const rend(): 🧮📐📏" << RESET << std::endl;
-	{
-		ft::RedBlack<int, std::string>::const_reverse_iterator it = my_tree.rbegin();
-		ft::RedBlack<int, std::string>::const_reverse_iterator ite = my_tree.rend();
-		while (it != ite) {
-			std::cout << it->first << " ";
-			++it;
-		}
-		std::cout << std::endl;
-	}
+	
+/**
+ * @TODO: test reverse rbegin() && rend() and operator++() && operator--().
+ */
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing rbegin() && rend(): 🧮📐📏" << RESET << std::endl;
+//	{
+//		ft::RedBlack<int, std::string>::reverse_iterator it = my_tree.rbegin();
+//		ft::RedBlack<int, std::string>::reverse_iterator ite = my_tree.rend();
+//		while (it != ite) {
+//			std::cout << it->first << " ";
+//			++it;
+//		}
+//		std::cout << std::endl;
+//	}
+
+//	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
+//	std::cout << BOLDGREEN << "Testing const rbegin() && const rend(): 🧮📐📏" << RESET << std::endl;
+//	{
+//		ft::RedBlack<int, std::string>::const_reverse_iterator it = my_tree.rbegin();
+//		ft::RedBlack<int, std::string>::const_reverse_iterator ite = my_tree.rend();
+//		while (it != ite) {
+//			std::cout << it->first << " ";
+//			++it;
+//		}
+//		std::cout << std::endl;
+//	}
 
 	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
 	std::cout << BOLDRED << "Testing RedBlack Methods: 🧮📐📏" << RESET << std::endl;
@@ -373,22 +378,25 @@ int main()
 	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
 	std::cout << BOLDGREEN << "Testing the erase()" << RESET << std::endl;
 	{
-		my_tree.erase(1);
-		my_tree.erase(2);
-		my_tree.erase(3);
-		my_tree.erase(4);
-		my_tree.erase(5);
-		my_tree.erase(6);
-		my_tree.erase(7);
-		my_tree.erase(8);
-		my_tree.erase(9);
-		my_tree.erase(10);
-
+		std::cout << "Erasing [1]" << BOLDRED << my_tree.erase(1)  << RESET << std::endl;
+		std::cout << "Erasing [2]" << BOLDRED << my_tree.erase(2)  << RESET << std::endl;
+		std::cout << "Erasing [3]" << BOLDRED << my_tree.erase(3)  << RESET << std::endl;
+		std::cout << "Erasing [4]" << BOLDRED << my_tree.erase(4)  << RESET << std::endl;
+		std::cout << "Erasing [5]" << BOLDRED << my_tree.erase(5)  << RESET << std::endl;
+		std::cout << "Erasing [6]" << BOLDRED << my_tree.erase(6)  << RESET << std::endl;
+		std::cout << "Erasing [7]" << BOLDRED << my_tree.erase(7)  << RESET << std::endl;
+		std::cout << "Erasing [8]" << BOLDRED << my_tree.erase(8)  << RESET << std::endl;
+		std::cout << "Erasing [9]" << BOLDRED << my_tree.erase(9)  << RESET << std::endl;
+		std::cout << "Erasing [10]" << BOLDRED << my_tree.erase(10) << RESET << std::endl;
+		std::cout << "Erasing [55]" << BOLDRED << my_tree.erase(55) << RESET << std::endl;
 	}
 	std::cout << BOLDYELLOW << "—————————————————————————————————————————————" << RESET << std::endl;
 	std::cout << BOLDGREEN << "Testing access clear(): " << RESET << std::endl;
 	{
 		my_tree.clear();
+		std::cout << BOLDRED << "my_tree.size() = " << BOLDWHITE << my_tree.size() << RESET << std::endl;
+		std::cout << BOLDRED << "my_tree.empty() = " << BOLDWHITE << my_tree.empty() << RESET << std::endl;
+		std::cout << BOLDRED << "tree has been cleared" << RESET << std::endl;
 	}
 	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
 

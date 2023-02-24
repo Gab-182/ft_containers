@@ -7,6 +7,7 @@
 
 # include "../pair.hpp"
 # include "./TreeNode.hpp"
+# include "./"
 # include "../../iterator/reverse_iterator.hpp"
 # include "../../iterator/RedBlack_iterator/RB_iterator.hpp"
 # include "../../iterator/RedBlack_iterator/RB_const_iterator.hpp"
@@ -655,11 +656,11 @@ namespace ft {
 				return y
 
 			 **/
-			void
+			size_type
 			erase(const key_type& k) {
 				node_pointer z = find_node(k);
 				if (z == _nil)
-					return ;
+					return 0;
 				node_pointer y = z;
 				node_pointer x;
 				if (z->left == _nil || z->right == _nil) {
@@ -691,6 +692,7 @@ namespace ft {
 				}
 				_alloc_node.destroy(y);
 				_alloc_node.deallocate(y, 1);
+				return 1;
 			}
 			
 		private:
@@ -833,9 +835,20 @@ namespace ft {
 				return end();
 			}
 		
+			const_iterator
+			find (const key_type& k) const {
+				const_iterator it = begin();
+				const_iterator ite = end();
+				while (it != ite) {
+					if (it->first == k)
+						return (it);
+					it++;
+				}
+				return end();
+			}
 			/**——————————————————————————————————[ find_node ]————————————————————————————————————*
 			 ** @brief: Searches the container for an element with a key
-			 ** equivalent to k and returns a pointer to it if found,
+			 ** equivalent to k and returns a node pointer to it if found,
 			 ** otherwise it returns a null.
 			 **/
 			node_pointer
@@ -860,7 +873,7 @@ namespace ft {
 			 ** or zero (otherwise).
 			 **/
 			size_type
-			count (const key_type& k) {
+			count (const key_type& k) const {
 				if (find(k) == end())
 					return (0);
 				return (1);
