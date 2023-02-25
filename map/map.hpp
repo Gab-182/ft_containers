@@ -178,10 +178,10 @@ namespace ft {
 //					_tree.erase(first, last);
 //				}
 //
-//				void swap(map &x) {
-//					_tree.swap(x._tree);
-//				}
-//
+				void swap(map &x) {
+					_tree.swap(x._tree);
+				}
+
 				void clear() {
 					_tree.clear();
 				}
@@ -238,40 +238,40 @@ namespace ft {
 				}
 		};// Map
 	/**———————————————————————————————————[Non-member function overloads]—————————————————————————————————————*/
-//		template <class Key, class T, class Compare, class Alloc>
-//		bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
-//			return lhs._tree == rhs._tree;
-//		}
-//
-//		template <class Key, class T, class Compare, class Alloc>
-//		bool operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
-//			return lhs._tree != rhs._tree;
-//		}
-//
-//		template <class Key, class T, class Compare, class Alloc>
-//		bool operator<(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
-//			return lhs._tree < rhs._tree;
-//		}
-//
-//		template <class Key, class T, class Compare, class Alloc>
-//		bool operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
-//			return lhs._tree <= rhs._tree;
-//		}
-//
-//		template <class Key, class T, class Compare, class Alloc>
-//		bool operator>(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
-//			return lhs._tree > rhs._tree;
-//		}
-//
-//		template <class Key, class T, class Compare, class Alloc>
-//		bool operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
-//			return lhs._tree >= rhs._tree;
-//		}
-//
-//		template <class Key, class T, class Compare, class Alloc>
-//		void swap(map<Key, T, Compare, Alloc> &x, map<Key, T, Compare, Alloc> &y) {
-//			x.swap(y);
-//		}
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+			return lhs._tree == rhs._tree;
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+			return lhs._tree != rhs._tree;
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator<(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+			return lhs._tree < rhs._tree;
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+			return lhs._tree <= rhs._tree;
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator>(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+			return lhs._tree > rhs._tree;
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
+			return lhs._tree >= rhs._tree;
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		void swap(map<Key, T, Compare, Alloc> &x, map<Key, T, Compare, Alloc> &y) {
+			x.swap(y);
+		}
 /*=============================================================================================================*/
 }// FT
 

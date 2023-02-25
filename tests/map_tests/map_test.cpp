@@ -155,6 +155,97 @@ int main()
 		}
 	}
 
+	std::cout << BOLDGREEN << "\nTesting the erase()" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
+	{
+		std::cout << BOLDYELLOW << "Erasing [1]  -> " << BOLDRED << my_map.erase(1)  << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [2]  -> " << BOLDRED << my_map.erase(2)  << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [3]  -> " << BOLDRED << my_map.erase(3)  << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [4]  -> " << BOLDRED << my_map.erase(4)  << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [5]  -> " << BOLDRED << my_map.erase(5)  << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [6]  -> " << BOLDRED << my_map.erase(6)  << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [7]  -> " << BOLDRED << my_map.erase(7)  << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [8]  -> " << BOLDRED << my_map.erase(8)  << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [9]  -> " << BOLDRED << my_map.erase(9)  << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [10] -> " << BOLDRED << my_map.erase(10) << RESET << std::endl;
+		std::cout << BOLDYELLOW << "Erasing [55] -> " << BOLDRED << my_map.erase(55) << RESET << std::endl;
+	}
+
+	std::cout << BOLDGREEN << "\nTesting the swap()" << RESET << std::endl;
+	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
+	{
+		ft::map<int, std::string> map1;
+		map1.insert(ft::make_pair(1, "< A >"));
+		map1.insert(ft::make_pair(2, "< B >"));
+		map1.insert(ft::make_pair(3, "< C >"));
+		map1.insert(ft::make_pair(4, "< D >"));
+		
+		ft::map<int, std::string> map2;
+		map2.insert(ft::make_pair(10, "[ A ]"));
+		map2.insert(ft::make_pair(11, "[ B ]"));
+		map2.insert(ft::make_pair(12, "[ C ]"));
+		map2.insert(ft::make_pair(13, "[ D ]"));
+		map2.insert(ft::make_pair(14, "[ E ]"));
+		map2.insert(ft::make_pair(15, "[ F ]"));
+		map2.insert(ft::make_pair(16, "[ G ]"));
+		map2.insert(ft::make_pair(17, "[ H ]"));
+		map2.insert(ft::make_pair(18, "[ I ]"));
+		
+		std::cout << BOLDRED << "\n================== [Before swap()] ==================" << RESET << std::endl;
+		{
+			std::cout << BOLDYELLOW << "------- [Map1] --------" << RESET << std::endl;
+			ft::map<int, std::string>::iterator it = map1.begin();
+			ft::map<int, std::string>::iterator ite = map1.end();
+			std::cout << "Map1 Size: " << map1.size() << std::endl;
+			while (it != ite) {
+				std::cout
+						<< BOLDYELLOW << "Key= " << BOLDWHITE << it->first
+						<< BOLDYELLOW << ", Val= " << BOLDWHITE << it->second
+						<< RESET << std::endl;
+				++it;
+			}
+			
+			std::cout << BOLDYELLOW << "------- [Map2] --------" << RESET << std::endl;
+			ft::map<int, std::string>::iterator it2 = map2.begin();
+			ft::map<int, std::string>::iterator ite2 = map2.end();
+			std::cout << "Map2 Size: " << map2.size() << std::endl;
+			while (it2 != ite2) {
+				std::cout
+						<< BOLDYELLOW << "Key= " << BOLDWHITE << it2->first
+						<< BOLDYELLOW << ", Val= " << BOLDWHITE << it2->second
+						<< RESET << std::endl;
+				++it2;
+			}
+		}
+		map1.swap(map2);
+		std::cout << BOLDRED << "\n================== [After swap()] ==================" << RESET << std::endl;
+		{
+			std::cout << BOLDYELLOW << "------- [Map1] --------" << RESET << std::endl;
+			ft::map<int, std::string>::iterator it = map1.begin();
+			ft::map<int, std::string>::iterator ite = map1.end();
+			std::cout << "Map1 Size: " << map1.size() << std::endl;
+			while (it != ite) {
+				std::cout
+						<< BOLDYELLOW << "Key= " << BOLDWHITE << it->first
+						<< BOLDYELLOW << ", Val= " << BOLDWHITE << it->second
+						<< RESET << std::endl;
+				++it;
+			}
+			
+			std::cout << BOLDYELLOW << "------- [Map2] --------" << RESET << std::endl;
+			ft::map<int, std::string>::iterator it2 = map2.begin();
+			ft::map<int, std::string>::iterator ite2 = map2.end();
+			std::cout << "Map2 Size: " << map2.size() << std::endl;
+			while (it2 != ite2) {
+				std::cout
+						<< BOLDYELLOW << "Key= " << BOLDWHITE << it2->first
+						<< BOLDYELLOW << ", Val= " << BOLDWHITE << it2->second
+						<< RESET << std::endl;
+				++it2;
+			}
+		}
+	}
+
 	std::cout << BOLDGREEN << "\nTesting Operators: 🧮" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
 	{
@@ -223,7 +314,30 @@ int main()
 			it++;
 		}
 	}
-	
+
+	std::cout << BOLDGREEN << "\nTesting access at(): " << RESET << std::endl;
+	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
+	{
+		try {
+			ft::map<int, std::string>::iterator it = my_map.begin();
+			ft::map<int, std::string>::iterator ite = my_map.end();
+			my_map.at(1) = "AAA";
+			my_map.at(20) = "TTT";
+			my_map.at(21) = "OUT.OUT";
+			my_map.at(22) = "REALLY OUT > Really";
+			my_map.at(43) = "OUT."; // This will cause an exception, key not found.
+			
+			while (it != ite) {
+				std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
+						  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
+						  << RESET << std::endl;
+				it++;
+			}
+		} catch (std::exception &e) {
+			std::cout << BOLDRED << e.what() << RESET << std::endl;
+		}
+	}
+
 	std::cout << BOLDGREEN << "\nTesting find(): " << RESET << std::endl;
 	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
 	{
@@ -329,46 +443,7 @@ int main()
 				  << BOLDWHITE << equal_range1.first->second
 				  << std::endl;
 	}
-	
-	std::cout << BOLDGREEN << "\nTesting access at(): " << RESET << std::endl;
-	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
-	{
-		try {
-			ft::map<int, std::string>::iterator it = my_map.begin();
-			ft::map<int, std::string>::iterator ite = my_map.end();
-			my_map.at(1) = "AAA";
-			my_map.at(20) = "TTT";
-			my_map.at(21) = "OUT.OUT";
-			my_map.at(22) = "REALLY OUT > Really";
-			my_map.at(43) = "OUT."; // This will cause an exception, key not found.
 
-			while (it != ite) {
-				std::cout << BOLDYELLOW << "Key = " << BOLDWHITE << it->first << ", "
-						  << BOLDYELLOW << "Value = " << BOLDWHITE << it->second
-						  << RESET << std::endl;
-				it++;
-			}
-		} catch (std::exception &e) {
-			std::cout << BOLDRED << e.what() << RESET << std::endl;
-		}
-	}
-	
-	std::cout << BOLDGREEN << "\nTesting the erase()" << RESET << std::endl;
-	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
-	{
-		std::cout << BOLDYELLOW << "Erasing [1]  -> " << BOLDRED << my_map.erase(1)  << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [2]  -> " << BOLDRED << my_map.erase(2)  << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [3]  -> " << BOLDRED << my_map.erase(3)  << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [4]  -> " << BOLDRED << my_map.erase(4)  << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [5]  -> " << BOLDRED << my_map.erase(5)  << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [6]  -> " << BOLDRED << my_map.erase(6)  << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [7]  -> " << BOLDRED << my_map.erase(7)  << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [8]  -> " << BOLDRED << my_map.erase(8)  << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [9]  -> " << BOLDRED << my_map.erase(9)  << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [10] -> " << BOLDRED << my_map.erase(10) << RESET << std::endl;
-		std::cout << BOLDYELLOW << "Erasing [55] -> " << BOLDRED << my_map.erase(55) << RESET << std::endl;
-	}
-	
 	std::cout << BOLDGREEN << "\nTesting access clear(): " << RESET << std::endl;
 	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
 	{

@@ -7,7 +7,7 @@
 
 # include "../pair.hpp"
 # include "./TreeNode.hpp"
-# include "./"
+# include "../Algorithms.hpp"
 # include "../../iterator/reverse_iterator.hpp"
 # include "../../iterator/RedBlack_iterator/RB_iterator.hpp"
 # include "../../iterator/RedBlack_iterator/RB_const_iterator.hpp"
@@ -343,7 +343,7 @@ namespace ft {
 			**  🟢☑️ 1) insert
 			**  🟢☑️ 2) erase
 			**  🟢☑️ 3) clear
-			**
+			**  🟢☑️ 4) swap
 			**/
 			/**————————————————————————————————————[ insert ]—————————————————————————————————————*
 			 ** @brief Inserts a new node in the tree that holds the given value,
@@ -624,7 +624,7 @@ namespace ft {
 			
 			/**——————————————————————————————————————————————————————————————————————————————————*/
 		public:
-			/**—————————————————————————————————[ delete_subtree ]————————————————————————————————*
+			/**—————————————————————————————————————[ erase ]————————————————————————————————————*
 			 ** @brief Deleting the left subtree, then the right subtree,
 			 ** recursively, used as a helper function for the clear() function.
 			 **
@@ -807,6 +807,25 @@ namespace ft {
 				delete_subtree(_root);
 				_nodes_count = 0;
 			}
+		
+			/**—————————————————————————————————————[ swap ]—————————————————————————————————————*
+			 * @brief Swaps the contents of the RedBlack tree by the contents of another RedBlack tree.
+			 * @param other The RedBlack tree to swap the contents with.
+			 * @return void
+			 */
+			void
+			swap(RedBlack& other) {
+				if (this == &other)
+					return;
+				node_pointer tmp = _root;
+				size_type tmp_size = _nodes_count;
+				
+				this->_root = other._root;
+				other._root = tmp;
+				
+				this->_nodes_count = other._nodes_count;
+				other._nodes_count = tmp_size;
+			}
 			
 			/*——————————————————————————————————————————————————————————————————————————————————————*
 			———————————————————————————————————————[Operations]——————————————————————————————————————
@@ -966,7 +985,65 @@ namespace ft {
 			
 /*=============================================================================================================*/
 	}; // RED_BLACK_TREE
-/*=============================================================================================================*/
+	/**———————————————————————————————————[Non-member function overloads]—————————————————————————————————————*/
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator==( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
+					 const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+		if (_tree1._nodes_count() != _tree2._nodes_count())
+			return false;
+		typename ft::RedBlack<Key, T, Compare, Alloc>::const_iterator it1 = _tree1.begin();
+		typename ft::RedBlack<Key, T, Compare, Alloc>::const_iterator ite1 = _tree1.end();
+		
+		typename ft::RedBlack<Key, T, Compare, Alloc>::const_iterator it2 = _tree2.begin();
+		typename ft::RedBlack<Key, T, Compare, Alloc>::const_iterator ite2 = _tree2.end();
+		
+		while (it1 != ite1 && it2 != ite2) {
+			if (it1->first != it2->first || it1->second != it2->second)
+				return false;
+			it1++;
+			it2++;
+		}
+		return true;
+	}
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator!=( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
+					 const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+		return !(_tree1 == _tree2);
+	}
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
+					const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+		return (ft::lexicographical_compare(_tree1.begin(), _tree1.end(),
+											_tree2.begin(), _tree2.end()));
+	}
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator<=( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
+					 const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+		return !(_tree2 < _tree1);
+	}
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
+					const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+		return (_tree2 < _tree1);
+	}
+	
+	template< class Key, class T, class Compare, class Alloc >
+	bool operator>=( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
+					 const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+		return !(_tree1 < _tree2);
+	}
+	
+	template< class Key, class T, class Compare, class Alloc >
+	void swap (ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
+			   ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+		_tree1.swap(_tree2);
+	}
+	
+	
 } // NAMESPACE FT
 /*=============================================================================================================*/
 
