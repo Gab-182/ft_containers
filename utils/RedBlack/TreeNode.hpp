@@ -43,8 +43,8 @@ namespace ft {
 		 **/
 		NODE()
 				: paired_data(),
-				parent(NULL), left(NULL),
-				right(NULL), color(BLACK) { }
+				parent(nullptr), left(nullptr),
+				right(nullptr), color(BLACK) { }
 		
 		/**———————————————————————————————[ Constructor ]————————————————————————————————*
 		 ** @brief Parametrized Constructor, the default color will be red.
@@ -52,8 +52,8 @@ namespace ft {
 		 **/
 		NODE(T paired_data)
 				: paired_data(paired_data),
-				parent(NULL), left(NULL),
-				right(NULL), color(RED) { }
+				parent(nullptr), left(nullptr),
+				right(nullptr), color(RED) { }
 		
 		/**———————————————————————————————[ Grand Parent ]———————————————————————————————*
 		 ** @brief Get the grand parent for the node.
@@ -61,8 +61,8 @@ namespace ft {
 		node_pointer
 		grandparent() {
 			// if the node is the tree root.
-			if (parent == NULL)
-				return NULL;
+			if (parent == nullptr)
+				return nullptr;
 			// else return the parent of the parent.
 			return parent->parent;
 		}
@@ -75,8 +75,8 @@ namespace ft {
 			node_pointer grand_parent = grandparent();
 			
 			// if the parent is the tree root, then there is no uncle.
-			if (grand_parent == NULL)
-				return NULL;
+			if (grand_parent == nullptr)
+				return nullptr;
 			// if the parent is the left child of the grandparent,
 			// then the uncle is the right child for the grandparent.
 			if (parent == grand_parent->left)
@@ -93,8 +93,8 @@ namespace ft {
 		 node_pointer
 		 brother() {
 			// if the node is tree root
-			if (parent == NULL)
-		 		return NULL;
+			if (parent == nullptr)
+		 		return nullptr;
 			// if the node is the left child
 		 	if (this == parent->left)
 		 		return parent->right;
@@ -107,7 +107,7 @@ namespace ft {
 		 **/
 		static node_pointer
 		get_minimum(node_pointer current) {
-			while (current->left != NULL)
+			while (current != nullptr && current->left != nullptr)
 				current = current->left;
 			return current;
 		}
@@ -117,7 +117,7 @@ namespace ft {
 		 **/
 		static node_pointer
 		get_maximum(node_pointer current) {
-			while (current->right != NULL)
+			while (current != nullptr && current->right != nullptr)
 				current = current->right;
 			return current;
 		}

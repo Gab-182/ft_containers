@@ -62,9 +62,6 @@ namespace ft {
 				key_compare				_compare;
 				allocator_type			_alloc_data;
 //				node_allocator			_alloc_node;
-//				node_pointer 			_root;
-//				node_pointer 			_nil;
-//				size_type				_nodes_count;
 				tree					_tree;
 				
 
@@ -156,7 +153,7 @@ namespace ft {
 				ft::pair<iterator, bool> insert(const value_type &val) {
 					return _tree.insert(val);
 				}
-//
+
 //				iterator insert(iterator position, const value_type &val) {
 //					return _tree.insert(position, val);
 //				}
@@ -173,11 +170,11 @@ namespace ft {
 				size_type erase(const key_type &k) {
 					return _tree.erase(k);
 				}
-//
-//				void erase(iterator first, iterator last) {
-//					_tree.erase(first, last);
-//				}
-//
+
+				void erase(iterator first, iterator last) {
+					_tree.erase(first, last);
+				}
+
 				void swap(map &x) {
 					_tree.swap(x._tree);
 				}
@@ -223,12 +220,14 @@ namespace ft {
 //				const_iterator upper_bound(const key_type &k) const {
 //					return _tree.upper_bound(k);
 //				}
-//
-//				ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const {
+
+//				ft::pair<const_iterator, const_iterator>
+//				equal_range(const key_type &k) const {
 //					return _tree.equal_range(k);
 //				}
 
-				ft::pair<iterator, iterator> equal_range(const key_type &k) {
+				ft::pair<iterator, iterator>
+				equal_range(const key_type &k) {
 					return _tree.equal_range(k);
 				}
 				

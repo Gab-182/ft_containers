@@ -599,30 +599,7 @@ namespace ft {
 				}
 				_root->color = BLACK;
 			}
-		
-			/**——————————————————————————————————————————————————————————————————————————————————*/
-		private:
-			/**——————————————————————————————————[ successor ]———————————————————————————————————*
-			 ** @brief return the successor of the given node.
-			 ** @param node
-			 **
-			 ** The "successor" of a node is the next node with the smallest
-			 ** key that is greater than the key of the input node. For example, if you have a tree
-			 ** with keys 1, 3, 5, 7, and 9, then the successor of 5 is 7.
-			 **/
-			node_pointer
-			successor(node_pointer node) {
-				if (node->right != _nil)
-					return ft::NODE<value_type>::get_minimum(node->right);
-				node_pointer parent = node->parent;
-				while (parent != _nil && node == parent->right) {
-					node = parent;
-					parent = parent->parent;
-				}
-				return parent;
-			}
 			
-			/**——————————————————————————————————————————————————————————————————————————————————*/
 		public:
 			/**—————————————————————————————————————[ erase ]————————————————————————————————————*
 			 ** @brief Deleting the left subtree, then the right subtree,
@@ -696,6 +673,26 @@ namespace ft {
 			}
 			
 		private:
+			/**——————————————————————————————————[ successor ]———————————————————————————————————*
+			 ** @brief return the successor of the given node.
+			 ** @param node
+			 **
+			 ** The "successor" of a node is the next node with the smallest
+			 ** key that is greater than the key of the input node. For example, if you have a tree
+			 ** with keys 1, 3, 5, 7, and 9, then the successor of 5 is 7.
+			 **/
+			node_pointer
+			successor(node_pointer node) {
+				if (node->right != _nil)
+					return ft::NODE<value_type>::get_minimum(node->right);
+				node_pointer parent = node->parent;
+				while (parent != _nil && node == parent->right) {
+					node = parent;
+					parent = parent->parent;
+				}
+				return parent;
+			}
+			
 			/**——————————————————————————————————[ eraseFixup ]———————————————————————————————————*
 			 ** @brief Fixing the tree after deleting a node.
 			 ** @param node
@@ -770,9 +767,7 @@ namespace ft {
 				if (node)
 					node->color = BLACK;
 			}
-		
-			/**——————————————————————————————————————————————————————————————————————————————————*/
-		private:
+			
 			/**—————————————————————————————————[ delete_subtree ]————————————————————————————————*
 			 ** @brief Deleting the left subtree, then the right subtree,
 			 ** recursively, used as a helper function for the clear() function.
@@ -793,8 +788,23 @@ namespace ft {
 				}
 			}
 			
-			/**——————————————————————————————————————————————————————————————————————————————————*/
 		public:
+			/**——————————————————————————————————[ range erase ]—————————————————————————————————*
+			 * @brief Erases all the elements in the range [first, last).
+			 * @param first The first element to erase.
+			 * @param last The last element to erase.
+			 * @return void
+			 */
+			void
+			erase(iterator first, iterator last) {
+				while (first != last) {
+					if (first == end())
+						return;
+					erase(first->first);
+					++first;
+				}
+			}
+			
 			/**—————————————————————————————————————[ clear ]—————————————————————————————————————*
 			 * @brief Deleting all nodes in the tree, starting from the Minimum node
 			 * to the root node, then from the Maximum node to the root node.

@@ -97,13 +97,13 @@ namespace ft {
 		 **/
 		inline RB_const_iterator&
 		operator++() {
-			if (_ptr->right != NULL) {
+			if (_ptr && _ptr->right != NULL) {
 				_ptr = _ptr->right;
-				while (_ptr->left != NULL)
+				while (_ptr && _ptr->left != NULL)
 					_ptr = _ptr->left;
 			}
 			else {
-				while (_ptr->parent != NULL && _ptr->parent->right == _ptr)
+				while (_ptr->parent && _ptr->parent->right == _ptr)
 					_ptr = _ptr->parent;
 				_ptr = _ptr->parent;
 			}
