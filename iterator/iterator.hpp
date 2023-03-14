@@ -7,19 +7,19 @@
 namespace ft {
 	template <class T >
 	class iterator {
-		/*---------------------------------------------------------------------------------------------------*/
+		/**—————————————————————————————————————————————————————————————————————————————————**/
 		public:
 		/**
 		 * @Member_Types
 		 */
 			typedef			T									value_type;
 			typedef			std::ptrdiff_t						difference_type;
-			typedef			T*									pointer;
-			typedef			T&									reference;
+			typedef			T*									value_pointer;
+			typedef			T&									value_reference;
 			typedef			ft::random_access_iterator_tag		iterator_category;
-		/*---------------------------------------------------------------------------------------------------*/
+		/**—————————————————————————————————————————————————————————————————————————————————**/
 		private:
-			pointer			_ptr;
+		value_pointer			_ptr;
 
 		public:
 			/**
@@ -27,9 +27,8 @@ namespace ft {
 
 			iterator()
 				: _ptr(NULL) {};
-
-			explicit
-			iterator(pointer ptr)
+			
+			iterator(value_pointer ptr)
 				: _ptr(ptr) {};
 
 			template <class U>
@@ -37,12 +36,12 @@ namespace ft {
 				: _ptr(other.base()) {}
 
 			~iterator() {}
-			/*---------------------------------------------------------------------------------------------------*/
-			inline pointer
+			/**—————————————————————————————————————————————————————————————————————————————————**/
+			inline value_pointer
 			base() const {
 				return (_ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			/**
 			 * @Operator_overloads
 			 * @attention
@@ -60,43 +59,48 @@ namespace ft {
 					_ptr = other._ptr;
 				return (*this);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
-			inline reference
+			/**—————————————————————————————————————————————————————————————————————————————————**/
+			inline value_reference
 			operator*() const {
 				return (*_ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
-			inline pointer
+			/**—————————————————————————————————————————————————————————————————————————————————**/
+			inline value_pointer
 			operator->() const {
 				return (_ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
+			inline value_reference
+			operator[](difference_type n) const {
+				return (_ptr[n]);
+			}
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline iterator&
 			operator++() {
 				++_ptr;
 				return (*this);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline const iterator<T>
 			operator++(int) {
 				iterator tmp(*this);
 				++_ptr;
 				return (tmp);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline iterator&
 			operator--() {
 				--_ptr;
 				return (*this);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline const iterator<T>
 			operator--(int) {
 				iterator tmp(*this);
 				--_ptr;
 				return (tmp);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			/**
 			 * Constructing new iterator, not modifying the current one.
 			 * which means that the current iterator is not incremented.
@@ -107,34 +111,34 @@ namespace ft {
 			operator+(difference_type n) const {
 				return iterator(_ptr + n);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline iterator
 			operator-(difference_type n) const {
 				return iterator(_ptr - n);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline iterator&
 			operator+=(difference_type n) {
 				_ptr += n;
 				return (*this);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline iterator&
 			operator-=(difference_type n) {
 				_ptr -= n;
 				return (*this);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline bool
 			operator==(const iterator& rhs) const {
 				return (_ptr == rhs._ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline bool
 			operator!=(const iterator& rhs) const {
 				return (_ptr != rhs._ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			/**
 			 * @brief return the number of elements between two iterators
 			 * @param rhs
@@ -144,34 +148,35 @@ namespace ft {
 			operator+(const iterator& rhs) const {
 				return (_ptr + rhs._ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline ptrdiff_t
 			operator-(const iterator& rhs) const {
 				return (_ptr - rhs._ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline bool
 			operator<=(const iterator &rhs) const {
 				return (_ptr <= rhs._ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline bool
 			operator>=(const iterator &rhs) const {
 				return (_ptr >= rhs._ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline bool
 			operator<(const iterator &rhs) const {
 				return (_ptr < rhs._ptr);
 			}
-			/*---------------------------------------------------------------------------------------------------*/
+			/**—————————————————————————————————————————————————————————————————————————————————**/
 			inline bool
 			operator>(const iterator &rhs) const {
 				return (_ptr > rhs._ptr);
 			}
 		}; //? iterator
-		
-		/*---------------------------------------------------------------------------------------------------*/
+		/*——————————————————————————————————————————————————————————————————————————————————————*
+		——————————————————————————————————[Non Member Functions]—————————————————————————————————
+		————————————————————————————————————————————————————————————————————————————————————————*/
 		template<class T >
 		std::ostream&
 		operator<<(std::ostream& os, const iterator<T> &it) {
@@ -179,27 +184,78 @@ namespace ft {
 			return (os);
 		}
 		
-		/*---------------------------------------------------------------------------------------------------*/
-        template <class Iter >
-		inline typename iterator<Iter>::difference_type
-		operator-(const iterator<Iter>& lhs, const iterator<Iter>& rhs) {
-			return (lhs.base() - rhs.base());
-		}
-		/*---------------------------------------------------------------------------------------------------*/
-		template <class Iter >
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter, class T >
 		inline bool
-		operator!=(const iterator<Iter>& lhs, const iterator<Iter>& rhs) {
+		operator==(const iterator<Iter>& lhs, const iterator<T>& rhs) {
+			return (lhs.base() == rhs.base());
+		}
+		
+		
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter, class T >
+		inline bool
+		operator!=(const iterator<Iter>& lhs, const iterator<T>& rhs) {
 			return (lhs.base() != rhs.base());
 		}
-		
-		/*---------------------------------------------------------------------------------------------------*/
-		template <class Iter >
-		inline iterator<Iter>
-		operator+(const iterator<Iter>& lhs, typename iterator<Iter>::difference_type rhs) {
-			return (lhs.base() + rhs);
+	
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter, class T >
+		inline bool
+		operator<(const iterator<Iter>& lhs, const iterator<T>& rhs) {
+			return (lhs.base() < rhs.base());
 		}
 		
-		/*---------------------------------------------------------------------------------------------------*/
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter, class T >
+		inline bool
+		operator<=(const iterator<Iter>& lhs, const iterator<T>& rhs) {
+			return (lhs.base() <= rhs.base());
+		}
+		
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter, class T >
+		inline bool
+		operator>(const iterator<Iter>& lhs, const iterator<T>& rhs) {
+			return (lhs.base() > rhs.base());
+		}
+		
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter, class T >
+		inline bool
+		operator>=(const iterator<Iter>& lhs, const iterator<T>& rhs) {
+			return (lhs.base() >= rhs.base());
+		}
+		
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter, class T >
+		inline iterator<Iter>
+		operator+(const iterator<Iter>& lhs, const iterator<T>& rhs) {
+			return (lhs.base() + rhs.base());
+		}
+	
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter >
+		inline iterator<Iter>
+		operator+(typename iterator<Iter>::difference_type n, const iterator<Iter>& rhs) {
+			return (n + rhs.base());
+		}
+	
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter, class T>
+		inline typename iterator<Iter>::difference_type
+		operator-(const iterator<Iter>& lhs, const iterator<T>& rhs) {
+			return (lhs.base() - rhs.base());
+		}
+		
+		/**—————————————————————————————————————————————————————————————————————————————————**/
+		template <class Iter >
+		inline iterator<Iter>
+		operator-(typename iterator<Iter>::difference_type lhs, const iterator<Iter>& rhs) {
+			return (lhs - rhs.base());
+		}
+	
+		/**—————————————————————————————————————————————————————————————————————————————————**/
 } // namespace ft
 
 #endif //! FT_ITERATOR_HPP

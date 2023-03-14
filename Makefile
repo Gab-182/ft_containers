@@ -59,18 +59,18 @@ CC = c++ -g3
 all: $(NAME) $(OBJ) clean
 $(NAME): $(OBJ)
 # Compile MY_VEC and ORG_VEC files
-#	@$(CC) $(FLAGS) $(MY_VEC) -o MY_VEC
-#	@$(CC) $(ORG_VEC) -o ORG_VEC
+	@$(CC) $(FLAGS) $(MY_VEC) -o MY_VEC
+	@$(CC) $(ORG_VEC) -o ORG_VEC
 
 # Compile MY_TREE files
-	$(CC) $(FLAGS) $(MY_TREE) -o MY_TREE
+	#$(CC) $(FLAGS) $(MY_TREE) -o MY_TREE
 
 
 # Move MY_VEC and ORG_VEC to tests folder
-#	@mv MY_VEC ORG_VEC ./tests/vector_tests
+	@mv MY_VEC ORG_VEC ./tests/vector_tests
 
 # Move MY_TREE to tests folder
-	@mv MY_TREE ./tests/map_tests
+	@#mv MY_TREE ./tests/map_tests
 
 	@echo "\033c"
 	@echo "$(R)≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ $(RS)"
@@ -106,8 +106,8 @@ clean:
 
 #------------------------------------------------------------------------------------------------------
 fclean: clean
-#	@rm -rf ./tests/vector_tests/MY_VEC ./tests/vector_tests/ORG_VEC
-	@rm -rf ./tests/map_tests/MY_TREE
+	@rm -rf ./tests/vector_tests/MY_VEC ./tests/vector_tests/ORG_VEC
+	@#rm -rf ./tests/map_tests/MY_TREE
 	@echo "\033c"
 	@echo "$(G)【OK】 $(RS)        $(R)❮ft_containers executable❯ DELETED$(RS)"
 

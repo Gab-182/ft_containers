@@ -13,6 +13,7 @@
 # include "../iterator/iterator.hpp"
 # include "../iterator/iterator_traits.hpp"
 # include "../iterator/reverse_iterator.hpp"
+# include <vector>
 /*=============================================================================================================*/
 namespace ft
 {
@@ -187,15 +188,33 @@ namespace ft
 		assign (size_type n, const value_type& val) {
 			/**
 			 **  NOTE --> {diff between destroy & deallocate}
-			 **  A question answered from slack on Slack, on the resources page.
+			 **  A question answered from slack, on the resources page.
 			 **  _allocator.destroy(_array);
 			 **/
 			_allocator.deallocate(_array, _capacity);
 			_size = n;
+			_capacity = _size;
 			_array = _allocator.allocate(n);
 			for (size_type i = 0; i < _size; i++)
 				_allocator.construct(&_array[i], val);
 		}
+		
+		/**———————————————————————————————————————————————————————————*/
+	private:
+		template<class InputIterator>
+		difference_type
+		distance (InputIterator first, InputIterator last)
+		{
+			difference_type rtn = 0;
+			while (first != last)
+			{
+				first++;
+				rtn++;
+			}
+			return (rtn);
+		}
+		
+	public:
 		/**———————————————————————————————————————————————————————————*
 		**  @brief  Assigns a range to a vector.
 		**  @param  first  An input iterator.
@@ -213,17 +232,14 @@ namespace ft
 		assign (Iter first,
 				Iter last,
 				typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = 0) {
-			if (first == last)
-				return;
-			else if (first > last)
-				throw std::out_of_range("first > last");
 			_allocator.deallocate(_array, _capacity);
-			_size = last - first;
+			_size = distance(first, last);
+			_capacity = _size;
 			_array = _allocator.allocate(_size);
 			
 			size_type i = 0;
-			for (iterator it = first; it != last; it++)
-				_allocator.construct(&_array[i++], *it);
+			for (;first != last; ++first)
+				_allocator.construct(&_array[i++], *first);
 		}
 
 		/**————————————————————[ get_allocator ]——————————————————————————
@@ -474,6 +490,23 @@ namespace ft
 			return (_array[pos]);
 		}
 		
+		/**———————————————————————————————————————————————————————————*
+		 * @brief Provides access to the data contained in the vector.
+		**  @param pos The index of the element for which data should be
+		**  accessed.
+		**  @return  Read/write reference to data.
+		**  @throw  std::out_of_range  If pos is an invalid index.
+		**
+		**  This function provides for safer data access.  The parameter
+		**  is first checked that it is in the range of the vector.  The
+		**  function throws out_of_range if the check fails.
+		*/
+		const_reference
+		at(size_type pos) const {
+			if (pos >= _size)
+				throw std::out_of_range("out of range");
+			return (_array[pos]);
+		}
 		/**———————————————————————————————————————————————————————————*
 		**  @brief  Subscript access to the data contained in the vector.
 		**  @param pos The index of the element for which data should be
@@ -737,7 +770,7 @@ namespace ft
 		 */
 		void
 		insert (iterator position, size_type n, const value_type& val) {
-			difference_type val_pos = position - begin();
+			difference_type val_pos = distance(begin(), position);
 			for (size_type to_fill = 0; to_fill < n; to_fill++) {
 				if (_size == _capacity)
 					reserve(_capacity * 2);
@@ -773,8 +806,8 @@ namespace ft
 		template <class Iter>
 		void
 		insert (iterator position, Iter first, Iter last, typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = 0) {
-			difference_type val_pos = position - begin();
-			difference_type rng_iter = last - first;
+			difference_type val_pos = distance(begin(), position);
+			difference_type rng_iter = distance(first, last);
 
 			for (difference_type to_fill = 0; to_fill < rng_iter; to_fill++) {
 				if (_size == _capacity)
@@ -786,7 +819,7 @@ namespace ft
 				}
 				if (last > first) {
 					_array[val_pos] = *(last-1);
-					last--;
+					--last;
 				}
 				_size++;
 			}
@@ -821,8 +854,9 @@ namespace ft
 				if (lhs[i] != rhs[i])
 					return (false);
 			}
+			return (true);
 		}
-		return (true);
+		return (false);
 	}
 	
 	/**—————————————————————————————————————————————————————————————————————————————————**/
@@ -832,6 +866,12 @@ namespace ft
 		return (!(lhs == rhs));
 	}
 	
+	/**—————————————————————————————————————————————————————————————————————————————————**/
+	template <class T>
+	inline bool
+	operator!= (const typename ft::vector<T>::iterator& lhs, const typename ft::vector<T>::const_iterator& rhs) {
+		return (!(lhs == rhs));
+	}
 	/**—————————————————————————————————————————————————————————————————————————————————**/
 	template <class T>
 	inline bool
