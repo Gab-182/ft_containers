@@ -694,18 +694,13 @@ namespace ft
 		**/
 		iterator
 		erase( iterator first, iterator last ) {
-			if (first == last)
-				return (first);
-			if (first == begin() && last == end()) {
-				clear();
-				return (end());
-			}
-			for (iterator it = first; it != last; it++)
-				_allocator.destroy(it.base());
 			for (iterator it = first; it != end() - (last - first); it++)
 				*it = *(it + (last - first));
-			_size = _size - (last - first);
-			return (last);
+			for (iterator it = first; it != last; it++) {
+				_allocator.destroy(it.base());
+				--_size;
+			}
+			return (first);
 		}
 		
 		/**———————————————————————————————————————————————————————————*
@@ -728,26 +723,16 @@ namespace ft
 		*/
 		iterator
 		insert (iterator position, const value_type& val) {
-			// Since after reserve() the pointers for the iterators going to be lost;
-			// so we need to save some values.
-			difference_type val_pos = position - begin();
-			
-			if (_size == _capacity)
+			difference_type val_index = distance(begin(), position);
+			if (_size == 0)
+				reserve(1);
+			else if (_size == _capacity)
 				reserve(_capacity * 2);
-			
-			for (difference_type i = _size; i >= val_pos; i--) {
-				/**
-				 ** When adding the new value to the beginning
-				 ** of the array (val_pos = 0)
-				 ** then we break the loop to assign the new val.
-				 **/
-				if (val_pos == 0 && i == 0)
-					break;
-				_array[i] = _array[i - 1];
-			}
-			_array[val_pos] = val;
+			for (size_type i = val_index + 1; i <= _size; i++)
+				std::swap(_array[val_index], _array[i]);
+			_allocator.construct(&_array[val_index], val);
 			_size++;
-			return (position);
+			return position;
 		}
 		
 		/**———————————————————————————————————————————————————————————*
@@ -770,18 +755,25 @@ namespace ft
 		 */
 		void
 		insert (iterator position, size_type n, const value_type& val) {
-			difference_type val_pos = distance(begin(), position);
-			for (size_type to_fill = 0; to_fill < n; to_fill++) {
-				if (_size == _capacity)
-					reserve(_capacity * 2);
-				for (difference_type i = _size; i >= val_pos; i--) {
-					if (val_pos == 0 && i == 0)
-						break;
-					_array[i] = _array[i - 1];
-				}
-				_array[val_pos] = val;
-				_size++;
+			// get the index of the new element
+			difference_type val_index = distance(begin(), position);
+			
+			// if the vector is empty, reserve (n) spaces
+			if (_size == 0)
+				reserve(n);
+			// if the vector is not empty, but there is not enough space
+			else if ((_size + n) > _capacity)
+					reserve(_size + n);
+			// move all elements after the position to the right, starting from the end.
+			for (difference_type i = _size - 1; i >= val_index; i--)
+				_allocator.construct(&_array[i + n], _array[i]);
+
+			// insert (n) elements at the position
+			for (size_type i = 0; i < n; i++) {
+				_allocator.construct(&_array[val_index], val);
+				val_index++;
 			}
+			_size += n;
 		}
 		
 		/**———————————————————————————————————————————————————————————*
@@ -802,29 +794,50 @@ namespace ft
 		 **  		This is generally an inefficient operation compared to the
 		 **  		one performed for the same operation by other kinds of sequence
 		 **  		containers (such as list or forward_list).
+		 *
+		 ** NOTE:
+		 * ======-----------------------------------------------------------
+		 **  the use of long long in this example is a way to ensure that
+		 **  the code works correctly and predictably on different systems,
+		 **  regardless of the size of the difference_type.
+		 * ------------------------------------------------------------------
 		 */
 		template <class Iter>
 		void
-		insert (iterator position, Iter first, Iter last, typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = 0) {
-			difference_type val_pos = distance(begin(), position);
-			difference_type rng_iter = distance(first, last);
-
-			for (difference_type to_fill = 0; to_fill < rng_iter; to_fill++) {
-				if (_size == _capacity)
-					reserve(_capacity * 2);
-				for (difference_type i = _size; i >= val_pos; i--) {
-					if (val_pos == 0 && i == 0)
-						break;
-					_array[i] = _array[i - 1];
-				}
-				if (last > first) {
-					_array[val_pos] = *(last-1);
-					--last;
-				}
-				_size++;
+		insert (iterator position, Iter first, Iter last,
+				typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = 0) {
+			
+			// get the index of the new element
+			difference_type value_index = distance(begin(), position);
+			// get the number of elements to insert
+			difference_type range = distance(first, last);
+			
+			// static_cast the index to size_t.
+			long long index = static_cast<long long>(value_index);
+			// static_cast the range to size_t.
+			size_t n = static_cast<size_t>(range);
+			
+			// if the vector is empty, reserve (n) spaces
+			if (_size == 0)
+				reserve(n);
+			// if the vector is not empty, but there is not enough space:
+			// reserve the maximum between (_size + n) and (_capacity * 2)
+			else if ((_size + n) > _capacity)
+				reserve(std::max(_size + n, _capacity * 2));
+			
+			// move all elements after the position to the right, starting from the end.
+			for (long long i = _size - 1; i >= index; i--)
+				_allocator.construct(&_array[i + n], _array[i]);
+			
+			// insert (n) elements at the position
+			for (size_type i = 0; i < n; i++) {
+				_allocator.construct(&_array[index++], *first);
+				first++;
 			}
+			
+			// increase the size of the vector
+			_size += n;
 		}
-		
 		/**—————————————————————————————————————————————————————————————————————————————*/
 	}; // vector
 	
@@ -846,9 +859,9 @@ namespace ft
 	 * Cause _size is private, we can't use it in the operator==.
 	 * So, we need to use the size() method.
 	 */
-	template <class T>
+	template <class T, class Alloc>
 	inline bool
-	operator== (const ft::vector<T>& lhs, const ft::vector<T>& rhs) {
+	operator== (const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
 		if (lhs.size() == rhs.size()) {
 			for (size_t i = 0; i < lhs.size(); i++) {
 				if (lhs[i] != rhs[i])
@@ -860,24 +873,24 @@ namespace ft
 	}
 	
 	/**—————————————————————————————————————————————————————————————————————————————————**/
-	template <class T>
+	template <class T, class Alloc>
 	inline bool
-	operator!= (const ft::vector<T>& lhs, const ft::vector<T>& rhs) {
+	operator!= (const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
 		return (!(lhs == rhs));
 	}
 	
 	/**—————————————————————————————————————————————————————————————————————————————————**/
-	template <class T>
+	template <class T, class Alloc>
 	inline bool
 	operator!= (const typename ft::vector<T>::iterator& lhs, const typename ft::vector<T>::const_iterator& rhs) {
 		return (!(lhs == rhs));
 	}
 	/**—————————————————————————————————————————————————————————————————————————————————**/
-	template <class T>
+	template <class T, class Alloc>
 	inline bool
-	operator< (const ft::vector<T>& lhs, const ft::vector<T>& rhs) {
+	operator< (const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
 		return ft::lexicographical_compare(lhs.begin(), lhs.end(),
-										   rhs.begin(), rhs.end());
+											rhs.begin(), rhs.end());
 	}
 	
 	/**—————————————————————————————————————————————————————————————————————————————————**/
@@ -892,16 +905,16 @@ namespace ft
 	 * If the comparison returns true, the function will return false,
 	 * and if the comparison returns false, the function will return true.
 	 */
-	template<class T>
+	template <class T, class Alloc>
 	inline bool
-	operator<=(const ft::vector<T>& lhs, const ft::vector<T>& rhs) {
+	operator<=(const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
 		return (!(rhs < lhs));
 	}
 	
 	/**—————————————————————————————————————————————————————————————————————————————————**/
-	template <class T>
+	template <class T, class Alloc>
 	inline bool
-	operator> (const ft::vector<T>& lhs, const ft::vector<T>& rhs) {
+	operator> (const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
 		return (rhs < lhs);
 	}
 	
@@ -913,16 +926,16 @@ namespace ft
 	 * If the comparison returns true, the function will return false,
 	 * and if the comparison returns false, the function will return true.
 	 */
-	template <class T>
+	template <class T, class Alloc>
 	inline bool
-	operator>= (const ft::vector<T>& lhs, const ft::vector<T>& rhs) {
+	operator>= (const ft::vector<T, Alloc>& lhs, const ft::vector<T, Alloc>& rhs) {
 		return (!(lhs < rhs));
 	}
 	
 	/**—————————————————————————————————————————————————————————————————————————————————**/
-	template <class T>
+	template <class T, class Alloc>
 	inline void
-	swap(ft::vector<T>& vec1, ft::vector<T>& vec2) {
+	swap(ft::vector<T, Alloc>& vec1, ft::vector<T, Alloc>& vec2) {
 		vec1.swap(vec2);
 	}
 	
