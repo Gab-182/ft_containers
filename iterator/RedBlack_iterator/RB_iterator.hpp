@@ -2,10 +2,10 @@
 #define RB_ITERATOR_HPP
 
 /*=============================================================================================================*/
-#include <iostream>
+# include <iostream>
 # include <cstddef>		// for ptrdiff_t
 # include "../iterator_traits.hpp"
-
+# include "../reverse_iterator.hpp"
 /*=============================================================================================================*/
 namespace ft {
 /*=============================================================================================================*/
@@ -27,7 +27,6 @@ namespace ft {
 	template <class T, class val, class DeffType>
 	class RB_iterator {
 		public:
-		
 			typedef 		val									value_type;
 			typedef			T									node_pointer;
 			typedef			val*								value_pointer;
@@ -37,19 +36,24 @@ namespace ft {
 			
 		private:
 			node_pointer	_ptr;
+			node_pointer 	_end;
+			node_pointer 	_root;
 			
 		public:
 			/**——————————————————————————[Constructors && Destructor]——————————————————————————————*/
 			RB_iterator()
-				: _ptr(NULL) { };
+				: _ptr(NULL), _end(NULL), _root(NULL) { };
 			
 			explicit RB_iterator(const node_pointer& ptr)
 				: _ptr(ptr) { };
 			
+			explicit RB_iterator(const node_pointer& ptr, const node_pointer& end, const node_pointer& root)
+				: _ptr(ptr), _end(end), _root(root) { };
+			
 			template<class NodePointer, class Val, class Diff>
 			RB_iterator(RB_iterator<NodePointer, Val, Diff>& copy)
 				: _ptr((copy.base())) { };
-
+			
 			~RB_iterator() { };
 
 			/**————————————————————————————————[base()]————————————————————————————————————————————*/
@@ -76,6 +80,31 @@ namespace ft {
 			operator->() const {
 				return &(_ptr->paired_data);
 			};
+	
+		private:
+			/**————————————————————————————————————[ GetMaxNode ]————————————————————————————————————*
+			 ** @brief Returns the maximum node in the tree.
+			 * @return node_pointer
+			 * */
+			node_pointer
+			GetMaxNode(node_pointer current) {
+				while (current && current->right)
+					current = current->right;
+				return current;
+			}
+			
+			/**————————————————————————————————————[ GetMinNode ]————————————————————————————————————*
+			 ** @brief Returns the minimum node in the tree.
+			 * @return node_pointer
+			 * */
+			node_pointer
+			GetMinNode(node_pointer current) {
+				while (current && current->left)
+					current = current->left;
+				return current;
+			}
+		
+		public:
 			
 			/**——————————————————————————————[Operator++]——————————————————————————————————————————*/
 			/**
@@ -85,13 +114,13 @@ namespace ft {
 			 **/
 			inline RB_iterator&
 			operator++() {
-				if (_ptr->right != NULL) {
+				if (_ptr && _ptr->right != NULL) {
 					_ptr = _ptr->right;
-					while (_ptr->left != NULL)
+					while (_ptr && _ptr->left != NULL)
 						_ptr = _ptr->left;
 				}
 				else {
-					while (_ptr->parent != NULL && _ptr->parent->right == _ptr)
+					while (_ptr->parent && _ptr->parent->right == _ptr)
 						_ptr = _ptr->parent;
 					_ptr = _ptr->parent;
 				}
@@ -119,22 +148,38 @@ namespace ft {
 			 **/
 			inline RB_iterator&
 			operator--() {
-				// if the node has left child, then the previous node is the rightmost node of the left subtree.
-				if (_ptr->left != NULL) {
+				node_pointer MaxNode = GetMaxNode(_root);
+				node_pointer MinNode = GetMinNode(_root);
+				
+				if (_end == _ptr)
+					_ptr = MaxNode;
+				else if (MinNode == _ptr)
+					_ptr = NULL;
+				else if (_ptr->left != NULL) {
 					_ptr = _ptr->left;
 					while (_ptr->right != NULL)
 						_ptr = _ptr->right;
 				}
-				// if the node has no left child, then the previous node is the parent.
 				else {
-					// if the node is the right child of its parent, then the parent is the previous node.
-					while (_ptr->parent != NULL && _ptr->parent->left == _ptr)
+					while (_ptr && _ptr->parent && _ptr->parent->left == _ptr)
 						_ptr = _ptr->parent;
-					_ptr = _ptr->parent;
+					if (_ptr && _ptr->parent)
+						_ptr = _ptr->parent;
 				}
 				return (*this);
+//				if (_ptr && _ptr->left != NULL) {
+//					_ptr = _ptr->left;
+//					while (_ptr->right != NULL)
+//						_ptr = _ptr->right;
+//				}
+//				else {
+//					while (_ptr && _ptr->parent && _ptr->parent->left == _ptr)
+//						_ptr = _ptr->parent;
+//					if (_ptr && _ptr->parent)
+//						_ptr = _ptr->parent;
+//				}
+//				return (*this);
 			}
-		
 		/**——————————————————————————————[Operator--(int)]—————————————————————————————————————————
 		 ** @brief Prefix decrement operator, it returns the iterator to the previous node.
 		 ** which have the smaller key.
@@ -189,17 +234,59 @@ namespace ft {
 
 /*=============================================================================================================*/
 	/**——————————————————————————————[Operator(it1 != it2)]———————————————————————————————————————————*/
-	template <class T, class val, class Diff>
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
 	inline bool
-	operator!=(const RB_iterator<T, val, Diff>& lhs, const RB_iterator<T, val, Diff>& rhs) {
+	operator!=(const RB_iterator<T_1, val_1, Diff_1>& lhs, const RB_iterator<T_2, val_2, Diff_2>& rhs) {
 		return (lhs.base() != rhs.base());
 	}
 	
 	/**——————————————————————————————[Operator(it1 == it2)]———————————————————————————————————————————*/
-	template <class T, class val, class Diff>
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
 	inline bool
-	operator==(const RB_iterator<T, val, Diff>& lhs, const RB_iterator<T, val, Diff>& rhs) {
+	operator==(const RB_iterator<T_1, val_1, Diff_1>& lhs, const RB_iterator<T_2, val_2, Diff_2>& rhs) {
 		return (lhs.base() == rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 < it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator<(const RB_iterator<T_1, val_1, Diff_1>& lhs, const RB_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() < rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 > it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator>(const RB_iterator<T_1, val_1, Diff_1>& lhs, const RB_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() > rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 <= it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator<=(const RB_iterator<T_1, val_1, Diff_1>& lhs, const RB_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() <= rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 >= it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator>=(const RB_iterator<T_1, val_1, Diff_1>& lhs, const RB_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() >= rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 - it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline typename RB_iterator<T_1, val_1, Diff_1>::difference_type
+	operator-(const RB_iterator<T_1, val_1, Diff_1>& lhs, const RB_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() - rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it + n)]———————————————————————————————————————————*/
+	template <class T, class val, class Diff>
+	inline RB_iterator<T, val, Diff>
+	operator+(typename RB_iterator<T, val, Diff>::difference_type n, const RB_iterator<T, val, Diff>& it) {
+		return (it + n);
 	}
 /*=============================================================================================================*/
 }

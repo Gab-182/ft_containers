@@ -6,7 +6,7 @@
 # include <cstddef>		// for ptrdiff_t
 # include "../iterator_traits.hpp"
 # include "../reverse_iterator.hpp"
-# include <map>
+# include "./RB_iterator.hpp"
 /*=============================================================================================================*/
 namespace ft {
 /*=============================================================================================================*/
@@ -30,19 +30,8 @@ namespace ft {
 	
 	private:
 		node_pointer	_ptr;
-		
-		/**
-		 * @brief By using const_cast, _ptr_non_const converts the const-qualified _ptr into
-		 * a non-const pointer and returns it as a node_pointer.
-		 * This allows other member functions that require a non-const pointer to
-		 * the node to modify it without violating the
-		 * const-correctness of the const iterator.
-		 * @return
-		 */
-		node_pointer _ptr_to_non_const() const {
-			return const_cast<node_pointer>(_ptr);
-		}
-	
+		node_pointer 	_end;
+		node_pointer 	_root;
 	
 	public:
 		/**——————————————————————————[Constructors && Destructor]——————————————————————————————*/
@@ -53,13 +42,20 @@ namespace ft {
 		RB_const_iterator(const node_pointer& ptr)
 				: _ptr(ptr) {};
 		
+		explicit RB_const_iterator(const node_pointer& ptr, const node_pointer& end, const node_pointer& root)
+				: _ptr(ptr), _end(end), _root(root) { };
+		
 		template <class NodePointer, class Val, class Diff>
 		RB_const_iterator(const RB_iterator<NodePointer, Val, Diff>& copy)
 				: _ptr(copy.base()) {};
-		
+
 		template <class NodePointer, class Val, class Diff>
 		RB_const_iterator(const RB_const_iterator<NodePointer, Val, Diff>& copy)
 				: _ptr(copy.base()) {};
+		
+		RB_const_iterator(const RB_const_iterator<T, val, DeffType>& copy)
+				: _ptr(copy.base()) {};
+		
 		
 		~RB_const_iterator() {};
 		
@@ -201,17 +197,81 @@ namespace ft {
 
 /*=============================================================================================================*/
 	/**——————————————————————————————[Operator(it1 != it2)]———————————————————————————————————————————*/
-	template <class T, class val, class Diff>
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
 	inline bool
-	operator!=(const RB_const_iterator<T, val, Diff>& lhs, const RB_const_iterator<T, val, Diff>& rhs) {
+	operator!=(const RB_const_iterator<T_1, val_1, Diff_1>& lhs,
+				const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() != rhs.base());
+	}
+	
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator!=(const RB_const_iterator<T_1, val_1, Diff_1>& lhs,
+				const RB_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() != rhs.base());
+	}
+	
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator!=(const RB_iterator<T_1, val_1, Diff_1>& lhs,
+				const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
 		return (lhs.base() != rhs.base());
 	}
 	
 	/**——————————————————————————————[Operator(it1 == it2)]———————————————————————————————————————————*/
-	template <class T, class val, class Diff>
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
 	inline bool
-	operator==(const RB_const_iterator<T, val, Diff>& lhs, const RB_const_iterator<T, val, Diff>& rhs) {
+	operator==(const RB_const_iterator<T_1, val_1, Diff_1>& lhs, const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
 		return (lhs.base() == rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 < it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator<(const RB_const_iterator<T_1, val_1, Diff_1>& lhs, const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() < rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 > it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator>(const RB_const_iterator<T_1, val_1, Diff_1>& lhs, const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() > rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 <= it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator<=(const RB_const_iterator<T_1, val_1, Diff_1>& lhs, const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() <= rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 >= it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator>=(const RB_const_iterator<T_1, val_1, Diff_1>& lhs, const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() >= rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it1 - it2)]———————————————————————————————————————————*/
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline typename RB_const_iterator<T_1, val_1, Diff_1>::difference_type
+	operator-(const RB_const_iterator<T_1, val_1, Diff_1>& lhs, const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() - rhs.base());
+	}
+	
+	/**——————————————————————————————[Operator(it + n)]———————————————————————————————————————————*/
+	template <class T, class val, class Diff>
+	inline RB_const_iterator<T, val, Diff>
+	operator+(typename RB_const_iterator<T, val, Diff>::difference_type n, const RB_const_iterator<T, val, Diff>& it) {
+		return (it + n);
+	}
+	
+	/**——————————————————————————————[Operator(it - n)]———————————————————————————————————————————*/
+	template <class T, class val, class Diff>
+	inline RB_const_iterator<T, val, Diff>
+	operator-(typename RB_const_iterator<T, val, Diff>::difference_type n, const RB_const_iterator<T, val, Diff>& it) {
+		return (it - n);
 	}
 /*=============================================================================================================*/
 }

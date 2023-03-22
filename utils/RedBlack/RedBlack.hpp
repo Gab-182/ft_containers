@@ -50,32 +50,32 @@ namespace ft {
 		/**——————————————————————————————————[Member_types]————————————————————————————————————————*/
 		public:
 			/**[Tree_types]*/
-			typedef				T																				mapped_type;
-			typedef				Key																				key_type;
-			typedef				ft::pair<key_type, mapped_type>													value_type;
-			typedef				ft::pair<key_type, mapped_type>													const_value_type;
-			typedef				Compare																			key_compare;
-			typedef				Allocator																		allocator_type;
-			typedef	typename 	allocator_type::reference														reference;
-			typedef	typename 	allocator_type::const_reference													const_reference;
-			typedef typename 	allocator_type::pointer															pointer;
-			typedef typename 	allocator_type::const_pointer													const_pointer;
+			typedef				T																		mapped_type;
+			typedef				Key																		key_type;
+			typedef				ft::pair<key_type, mapped_type>											value_type;
+			typedef				ft::pair<key_type, mapped_type>											const_value_type;
+			typedef				Compare																	key_compare;
+			typedef				Allocator																allocator_type;
+			typedef	typename 	allocator_type::reference												reference;
+			typedef	typename 	allocator_type::const_reference											const_reference;
+			typedef typename 	allocator_type::pointer													pointer;
+			typedef typename 	allocator_type::const_pointer											const_pointer;
 
 			/**[Node_types]*/
-			typedef				ft::NODE<value_type>															node;
-			typedef	typename	allocator_type::template rebind<node>::other									node_allocator;
-			typedef	typename	node_allocator::pointer															node_pointer;
-			typedef	typename	node_allocator::reference														node_reference;
-			typedef typename 	node_allocator::const_pointer													const_node_pointer;
+			typedef				ft::NODE<value_type>													node;
+			typedef	typename	allocator_type::template rebind<node>::other							node_allocator;
+			typedef	typename	node_allocator::pointer													node_pointer;
+			typedef	typename	node_allocator::reference												node_reference;
+			typedef typename 	node_allocator::const_pointer											const_node_pointer;
 			
-			typedef				std::ptrdiff_t																	difference_type;
-			typedef				std::size_t																		size_type;
+			typedef				std::ptrdiff_t															difference_type;
+			typedef				std::size_t																size_type;
 			
 			/**[Iterator_types]*/
-			typedef				ft::RB_iterator<node_pointer, value_type, difference_type>						iterator;
-			typedef				ft::RB_const_iterator<node_pointer, const value_type, difference_type>			const_iterator;
-			typedef				ft::reverse_iterator<iterator>													reverse_iterator;
-			typedef				ft::reverse_iterator<const_iterator>											const_reverse_iterator;
+			typedef				ft::RB_iterator<node_pointer, value_type, difference_type>				iterator;
+			typedef				ft::RB_const_iterator<node_pointer, const value_type, difference_type>	const_iterator;
+			typedef				ft::reverse_iterator<iterator>											reverse_iterator;
+			typedef				ft::reverse_iterator<const_iterator>									const_reverse_iterator;
 
 		
 		/**———————————————————————————————————[Private Member]—————————————————————————————————————*/
@@ -84,7 +84,7 @@ namespace ft {
 			allocator_type			_alloc_data;
 			node_allocator			_alloc_node;
 			node_pointer 			_root;
-			node_pointer 			_nil;
+			node_pointer 			_end;
 			size_type				_nodes_count;
 
 		public:
@@ -103,42 +103,9 @@ namespace ft {
 					_alloc_data(alloc),
 					_alloc_node(alloc),
 					_root(nullptr),
-					_nil(nullptr),
-					_nodes_count(0) { }
-		
-			/**——————————————————————————————[Range_Constructor]———————————————————————————————————*
-			 ** Constructs the container with the contents of the range [first, last).
-			 * If multiple elements in the range have keys that compare equivalent,
-			 * it is unspecified which element is inserted
-			 **/
-			template <class InputIterator>
-			RedBlack (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) 
-				:	_compare(comp),
-					_alloc_data(alloc),
-					_alloc_node(alloc),
-					_root(nullptr),
-					_nil(nullptr),
-					_nodes_count(0){
-				this->insert(first, last);
-			}
-			
-			/**——————————————————————————————[Copy_Constructor]————————————————————————————————————*/
-			/**
-			 ** @brief Copy constructor.
-			 ** NOTE:
-			 ** ======
-			 ** _compare(comp), _alloc_data(alloc), _alloc_node(alloc):
-			 ** should should always initialize at the beginning before everything else or an error will occur.
-			 ** @param copy: the tree to copy from.
-			 **/
-			RedBlack(const RedBlack& copy)
-					:	_compare(copy._compare),
-						 _alloc_data(copy._alloc_data),
-						 _alloc_node(copy._alloc_node),
-						 _root(nullptr),
-						 _nil(nullptr),
-						 _nodes_count(copy._nodes_count) {
-				this->insert(copy.begin(), copy.end());
+					_nodes_count(0) {
+				_end = _alloc_node.allocate(sizeof(node));
+				_alloc_node.construct(_end, node());
 			}
 			
 			/**——————————————————————————————[Assignment_Operator]—————————————————————————————————*/
@@ -149,7 +116,7 @@ namespace ft {
 			 **/
 			template<class NodePointer, class Val, class Diff>
 			RedBlack&
-			operator=(const RedBlack& copy) {
+			operator=(const RedBlack<NodePointer, Val, Diff>& copy) {
 				if (this != &copy) {
 					_compare = copy._compare;
 					_alloc_data = copy._alloc_data;
@@ -200,7 +167,45 @@ namespace ft {
 			max_size() const {
 				return (_alloc_data.max_size());
 			}
-
+			
+		private:
+			/**————————————————————————————————————[ GetMaxNode ]————————————————————————————————————*
+			 ** @brief Returns the maximum node in the tree.
+			 * @return node_pointer
+			 * */
+			node_pointer
+			GetMaxNode(node_pointer current) {
+				while (current && current->right)
+					current = current->right;
+				return current;
+			}
+		
+			node_pointer
+			GetMaxNode(node_pointer current) const {
+				while (current && current->right)
+					current = current->right;
+				return current;
+			}
+		
+			/**————————————————————————————————————[ GetMinNode ]————————————————————————————————————*
+			 ** @brief Returns the minimum node in the tree.
+			 * @return node_pointer
+			 * */
+			node_pointer
+			GetMinNode(node_pointer current) {
+				while (current && current->left)
+					current = current->left;
+				return current;
+			}
+		
+			node_pointer
+			GetMinNode(node_pointer current) const {
+				while (current && current->left)
+					current = current->left;
+				return current;
+			}
+		
+		public:
 			/*——————————————————————————————————————————————————————————————————————————————————————*
 			—————————————————————————————————————[Iterators]—————————————————————————————————————————
 			—————————————————————————————————————————————————————————————————————————————————————————
@@ -216,8 +221,9 @@ namespace ft {
 			 **/
 			inline iterator
 			begin() {
-				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
-				return iterator(MinNode);
+				if (empty())
+					return (iterator(_end));
+				return iterator(GetMinNode(_root));
 			}
 
 			/**—————————————————————————————————————[ begin ]—————————————————————————————————————*
@@ -226,8 +232,9 @@ namespace ft {
 			 **/
 			inline const_iterator
 			begin() const {
-				node_pointer MinNode = ft::NODE<value_type>::get_minimum(_root);
-				return const_iterator(MinNode);
+				if (empty())
+					return (const_iterator(_end));
+				return const_iterator(GetMinNode(_root));
 			}
 		
 			/**——————————————————————————————————————[ end ]——————————————————————————————————————*
@@ -238,11 +245,13 @@ namespace ft {
 			 ** Referencing this iterator will result in undefined behavior,
 			 ** cause it's pointing ti the end of the tree (leaf).
 			 **/
-			 
+			
 			inline iterator
 			end() {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-				return (iterator(MaxNode->right));
+				if (empty())
+					return (iterator(_end));
+				node_pointer max = GetMaxNode(_root);
+				return (iterator(max->right, _end, _root));
 			}
 		
 			/**——————————————————————————————————————[ end ]——————————————————————————————————————*
@@ -252,8 +261,10 @@ namespace ft {
 			
 			inline const_iterator
 			end() const {
-				const_node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-				return (const_iterator(MaxNode->right));
+				if (empty())
+					return (const_iterator(_end));
+				node_pointer max = GetMaxNode(_root);
+				return (iterator(max->right, _end, _root));
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -262,8 +273,7 @@ namespace ft {
 			 **/
 			inline reverse_iterator
 			rbegin() {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-				return reverse_iterator(iterator(MaxNode));
+				return reverse_iterator(iterator(GetMaxNode(_root)));
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -272,8 +282,7 @@ namespace ft {
 			 **/
 			inline const_reverse_iterator
 			rbegin() const {
-				node_pointer MaxNode = ft::NODE<value_type>::get_maximum(_root);
-				return const_reverse_iterator(iterator(MaxNode));
+				return const_reverse_iterator(iterator(GetMaxNode(_root)));
 			}
 		
 			/**—————————————————————————————————————[ rend ]——————————————————————————————————————*
@@ -389,12 +398,12 @@ namespace ft {
 				node_pointer new_node = _alloc_node.allocate(sizeof(node));
 				_alloc_node.construct(new_node, node(value));
 				
-				node_pointer parent = _nil;
+				node_pointer parent = nullptr;
 				node_pointer current = _root;
 				// find the correct location for the new node, and set the parent of the new node.
-				while (current != _nil) {
+				while (current != nullptr) {
 					parent = current;
-					if (new_node->paired_data.first < current->paired_data.first)
+					if (_compare(new_node->paired_data.first, current->paired_data.first) == true)
 						current = current->left;
 					else {
 						current = current->right;
@@ -402,24 +411,25 @@ namespace ft {
 				}
 				new_node->parent = parent;
 				// if the tree is empty, the new node will be the root.
-				if (parent == _nil)
+				if (parent == nullptr)
 					_root = new_node;
+				else if (find(new_node->paired_data.first) != end()) {
+					_alloc_node.destroy(new_node);
+					_alloc_node.deallocate(new_node, sizeof(node));
+					return (ft::make_pair(iterator(parent), false));
+				}
 				// if the key of the new node is less than the parent, it will be the left child.
-				else if (new_node->paired_data.first < parent->paired_data.first)
+				else if (_compare(new_node->paired_data.first, parent->paired_data.first) == true)
 					parent->left = new_node;
 				// if the key of the new node is greater than the parent, it will be the right child.
-				else if (new_node->paired_data.first > parent->paired_data.first)
+				else if (_compare(new_node->paired_data.first, parent->paired_data.first) == false)
 					parent->right = new_node;
-				// if the key already exists:
-				//		- delete the new node.
-				//		- return an iterator to the existing node.
 				else {
 					_alloc_node.destroy(new_node);
 					_alloc_node.deallocate(new_node, sizeof(node));
 					return (ft::make_pair(iterator(parent), false));
 				}
-				new_node->left = _nil;
-				new_node->right = _nil;
+				new_node->left = nullptr;
 				new_node->color = RED;
 				++_nodes_count;
 				InsertFixup(new_node);
@@ -441,7 +451,17 @@ namespace ft {
 					++first;
 				}
 			}
-			
+		
+			/**—————————————————————————————————[ range insert ]——————————————————————————————————*
+			** @brief Inserts elements from range [first, last). If multiple elements in the
+			** range have keys that compare equivalent, it is unspecified which element is inserted
+			** @param first, last
+			**/
+			iterator
+			insert (iterator position, const value_type& val) {
+				(void)position;
+				return (insert(val).first);
+			}
 			/**——————————————————————————————————————————————————————————————————————————————————*/
 		private:
 			/**—————————————————————————————————[ LeftRotation ]——————————————————————————————————*
@@ -539,7 +559,7 @@ namespace ft {
 			 **/
 			void
 			InsertFixup(node_pointer node) {
-				node_pointer parent = _nil;
+				node_pointer parent = nullptr;
 				node_pointer grand_parent = node->grandparent();
 				
 				while ((node != _root) && (node->color != BLACK) && (node->parent->color == RED)) {
@@ -551,7 +571,7 @@ namespace ft {
 						node_pointer uncle = grand_parent->right;
 
 						/* Case 1: Uncle is also red */
-						if (uncle != _nil && uncle->color == RED) {
+						if (uncle != nullptr && uncle->color == RED) {
 							grand_parent->color = RED;
 							parent->color = BLACK;
 							uncle->color = BLACK;
@@ -576,7 +596,7 @@ namespace ft {
 						node_pointer uncle = grand_parent->left;
 						
 						/* Case 1: Uncle is also red */
-						if (uncle != _nil && uncle->color == RED) {
+						if (uncle != nullptr && uncle->color == RED) {
 							grand_parent->color = RED;
 							parent->color = BLACK;
 							uncle->color = BLACK;
@@ -636,24 +656,24 @@ namespace ft {
 			size_type
 			erase(const key_type& k) {
 				node_pointer z = find_node(k);
-				if (z == _nil)
+				if (z == nullptr)
 					return 0;
 				node_pointer y = z;
 				node_pointer x;
-				if (z->left == _nil || z->right == _nil) {
+				if (z->left == nullptr || z->right == nullptr) {
 					y = z;
 				} else {
 					y = successor(z);
 				}
-				if (y->left != _nil) {
+				if (y->left != nullptr) {
 					x = y->left;
 				} else {
 					x = y->right;
 				}
-				if (x != _nil) {
+				if (x != nullptr) {
 					x->parent = y->parent;
 				}
-				if (y->parent == _nil) {
+				if (y->parent == nullptr) {
 					_root = x;
 				} else if (y == y->parent->left) {
 					y->parent->left = x;
@@ -683,10 +703,10 @@ namespace ft {
 			 **/
 			node_pointer
 			successor(node_pointer node) {
-				if (node->right != _nil)
-					return ft::NODE<value_type>::get_minimum(node->right);
+				if (node->right != nullptr)
+					return GetMinNode(node->right);
 				node_pointer parent = node->parent;
-				while (parent != _nil && node == parent->right) {
+				while (parent != nullptr && node == parent->right) {
 					node = parent;
 					parent = parent->parent;
 				}
@@ -777,7 +797,7 @@ namespace ft {
 				if (node == nullptr) {
 					return;
 				}
-				if (node->left != nullptr)
+				if (node != nullptr && node->left != nullptr)
 					delete_subtree(node->left);
 				if (node->right != nullptr)
 					delete_subtree(node->right);
@@ -804,7 +824,18 @@ namespace ft {
 					++first;
 				}
 			}
-			
+		
+			/**————————————————————————————————[ range (iterator) ]———————————————————————————————*
+			* @brief Erases the elements in that pointed to by pos iterator.
+			* @param pos Iterator to the element to erase.
+			* @return void
+			*/
+			void
+			erase(iterator pos) {
+				if (pos == end())
+					return;
+				erase(pos->first);
+			}
 			/**—————————————————————————————————————[ clear ]—————————————————————————————————————*
 			 * @brief Deleting all nodes in the tree, starting from the Minimum node
 			 * to the root node, then from the Maximum node to the root node.
@@ -829,12 +860,22 @@ namespace ft {
 					return;
 				node_pointer tmp = _root;
 				size_type tmp_size = _nodes_count;
+				key_compare tmp_comp = _compare;
+				allocator_type tmp_alloc = _alloc_data;
+				node_allocator tmp_alloc_node = _alloc_node;
 				
-				this->_root = other._root;
+				_compare = other._compare;
+				_alloc_data = other._alloc_data;
+				_alloc_node = other._alloc_node;
+				_root = other._root;
+				_nodes_count = other._nodes_count;
+				
+				other._compare = tmp_comp;
+				other._alloc_data = tmp_alloc;
+				other._alloc_node = tmp_alloc_node;
 				other._root = tmp;
-				
-				this->_nodes_count = other._nodes_count;
 				other._nodes_count = tmp_size;
+				
 			}
 			
 			/*——————————————————————————————————————————————————————————————————————————————————————*
@@ -916,14 +957,20 @@ namespace ft {
 			 **/
 			iterator
 			lower_bound (const key_type& k) {
-				iterator find_k = find(k);
-				iterator it = begin();
-				
-				if (find_k != end())
-					return (find_k);
-				for (;it != end(); it++) {
-					if (it->first > k)
-						return it;
+				for (iterator it = begin(); it != end(); it++)
+					if (_compare(it->first, k) == false)
+						return (it);
+				return end();
+			}
+		
+			const_iterator
+			lower_bound (const key_type& k) const {
+				const_iterator it = begin();
+				const_iterator ite = end();
+				while (it != ite) {
+					if (_compare(it->first, k) == false)
+						return (it);
+					it++;
 				}
 				return end();
 			}
@@ -934,13 +981,26 @@ namespace ft {
 			 **/
 			iterator
 			upper_bound (const key_type& k) {
-				for (iterator it = begin(); it != end(); it++) {
-					if (it->first > k)
-						return it;
+				iterator it = begin();
+				iterator ite = end();
+				while (it != ite) {
+					if (_compare(k, it->first) == true)
+						return (it);
+					it++;
 				}
 				return end();
 			}
-		
+			const_iterator
+			upper_bound (const key_type& k) const {
+				const_iterator it = begin();
+				const_iterator ite = end();
+				while (it != ite) {
+					if (_compare(k, it->first) == true)
+						return (it);
+					it++;
+				}
+				return end();
+			}
 			/**——————————————————————————————————[ equal_range ]——————————————————————————————————*
 			 ** @brief  Returns the bounds of a range that includes all the
 			 * elements in the container which have a key equivalent to k.
@@ -953,14 +1013,12 @@ namespace ft {
 			 **/
 			pair<iterator,iterator>
 			equal_range (const key_type& k) {
-				iterator it_start = find(k);
-				iterator it_end = find(k);
-				
-				if (it_start == end()) {
-					it_start = upper_bound(k);
-					it_end = upper_bound(k);
-				}
-				return (ft::make_pair(it_start, it_end));
+				return (make_pair(lower_bound(k), upper_bound(k)));
+			}
+		
+			pair<const_iterator,const_iterator>
+			equal_range (const key_type& k) const {
+				return (make_pair(lower_bound(k), upper_bound(k)));
 			}
 			/**————————————————————————————————————[ get_root ]———————————————————————————————————*
 			 ** @brief:  Returns a constant _root of the tree.
@@ -996,16 +1054,17 @@ namespace ft {
 /*=============================================================================================================*/
 	}; // RED_BLACK_TREE
 	/**———————————————————————————————————[Non-member function overloads]—————————————————————————————————————*/
-	template< class Key, class T, class Compare, class Alloc >
-	bool operator==( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
-					 const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+	template< class Key_1, class T_1, class Compare_1, class Alloc_1,
+			class Key_2, class T_2, class Compare_2, class Alloc_2>
+	bool operator==( const ft::RedBlack<Key_1, T_1, Compare_1, Alloc_1>& _tree1,
+					 const ft::RedBlack<Key_2, T_2, Compare_2, Alloc_2>& _tree2) {
 		if (_tree1._nodes_count() != _tree2._nodes_count())
 			return false;
-		typename ft::RedBlack<Key, T, Compare, Alloc>::const_iterator it1 = _tree1.begin();
-		typename ft::RedBlack<Key, T, Compare, Alloc>::const_iterator ite1 = _tree1.end();
+		typename ft::RedBlack<Key_1, T_1, Compare_1, Alloc_1>::iterator it1 = _tree1.begin();
+		typename ft::RedBlack<Key_1, Key_1, Compare_1, Alloc_1>::iterator ite1 = _tree1.end();
 		
-		typename ft::RedBlack<Key, T, Compare, Alloc>::const_iterator it2 = _tree2.begin();
-		typename ft::RedBlack<Key, T, Compare, Alloc>::const_iterator ite2 = _tree2.end();
+		typename ft::RedBlack<Key_2, T_2, Compare_2, Alloc_2>::iterator it2 = _tree2.begin();
+		typename ft::RedBlack<Key_2, T_2, Compare_2, Alloc_2>::iterator ite2 = _tree2.end();
 		
 		while (it1 != ite1 && it2 != ite2) {
 			if (it1->first != it2->first || it1->second != it2->second)
@@ -1016,9 +1075,10 @@ namespace ft {
 		return true;
 	}
 	
-	template< class Key, class T, class Compare, class Alloc >
-	bool operator!=( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
-					 const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+	template< class Key_1, class T_1, class Compare_1, class Alloc_1,
+			class Key_2, class T_2, class Compare_2, class Alloc_2>
+	bool operator!=( const ft::RedBlack<Key_1, T_1, Compare_1, Alloc_1>& _tree1,
+					const ft::RedBlack<Key_2, T_2, Compare_2, Alloc_2>& _tree2) {
 		return !(_tree1 == _tree2);
 	}
 	
@@ -1031,7 +1091,7 @@ namespace ft {
 	
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator<=( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
-					 const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+					const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
 		return !(_tree2 < _tree1);
 	}
 	
@@ -1043,13 +1103,12 @@ namespace ft {
 	
 	template< class Key, class T, class Compare, class Alloc >
 	bool operator>=( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
-					 const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+					const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
 		return !(_tree1 < _tree2);
 	}
 	
 	template< class Key, class T, class Compare, class Alloc >
-	void swap (ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
-			   ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+	void swap (ft::RedBlack<Key, T, Compare, Alloc>& _tree1, ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
 		_tree1.swap(_tree2);
 	}
 	
