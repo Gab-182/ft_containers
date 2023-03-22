@@ -104,11 +104,12 @@ namespace ft {
 				/**——————————————————————————————————[Operator=]——————————————————————————————————————*/
 				map &operator=(const map &copy) {
 					if (this != &copy) {
+						clear();
 						_compare = copy._compare;
 						_alloc_data = copy._alloc_data;
-						insert(copy.begin(), copy.end());
+						this->insert(copy.begin(), copy.end());
 					}
-					return *this;
+					return (*this);
 				}
 				
 				/**—————————————————————————————————[Iterators]————————————————————————————————————————*/

@@ -118,6 +118,7 @@ namespace ft {
 			RedBlack&
 			operator=(const RedBlack<NodePointer, Val, Diff>& copy) {
 				if (this != &copy) {
+					clear();
 					_compare = copy._compare;
 					_alloc_data = copy._alloc_data;
 					_alloc_node = copy._alloc_node;
@@ -799,7 +800,7 @@ namespace ft {
 				}
 				if (node != nullptr && node->left != nullptr)
 					delete_subtree(node->left);
-				if (node->right != nullptr)
+				else if (node->right != nullptr)
 					delete_subtree(node->right);
 				if (node != nullptr) {
 					_alloc_node.destroy(node);
@@ -807,7 +808,7 @@ namespace ft {
 					node = nullptr;
 				}
 			}
-			
+
 		public:
 			/**——————————————————————————————————[ range erase ]—————————————————————————————————*
 			 * @brief Erases all the elements in the range [first, last).
@@ -846,6 +847,10 @@ namespace ft {
 				if (_root == nullptr)
 					return;
 				delete_subtree(_root);
+				if (_root != nullptr) {
+					_alloc_node.destroy(_root);
+					_root = nullptr;
+				}
 				_nodes_count = 0;
 			}
 		
