@@ -43,8 +43,8 @@ namespace ft {
 		 **/
 		NODE()
 				: paired_data(),
-				parent(nullptr), left(nullptr),
-				right(nullptr), color(BLACK) { }
+				parent(0), left(0),
+				right(0), color(BLACK) { }
 		
 		/**———————————————————————————————[ Constructor ]————————————————————————————————*
 		 ** @brief Parametrized Constructor, the default color will be red.
@@ -102,25 +102,6 @@ namespace ft {
 		 	else
 		 		return parent->left;
 		 }
-		/**———————————————————————————————[ Get Minimum ]————————————————————————————————*
-		 ** @brief Get the minimum node in the subtree, which is the far left node.
-		 **/
-		static node_pointer
-		get_minimum(node_pointer current) {
-			while (current != nullptr && current->left != nullptr)
-				current = current->left;
-			return current;
-		}
-		
-		/**———————————————————————————————[ Get Maximum ]————————————————————————————————*
-		 ** @brief Get the maximum node in the subtree, which is the far right node.
-		 **/
-		static node_pointer
-		get_maximum(node_pointer current) {
-			while (current != nullptr && current->right != nullptr)
-				current = current->right;
-			return current;
-		}
 		
 		/**———————————————————————————————[ Change Color ]————————————————————————————————*
 		 ** @brief Change the color of the node, if it's red, make it black, and vice versa.

@@ -79,9 +79,9 @@ make_pair( T1 first, T2 second ) {
  **/
 template<typename T1, typename T2>
 inline bool
-operator==(const pair<T1, T2>& x, const pair<T1, T2>& y)
-	{ return x.first == y.first && x.second == y.second; }
-
+operator==(const pair<T1, T2>& x, const pair<T1, T2>& y) {
+	return ((x.first == y.first) && (x.second == y.second));
+}
 /**———————————————————————————————————————————————————————————**/
 /**
  **  @brief: Uses operator== to find the result.

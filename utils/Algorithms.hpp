@@ -45,6 +45,17 @@ namespace ft {
 		}
 		return (first1 == last1 && first2 != last2);
 	}
+	
+	/**—————————————————————————————————————————————————————————————————————————————————**/
+	template <class Iter1, class Iter2 >
+	bool equal(Iter1 first1, Iter1 last1, Iter2 first2) {
+		for (; first1 != last1; ++first1, ++first2) {
+			if (*first1 != *first2) {
+				return false;
+			}
+		}
+		return true;
+	}
 	/**—————————————————————————————————————————————————————————————————————————————————**/
 }
 
