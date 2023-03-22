@@ -151,7 +151,7 @@ namespace ft {
 				node_pointer MaxNode = GetMaxNode(_root);
 				node_pointer MinNode = GetMinNode(_root);
 				
-				if (_end == _ptr)
+				if (_ptr == NULL)
 					_ptr = MaxNode;
 				else if (MinNode == _ptr)
 					_ptr = NULL;

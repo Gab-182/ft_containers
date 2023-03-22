@@ -221,7 +221,22 @@ namespace ft {
 	/**——————————————————————————————[Operator(it1 == it2)]———————————————————————————————————————————*/
 	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
 	inline bool
-	operator==(const RB_const_iterator<T_1, val_1, Diff_1>& lhs, const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
+	operator==(const RB_const_iterator<T_1, val_1, Diff_1>& lhs,
+				const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() == rhs.base());
+	}
+	
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator==(const RB_const_iterator<T_1, val_1, Diff_1>& lhs,
+			   const RB_iterator<T_2, val_2, Diff_2>& rhs) {
+		return (lhs.base() == rhs.base());
+	}
+	
+	template <class T_1, class val_1, class Diff_1, class T_2, class val_2, class Diff_2>
+	inline bool
+	operator==(const RB_iterator<T_1, val_1, Diff_1>& lhs,
+			   const RB_const_iterator<T_2, val_2, Diff_2>& rhs) {
 		return (lhs.base() == rhs.base());
 	}
 	
