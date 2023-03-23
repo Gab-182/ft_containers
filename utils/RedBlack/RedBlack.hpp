@@ -5,6 +5,7 @@
 # include <cstddef>		// for ptrdiff_t
 # include <memory>      // for allocator
 
+# include <stack>
 # include "../pair.hpp"
 # include "./TreeNode.hpp"
 # include "../Algorithms.hpp"
@@ -223,8 +224,8 @@ namespace ft {
 			inline iterator
 			begin() {
 				if (empty())
-					return (iterator(_end));
-				return iterator(GetMinNode(_root));
+					return iterator(_end, _root);
+				return iterator(GetMinNode(_root), _root);
 			}
 
 			/**—————————————————————————————————————[ begin ]—————————————————————————————————————*
@@ -234,8 +235,8 @@ namespace ft {
 			inline const_iterator
 			begin() const {
 				if (empty())
-					return (const_iterator(_end));
-				return const_iterator(GetMinNode(_root));
+					return const_iterator(_end, _root);
+				return const_iterator(GetMinNode(_root), _root);
 			}
 		
 			/**——————————————————————————————————————[ end ]——————————————————————————————————————*
@@ -250,8 +251,8 @@ namespace ft {
 			inline iterator
 			end() {
 				if (empty())
-					return (iterator(_end));
-				return (iterator(nullptr, _root));
+					return iterator(_end, _root);
+				return iterator(nullptr, _root);
 			}
 		
 			/**——————————————————————————————————————[ end ]——————————————————————————————————————*
@@ -262,8 +263,8 @@ namespace ft {
 			inline const_iterator
 			end() const {
 				if (empty())
-					return (const_iterator(_end));
-				return (iterator(nullptr, _root));
+					return const_iterator(_end, _root);
+				return iterator(nullptr, _root);
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -272,7 +273,7 @@ namespace ft {
 			 **/
 			inline reverse_iterator
 			rbegin() {
-				return reverse_iterator(iterator(GetMaxNode(_root)));
+				return reverse_iterator(iterator(GetMaxNode(_root), _root));
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -281,7 +282,7 @@ namespace ft {
 			 **/
 			inline const_reverse_iterator
 			rbegin() const {
-				return const_reverse_iterator(iterator(GetMaxNode(_root)));
+				return const_reverse_iterator(iterator(GetMaxNode(_root), _root));
 			}
 		
 			/**—————————————————————————————————————[ rend ]——————————————————————————————————————*
@@ -415,7 +416,7 @@ namespace ft {
 				else if (find(new_node->paired_data.first) != end()) {
 					_alloc_node.destroy(new_node);
 					_alloc_node.deallocate(new_node, sizeof(node));
-					return (ft::make_pair(iterator(parent), false));
+					return (ft::make_pair(iterator(parent, _root), false));
 				}
 				// if the key of the new node is less than the parent, it will be the left child.
 				else if (_compare(new_node->paired_data.first, parent->paired_data.first) == true)
@@ -426,13 +427,13 @@ namespace ft {
 				else {
 					_alloc_node.destroy(new_node);
 					_alloc_node.deallocate(new_node, sizeof(node));
-					return (ft::make_pair(iterator(parent), false));
+					return (ft::make_pair(iterator(parent, _root), false));
 				}
 				new_node->left = nullptr;
 				new_node->color = RED;
 				++_nodes_count;
 				InsertFixup(new_node);
-				return (ft::make_pair(iterator(new_node), true));
+				return (ft::make_pair(iterator(new_node, _root), true));
 			}
 		
 			/**—————————————————————————————————[ range insert ]——————————————————————————————————*
@@ -817,11 +818,14 @@ namespace ft {
 			 */
 			void
 			erase(iterator first, iterator last) {
-				while (first != last) {
-					if (first == end())
-						return;
-					erase(first->first);
-					++first;
+				std::stack<key_type> tmp;
+				
+				for (iterator it = first; it != last; it++) {
+					tmp.push(it->first);
+				}
+				while (!tmp.empty()) {
+					erase(tmp.top());
+					tmp.pop();
 				}
 			}
 		

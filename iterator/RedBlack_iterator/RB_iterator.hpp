@@ -43,15 +43,12 @@ namespace ft {
 			RB_iterator()
 				: _ptr(NULL), _root(NULL) { };
 			
-			explicit RB_iterator(const node_pointer& ptr)
-				: _ptr(ptr) { };
-			
 			explicit RB_iterator(const node_pointer& ptr, const node_pointer& root)
 				: _ptr(ptr), _root(root) { };
 			
 			template<class NodePointer, class Val, class Diff>
 			RB_iterator(RB_iterator<NodePointer, Val, Diff>& copy)
-				: _ptr((copy.base())) { };
+				: _ptr(copy.base()), _root(copy.GetRoot()) { };
 			
 			~RB_iterator() { };
 
@@ -60,6 +57,13 @@ namespace ft {
 			base() const {
 				return _ptr;
 			};
+			
+			/**————————————————————————————————[GetRoot]———————————————————————————————————————————*/
+			inline node_pointer
+			GetRoot() const {
+				return _root;
+			};
+			
 			/**——————————————————————————————[Operator=]———————————————————————————————————————————*/
 			inline RB_iterator&
 			operator=(const RB_iterator& copy) {
@@ -113,17 +117,29 @@ namespace ft {
 			 **/
 			inline RB_iterator&
 			operator++() {
-				if (_ptr && _ptr->right != NULL) {
-					_ptr = _ptr->right;
-					while (_ptr && _ptr->left != NULL)
-						_ptr = _ptr->left;
+				if (_ptr && _ptr != GetMaxNode(_root)) {
+					// if the node has a right child, go to its leftmost descendant
+					if (_ptr->right) {
+						_ptr = _ptr->right;
+						while (_ptr->left) {
+							_ptr = _ptr->left;
+						}
+					}
+						// if the node doesn't have a right child, go up until a larger key is found
+					else {
+						node_pointer parent = _ptr->parent;
+						while (parent && _ptr == parent->right) {
+							_ptr = parent;
+							parent = parent->parent;
+						}
+						_ptr = parent;
+					}
 				}
 				else {
-					while (_ptr->parent && _ptr->parent->right == _ptr)
-						_ptr = _ptr->parent;
-					_ptr = _ptr->parent;
+					// if the current node is null, return the end iterator
+					_ptr = nullptr;
 				}
-				return (*this);
+				return *this;
 			}
 			/**————————————————————————————[Operator++(int)]———————————————————————————————————————*/
 			/**

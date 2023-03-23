@@ -35,22 +35,18 @@ namespace ft {
 	public:
 		/**——————————————————————————[Constructors && Destructor]——————————————————————————————*/
 		RB_const_iterator()
-				: _ptr(NULL) {};
-		
-		explicit
-		RB_const_iterator(const node_pointer& ptr)
-				: _ptr(ptr) {};
+				: _ptr(nullptr) , _root(nullptr){};
 		
 		explicit RB_const_iterator(const node_pointer& ptr, const node_pointer& root)
 				: _ptr(ptr), _root(root) { };
 		
 		template <class NodePointer, class Val, class Diff>
 		RB_const_iterator(const RB_iterator<NodePointer, Val, Diff>& copy)
-				: _ptr(copy.base()) {};
+				: _ptr(copy.base()), _root(copy.GetRoot()) {};
 
 		template <class NodePointer, class Val, class Diff>
 		RB_const_iterator(const RB_const_iterator<NodePointer, Val, Diff>& copy)
-				: _ptr(copy.base()) {};
+				: _ptr(copy.base()), _root(copy.GetRoot()) {};
 		
 		RB_const_iterator(const RB_const_iterator<T, val, DeffType>& copy)
 				: _ptr(copy.base()) {};
@@ -64,6 +60,11 @@ namespace ft {
 			return _ptr;
 		}
 		
+		/**————————————————————————————————[GetRoot]———————————————————————————————————————————*/
+		inline node_pointer
+		GetRoot() const {
+			return _root;
+		}
 		/**——————————————————————————————[Operator=]———————————————————————————————————————————*/
 		inline RB_const_iterator&
 		operator=(const RB_const_iterator& copy) {
@@ -83,6 +84,32 @@ namespace ft {
 		operator->() const {
 			return &(_ptr->paired_data);
 		};
+	
+	
+	private:
+		/**————————————————————————————————————[ GetMaxNode ]————————————————————————————————————*
+		 ** @brief Returns the maximum node in the tree.
+		 * @return node_pointer
+		 * */
+		node_pointer
+		GetMaxNode(node_pointer current) {
+			while (current && current->right)
+				current = current->right;
+			return current;
+		}
+		
+		/**————————————————————————————————————[ GetMinNode ]————————————————————————————————————*
+		 ** @brief Returns the minimum node in the tree.
+		 * @return node_pointer
+		 * */
+		node_pointer
+		GetMinNode(node_pointer current) {
+			while (current && current->left)
+				current = current->left;
+			return current;
+		}
+	
+	public:
 		
 		/**——————————————————————————————[Operator++]——————————————————————————————————————————*/
 		/**
@@ -92,17 +119,29 @@ namespace ft {
 		 **/
 		inline RB_const_iterator&
 		operator++() {
-			if (_ptr && _ptr->right != NULL) {
-				_ptr = _ptr->right;
-				while (_ptr && _ptr->left != NULL)
-					_ptr = _ptr->left;
+			if (_ptr && _ptr != GetMaxNode(_root)) {
+				// if the node has a right child, go to its leftmost descendant
+				if (_ptr->right) {
+					_ptr = _ptr->right;
+					while (_ptr->left) {
+						_ptr = _ptr->left;
+					}
+				}
+					// if the node doesn't have a right child, go up until a larger key is found
+				else {
+					node_pointer parent = _ptr->parent;
+					while (parent && _ptr == parent->right) {
+						_ptr = parent;
+						parent = parent->parent;
+					}
+					_ptr = parent;
+				}
 			}
 			else {
-				while (_ptr->parent && _ptr->parent->right == _ptr)
-					_ptr = _ptr->parent;
-				_ptr = _ptr->parent;
+				// if the current node is null, return the end iterator
+				_ptr = nullptr;
 			}
-			return (*this);
+			return *this;
 		}
 		/**————————————————————————————[Operator++(int)]———————————————————————————————————————*/
 		/**
@@ -126,18 +165,23 @@ namespace ft {
 		 **/
 		inline RB_const_iterator&
 		operator--() {
-			// if the node has left child, then the previous node is the rightmost node of the left subtree.
-			if (_ptr->left != NULL) {
+			node_pointer MaxNode = GetMaxNode(_root);
+			node_pointer MinNode = GetMinNode(_root);
+			
+			if (_ptr == nullptr)
+				_ptr = MaxNode;
+			else if (_ptr == MinNode)
+				_ptr = nullptr;
+			else if (_ptr && _ptr->left != nullptr) {
 				_ptr = _ptr->left;
-				while (_ptr->right != NULL)
+				while (_ptr->right != nullptr)
 					_ptr = _ptr->right;
 			}
-				// if the node has no left child, then the previous node is the parent.
 			else {
-				// if the node is the right child of its parent, then the parent is the previous node.
-				while (_ptr->parent != NULL && _ptr->parent->left == _ptr)
+				while (_ptr && _ptr->parent && _ptr->parent->left == _ptr)
 					_ptr = _ptr->parent;
-				_ptr = _ptr->parent;
+				if (_ptr && _ptr->parent)
+					_ptr = _ptr->parent;
 			}
 			return (*this);
 		}
