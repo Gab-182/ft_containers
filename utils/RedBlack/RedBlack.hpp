@@ -251,8 +251,7 @@ namespace ft {
 			end() {
 				if (empty())
 					return (iterator(_end));
-				node_pointer max = GetMaxNode(_root);
-				return (iterator(max->right, _end, _root));
+				return (iterator(nullptr, _root));
 			}
 		
 			/**——————————————————————————————————————[ end ]——————————————————————————————————————*
@@ -264,8 +263,7 @@ namespace ft {
 			end() const {
 				if (empty())
 					return (const_iterator(_end));
-				node_pointer max = GetMaxNode(_root);
-				return (iterator(max->right, _end, _root));
+				return (iterator(nullptr, _root));
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -690,6 +688,7 @@ namespace ft {
 				}
 				_alloc_node.destroy(y);
 				_alloc_node.deallocate(y, 1);
+				--_nodes_count;
 				return 1;
 			}
 			

@@ -36,19 +36,18 @@ namespace ft {
 			
 		private:
 			node_pointer	_ptr;
-			node_pointer 	_end;
 			node_pointer 	_root;
 			
 		public:
 			/**——————————————————————————[Constructors && Destructor]——————————————————————————————*/
 			RB_iterator()
-				: _ptr(NULL), _end(NULL), _root(NULL) { };
+				: _ptr(NULL), _root(NULL) { };
 			
 			explicit RB_iterator(const node_pointer& ptr)
 				: _ptr(ptr) { };
 			
-			explicit RB_iterator(const node_pointer& ptr, const node_pointer& end, const node_pointer& root)
-				: _ptr(ptr), _end(end), _root(root) { };
+			explicit RB_iterator(const node_pointer& ptr, const node_pointer& root)
+				: _ptr(ptr), _root(root) { };
 			
 			template<class NodePointer, class Val, class Diff>
 			RB_iterator(RB_iterator<NodePointer, Val, Diff>& copy)
@@ -151,13 +150,13 @@ namespace ft {
 				node_pointer MaxNode = GetMaxNode(_root);
 				node_pointer MinNode = GetMinNode(_root);
 				
-				if (_ptr == NULL)
+				if (_ptr == nullptr)
 					_ptr = MaxNode;
-				else if (MinNode == _ptr)
-					_ptr = NULL;
-				else if (_ptr->left != NULL) {
+				else if (_ptr == MinNode)
+					_ptr = nullptr;
+				else if (_ptr && _ptr->left != nullptr) {
 					_ptr = _ptr->left;
-					while (_ptr->right != NULL)
+					while (_ptr->right != nullptr)
 						_ptr = _ptr->right;
 				}
 				else {
@@ -167,18 +166,6 @@ namespace ft {
 						_ptr = _ptr->parent;
 				}
 				return (*this);
-//				if (_ptr && _ptr->left != NULL) {
-//					_ptr = _ptr->left;
-//					while (_ptr->right != NULL)
-//						_ptr = _ptr->right;
-//				}
-//				else {
-//					while (_ptr && _ptr->parent && _ptr->parent->left == _ptr)
-//						_ptr = _ptr->parent;
-//					if (_ptr && _ptr->parent)
-//						_ptr = _ptr->parent;
-//				}
-//				return (*this);
 			}
 		/**——————————————————————————————[Operator--(int)]—————————————————————————————————————————
 		 ** @brief Prefix decrement operator, it returns the iterator to the previous node.

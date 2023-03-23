@@ -30,7 +30,6 @@ namespace ft {
 	
 	private:
 		node_pointer	_ptr;
-		node_pointer 	_end;
 		node_pointer 	_root;
 	
 	public:
@@ -42,8 +41,8 @@ namespace ft {
 		RB_const_iterator(const node_pointer& ptr)
 				: _ptr(ptr) {};
 		
-		explicit RB_const_iterator(const node_pointer& ptr, const node_pointer& end, const node_pointer& root)
-				: _ptr(ptr), _end(end), _root(root) { };
+		explicit RB_const_iterator(const node_pointer& ptr, const node_pointer& root)
+				: _ptr(ptr), _root(root) { };
 		
 		template <class NodePointer, class Val, class Diff>
 		RB_const_iterator(const RB_iterator<NodePointer, Val, Diff>& copy)
