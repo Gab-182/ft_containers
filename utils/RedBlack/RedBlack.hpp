@@ -224,7 +224,7 @@ namespace ft {
 			inline iterator
 			begin() {
 				if (empty())
-					return iterator(_end, _root);
+					return iterator(nullptr, _root);
 				return iterator(GetMinNode(_root), _root);
 			}
 
@@ -235,7 +235,7 @@ namespace ft {
 			inline const_iterator
 			begin() const {
 				if (empty())
-					return const_iterator(_end, _root);
+					return const_iterator(nullptr, _root);
 				return const_iterator(GetMinNode(_root), _root);
 			}
 		
@@ -251,7 +251,7 @@ namespace ft {
 			inline iterator
 			end() {
 				if (empty())
-					return iterator(_end, _root);
+					return iterator(nullptr, _root);
 				return iterator(nullptr, _root);
 			}
 		
@@ -263,8 +263,8 @@ namespace ft {
 			inline const_iterator
 			end() const {
 				if (empty())
-					return const_iterator(_end, _root);
-				return iterator(nullptr, _root);
+					return const_iterator(nullptr, _root);
+				return const_iterator(nullptr, _root);
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -906,7 +906,7 @@ namespace ft {
 				iterator it = begin();
 				iterator ite = end();
 				while (it != ite) {
-					if (it->first == k)
+					if (_compare(it->first, k) == false && _compare(k, it->first) == false)
 						return (it);
 					it++;
 				}
@@ -918,7 +918,7 @@ namespace ft {
 				const_iterator it = begin();
 				const_iterator ite = end();
 				while (it != ite) {
-					if (it->first == k)
+					if (_compare(it->first, k) == false && _compare(k, it->first) == false)
 						return (it);
 					it++;
 				}
