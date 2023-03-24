@@ -117,7 +117,10 @@ namespace ft {
 			 **/
 			inline RB_iterator&
 			operator++() {
-				if (_ptr && _ptr != GetMaxNode(_root)) {
+				// for the rend() iterator, return the min node
+				if (_ptr == nullptr)
+					_ptr = GetMinNode(_root);
+				else if (_ptr && _ptr != GetMaxNode(_root)) {
 					// if the node has a right child, go to its leftmost descendant
 					if (_ptr->right) {
 						_ptr = _ptr->right;
@@ -166,6 +169,7 @@ namespace ft {
 				node_pointer MaxNode = GetMaxNode(_root);
 				node_pointer MinNode = GetMinNode(_root);
 				
+				// for the end() iterator, return the max node
 				if (_ptr == nullptr)
 					_ptr = MaxNode;
 				else if (_ptr == MinNode)

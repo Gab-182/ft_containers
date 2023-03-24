@@ -273,7 +273,7 @@ namespace ft {
 			 **/
 			inline reverse_iterator
 			rbegin() {
-				return reverse_iterator(iterator(GetMaxNode(_root), _root));
+				return reverse_iterator(end());
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -282,7 +282,7 @@ namespace ft {
 			 **/
 			inline const_reverse_iterator
 			rbegin() const {
-				return const_reverse_iterator(iterator(GetMaxNode(_root), _root));
+				return const_reverse_iterator(end());
 			}
 		
 			/**—————————————————————————————————————[ rend ]——————————————————————————————————————*
@@ -1062,25 +1062,10 @@ namespace ft {
 /*=============================================================================================================*/
 	}; // RED_BLACK_TREE
 	/**———————————————————————————————————[Non-member function overloads]—————————————————————————————————————*/
-	template< class Key_1, class T_1, class Compare_1, class Alloc_1,
-			class Key_2, class T_2, class Compare_2, class Alloc_2>
-	bool operator==( const ft::RedBlack<Key_1, T_1, Compare_1, Alloc_1>& _tree1,
-					 const ft::RedBlack<Key_2, T_2, Compare_2, Alloc_2>& _tree2) {
-		if (_tree1._nodes_count() != _tree2._nodes_count())
-			return false;
-		typename ft::RedBlack<Key_1, T_1, Compare_1, Alloc_1>::iterator it1 = _tree1.begin();
-		typename ft::RedBlack<Key_1, Key_1, Compare_1, Alloc_1>::iterator ite1 = _tree1.end();
-		
-		typename ft::RedBlack<Key_2, T_2, Compare_2, Alloc_2>::iterator it2 = _tree2.begin();
-		typename ft::RedBlack<Key_2, T_2, Compare_2, Alloc_2>::iterator ite2 = _tree2.end();
-		
-		while (it1 != ite1 && it2 != ite2) {
-			if (it1->first != it2->first || it1->second != it2->second)
-				return false;
-			it1++;
-			it2++;
-		}
-		return true;
+	template< class Key, class T, class Compare, class Alloc>
+	bool operator==( const ft::RedBlack<Key, T, Compare, Alloc>& _tree1,
+					 const ft::RedBlack<Key, T, Compare, Alloc>& _tree2) {
+		return _tree1.size() == _tree2.size() && ft::equal(_tree1.begin(), _tree1.end(), _tree2.begin(), _tree2.end());
 	}
 	
 	template< class Key_1, class T_1, class Compare_1, class Alloc_1,

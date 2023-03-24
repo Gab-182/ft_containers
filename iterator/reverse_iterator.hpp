@@ -32,6 +32,7 @@ namespace ft {
 
 		private:
 			iterator_type			_current_iter;
+			pointer _root;
 			
 
 		public:
@@ -87,8 +88,8 @@ namespace ft {
 			 */
 			inline reference
 			operator*() const {
-				iterator_type tmp = _current_iter;
-				return *(--tmp);
+				iterator_type tmp(_current_iter);
+				return *--tmp;
 			}
 		
 			/**——————————————————————————————[Operator->]———————————————————————————————————————————*

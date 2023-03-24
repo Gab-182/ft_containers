@@ -130,19 +130,19 @@ namespace ft {
 				}
 
 				reverse_iterator rbegin() {
-					return _tree.end();
+					return _tree.rbegin();
 				}
 
 				const_reverse_iterator rbegin() const {
-					return _tree.end();
+					return _tree.rbegin();
 				}
 
 				reverse_iterator rend() {
-					return _tree.begin();
+					return _tree.rend();
 				}
 
 				const_reverse_iterator rend() const {
-					return _tree.begin();
+					return _tree.rend();
 				}
 				
 				/**—————————————————————————————————[Capacity]————————————————————————————————————————*/
@@ -254,13 +254,16 @@ namespace ft {
 				}
 		};// Map
 	/**———————————————————————————————————[Non-member function overloads]—————————————————————————————————————*/
+	
+	/**———————————————————————————————————————————[map1 == map2]——————————————————————————————————————————————*/
 		template <class Key_1, class T_1, class Compare_1, class Alloc_1,
 				class Key_2, class T_2, class Compare_2, class Alloc_2>
 		bool operator==(const map<Key_1, T_1, Compare_1, Alloc_1> &lhs,
 						const map<Key_2, T_2, Compare_2, Alloc_2> &rhs) {
-			return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+			return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 		}
 	
+	/**———————————————————————————————————————————[map1 != map2]——————————————————————————————————————————————*/
 		template <class Key_1, class T_1, class Compare_1, class Alloc_1,
 				class Key_2, class T_2, class Compare_2, class Alloc_2>
 		bool operator!=(const map<Key_1, T_1, Compare_1, Alloc_1> &lhs,
@@ -268,27 +271,32 @@ namespace ft {
 			return !(lhs == rhs);
 		}
 
+	/**———————————————————————————————————————————[map1 < map2]——————————————————————————————————————————————*/
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator<(const map<Key, T, Compare, Alloc> &lhs,
 						const map<Key, T, Compare, Alloc> &rhs) {
 			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 		}
 
+	/**———————————————————————————————————————————[map1 <= map2]——————————————————————————————————————————————*/
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
 			return !(rhs < lhs);
 		}
 
+	/**———————————————————————————————————————————[map1 > map2]——————————————————————————————————————————————*/
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator>(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
 			return rhs < lhs;
 		}
 
+	/**———————————————————————————————————————————[map1 >= map2]——————————————————————————————————————————————*/
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs) {
 			return !(lhs < rhs);
 		}
 
+	/**———————————————————————————————————————————[swap(map1, map2)]——————————————————————————————————————————————*/
 		template <class Key, class T, class Compare, class Alloc>
 		void swap(map<Key, T, Compare, Alloc> &x, map<Key, T, Compare, Alloc> &y) {
 			x.swap(y);
