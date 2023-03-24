@@ -56,13 +56,13 @@ namespace ft {
 			inline node_pointer
 			base() const {
 				return _ptr;
-			};
+			}
 			
 			/**————————————————————————————————[GetRoot]———————————————————————————————————————————*/
 			inline node_pointer
 			GetRoot() const {
 				return _root;
-			};
+			}
 			
 			/**——————————————————————————————[Operator=]———————————————————————————————————————————*/
 			inline RB_iterator&
@@ -70,20 +70,20 @@ namespace ft {
 				if (this != &copy)
 					_ptr = copy._ptr;
 				return *this;
-			};
+			}
 			
 			/**——————————————————————————————[Operator*]———————————————————————————————————————————*/
 			inline value_reference
 			operator*() const {
 				return (_ptr->paired_data);
-			};
+			}
 			
 			/**——————————————————————————————[Operator->]——————————————————————————————————————————*/
 			inline value_pointer
 			operator->() const {
 				return &(_ptr->paired_data);
-			};
-	
+			}
+			
 		private:
 			/**————————————————————————————————————[ GetMaxNode ]————————————————————————————————————*
 			 ** @brief Returns the maximum node in the tree.

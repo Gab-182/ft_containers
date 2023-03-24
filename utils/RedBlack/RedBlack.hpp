@@ -268,8 +268,7 @@ namespace ft {
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
-			 ** @brief Returns a reverse iterator to the first element in the tree,
-			 ** which is the right most node.
+			 ** @brief Returns a reverse iterator constructed from the end iterator.
 			 **/
 			inline reverse_iterator
 			rbegin() {
@@ -277,8 +276,7 @@ namespace ft {
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
-			 ** @brief Returns a reverse iterator to the first element in the tree,
-			 ** which is the right most node.
+			 ** @brief Returns a reverse iterator constructed from the end iterator.
 			 **/
 			inline const_reverse_iterator
 			rbegin() const {
@@ -286,8 +284,7 @@ namespace ft {
 			}
 		
 			/**—————————————————————————————————————[ rend ]——————————————————————————————————————*
-			 ** @brief Returns a reverse iterator to the last element in the tree,
-			 ** which is the left most node.
+			 ** @brief Returns a reverse iterator constructed from the begin iterator.
 			 **/
 			inline reverse_iterator
 			rend() {
@@ -295,8 +292,7 @@ namespace ft {
 			}
 		
 			/**—————————————————————————————————————[ rend ]——————————————————————————————————————*
-			 ** @brief Returns a reverse iterator to the last element in the tree,
-			 ** which is the left most node.
+			 ** @brief Returns a reverse iterator constructed from the begin iterator.
 			 **/
 			inline const_reverse_iterator
 			rend() const {

@@ -48,10 +48,9 @@ namespace ft {
 		RB_const_iterator(const RB_const_iterator<NodePointer, Val, Diff>& copy)
 				: _ptr(copy.base()), _root(copy.GetRoot()) {};
 		
-		RB_const_iterator(const RB_const_iterator<T, val, DeffType>& copy)
-				: _ptr(copy.base()) {};
-		
-		
+//		RB_const_iterator(const RB_const_iterator<T, val, DeffType>& copy)
+//				: _ptr(copy.base(), _root(copy.GetRoot())) {};
+//
 		~RB_const_iterator() {};
 		
 		/**————————————————————————————————[base()]————————————————————————————————————————————*/
@@ -65,6 +64,7 @@ namespace ft {
 		GetRoot() const {
 			return _root;
 		}
+		
 		/**——————————————————————————————[Operator=]———————————————————————————————————————————*/
 		inline RB_const_iterator&
 		operator=(const RB_const_iterator& copy) {
