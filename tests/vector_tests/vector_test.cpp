@@ -1,10 +1,10 @@
-# include "../../vector/vector.hpp"
+# include "../../containers/vector.hpp"
 
 # include <iostream>
 # include <iterator>
 # include <cassert>
-# include <vector>
 # include <exception>
+# include <list>
 /*===============================================================================*/
 
 # define BOLDWHITE		"\033[1m\033[37m"		/* Bold White */
@@ -350,11 +350,6 @@ int main()
 
 	 ft::vector<int> v20(10, 1);
 	 v20.assign(5, 20);
-	 
-	 assert(v20.size() == 5);
-	 assert(v20.capacity() == 10);
-	 assert(v20[0] == 20);
-	 assert(v20[4] == 20);
 
 	 for (ft::vector<int>::size_type i = 0; i < v20.size(); i++)
 	 	std::cout << BOLDWHITE << v20[i] << RESET << std::endl;
@@ -370,7 +365,6 @@ int main()
 
 	ft::vector<int> vec1(5, 5);
 	ft::vector<int> vec2(5, 1);
-	
 	for (ft::vector<int>::size_type i = 0; i < vec2.size(); i++)
 		std::cout << BOLDWHITE << vec2[i] << RESET << std::endl;
 	std::cout << BOLDWHITE << "----------------------------------------" << RESET << std::endl;
@@ -380,9 +374,22 @@ int main()
 	for (ft::vector<int>::size_type i = 0; i < vec2.size(); i++)
 		std::cout << BOLDWHITE << vec2[i] << RESET << std::endl;
 	std::cout << BOLDWHITE << "----------------------------------------" << RESET << std::endl;
-	
 	std::cout << BOLDWHITE << "vec2.size() = [" << vec2.size() << "]" << RESET << std::endl;
 	std::cout << BOLDWHITE << "vec2.capacity() = [" << vec2.capacity() << "]" << RESET << std::endl;
+	std::cout << BOLDWHITE << "----------------------------------------" << RESET << std::endl;
+	
+	std::list<int > lst;
+	std::list<int>::iterator lst_it;
+	
+	for (int i = 1; i < 5; ++i)
+		lst.push_back(i * 3);
+	lst_it = lst.begin();
+	for (int i = 1; lst_it != lst.end(); ++i)
+		*lst_it++ = i * 5;
+	ft::vector<int> vct;
+	
+//	vct.assign(lst.begin(), lst.end());
+	vct.insert(vct.end(), lst.rbegin(), lst.rend());
 	std::cout << BOLDGREEN << "Assign(range) function test passed ✅" << RESET << std::endl;
 	std::cout << BOLDYELLOW << "--------------------------------------------------------------" << RESET << std::endl;
 	

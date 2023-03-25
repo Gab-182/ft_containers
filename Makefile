@@ -37,8 +37,7 @@ NAME = ft_containers
 MY_VEC = 	./tests/vector_tests/vector_test.cpp
 ORG_VEC = 	./tests/vector_tests/Original.cpp
 
-MY_TREE = 	./tests/map_tests/tree_test.cpp
-#MY_MAP = 	./tests/map_tests/map_test.cpp.cpp
+MY_MAP = 	./tests/map_tests/map_test.cpp
 #ORG_MAP = 	./tests/map_tests/Original.cpp
 
 
@@ -50,7 +49,7 @@ FLAGS = -Wall -Wextra -Werror -std=c++98
 # -fsanitize=leak for leak sanitizer
 # -fsanitize=undefined for undefined behavior sanitizer
 # -fsanitize=thread for thread sanitizer
-#SFLAGS = -fsanitize=address -fsanitize=undefined -fsanitize=leak -fsanitize=thread
+SFLAGS = -fsanitize=address -fsanitize=undefined -fsanitize=leak -fsanitize=thread
 
 ####################################################################################
 CC = c++ -g3
@@ -62,15 +61,16 @@ $(NAME): $(OBJ)
 	@$(CC) $(FLAGS) $(MY_VEC) -o MY_VEC
 	@$(CC) $(ORG_VEC) -o ORG_VEC
 
-# Compile MY_TREE files
-	#$(CC) $(FLAGS) $(MY_TREE) -o MY_TREE
-
+# Compile MY_MAP files
+	$(CC) $(FLAGS) $(MY_MAP) -o MY_MAP
+	#$(CC) $(FLAGS) $(ORG_MAP) -o ORG_MAP
 
 # Move MY_VEC and ORG_VEC to tests folder
 	@mv MY_VEC ORG_VEC ./tests/vector_tests
 
-# Move MY_TREE to tests folder
-	@#mv MY_TREE ./tests/map_tests
+# Move MY_MAP to tests folder
+	@mv MY_MAP ./tests/map_tests
+	@#mv ORG_MAP ./tests/map_tests
 
 	@echo "\033c"
 	@echo "$(R)≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡≡ $(RS)"
@@ -106,8 +106,16 @@ clean:
 
 #------------------------------------------------------------------------------------------------------
 fclean: clean
-	@rm -rf ./tests/vector_tests/MY_VEC ./tests/vector_tests/ORG_VEC
-	@#rm -rf ./tests/map_tests/MY_TREE
+	@rm -rf ./tests/vector_tests/MY_VEC
+	@rm -rf ./tests/vector_tests/ORG_VEC
+	@rm -rf ./MY_VEC.dSYM
+	@rm -rf ./ORG_VEC.dSYM
+
+	@rm -rf ./tests/map_tests/MY_MAP
+	@#rm -rf ./tests/map_tests/ORG_MAP
+	@rm -rf ./MY_MAP.dSYM
+	@#rm -rf ./ORG_MAP.dSYM
+
 	@echo "\033c"
 	@echo "$(G)【OK】 $(RS)        $(R)❮ft_containers executable❯ DELETED$(RS)"
 

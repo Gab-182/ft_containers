@@ -1,3 +1,4 @@
+import difflib
 import time
 import subprocess
 import psutil
@@ -32,17 +33,6 @@ and also by adding more attributes of the subprocess.CompletedProcess object in 
 
 
 def compare_executables(file1, file2):
-	"""
-	This function compares the results of two executables and shows the difference.
-	It also measures the time and resources used by the executables.
-
-	Parameters:
-		file1 (str): The path to the first executable.
-		file2 (str): The path to the second executable.
-
-	Returns:
-		None
-	"""
 	# Measure time and resources used by first executable
 	start_time = time.time()
 	p1 = psutil.Popen(file1, shell=True)
@@ -69,18 +59,14 @@ def compare_executables(file1, file2):
 	if result1.stdout == result2.stdout:
 		print("The output of the two executables is the same.")
 	else:
-		print("Output of executable 1:")
-		print(result1.stdout)
-		print("Output of executable 2:")
-		print(result2.stdout)
-		print("\033[1;31;40m ❌❌ The outputs for [MY_VEC], [ORG_VEC] are different.\033[0m")
+		print("\033[1;31;40mThe outputs for [{}], [{}] are different.\033[0m".format(file1, file2))
+		diff_lines = difflib.unified_diff(result1.stdout.splitlines(), result2.stdout.splitlines(), lineterm='')
+		print('\n'.join(list(diff_lines)))
 
-	# To convert bytes to megabytes, divide by 1024 ** 2.
-	# To convert bytes to kilobytes, divide by 1024.
-	# Prepare data for tabulation converts bytes to kb
+	# Prepare data for tabulation
 	data = [
-		[My_Vector, time_used1, mem_info1.rss / 1024],
-		[Original_Vector, time_used2, mem_info2.rss / 1024]
+		[file1, time_used1, mem_info1.rss / 1024],
+		[file2, time_used2, mem_info2.rss / 1024]
 	]
 	headers = ["Executable", "Time (s)", "Memory (KB)"]
 
@@ -94,7 +80,6 @@ if __name__ == '__main__':
 	>>>  Welcome to Gab test script:
 		─➤  1- Test vector --> press[1]
 		─➤  2- Test map	   --> press[2]
-		─➤  3- Test stack  --> press[3]
 	
 	>>>  """)
 	while flag != '1' and flag != '2' and flag != '3':
@@ -103,5 +88,3 @@ if __name__ == '__main__':
 		compare_executables(My_Vector, Original_Vector)
 	# elif flag == '2':
 	# 	compare_executables(My_Map, Original_Map)
-	# elif flag == '3':
-	# 	compare_executables(My_Stack, Original_Stack)

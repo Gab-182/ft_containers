@@ -6,14 +6,12 @@
 # include <cstddef>		// for ptrdiff_t
 # include <exception>
 
-# include "../utils/enable_if.hpp"
-# include "../utils/is_integral.hpp"
-# include "../utils/Algorithms.hpp"
-
-# include "../iterator/iterator.hpp"
-# include "../iterator/iterator_traits.hpp"
-# include "../iterator/reverse_iterator.hpp"
-# include <vector>
+# include "../includes/utils/enable_if.hpp"
+# include "../includes/utils/is_integral.hpp"
+# include "../includes/utils/Algorithms.hpp"
+# include "../includes/iterator/iterator.hpp"
+# include "../includes/iterator/iterator_traits.hpp"
+# include "../includes/iterator/reverse_iterator.hpp"
 /*=============================================================================================================*/
 namespace ft
 {

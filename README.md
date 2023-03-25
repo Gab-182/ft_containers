@@ -6,8 +6,6 @@
   <img alt="GitHub repo file count" src="https://img.shields.io/github/directory-file-count/gab-182/ft_containers?color=gree">
 </p>
 
-<img src="UnderConstruction.jpg">
-
 <p align="center">
   <img src="https://user-images.githubusercontent.com/83855149/214600672-3ff0531b-8237-419e-9dd2-b9ed87a3dffc.png" />
 </p>
@@ -43,13 +41,13 @@ int main() {
 
 ### re-implementation of:
 
-  **➤ std::vector** -> [ft::vector](./vector/vector.hpp):
+  **➤ std::vector** -> [ft::vector](containers/vector.hpp):
 
     ➤➤ It is implemented using a dynamic array, which is a contiguous 
     block of memory that can be accessed using pointers.
     The vector class is a dynamic array that can grow and shrink in size.
 
-  **➤ std::map** -> [ft::map](./map/map.hpp) : 
+  **➤ std::map** -> [ft::map](containers/map.hpp) : 
 
     ➤➤ The best type of tree data structure to implement a map container 
     in C++ would be a self-balancing binary search tree (BST), such as 

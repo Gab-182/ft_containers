@@ -1017,12 +1017,12 @@ namespace ft {
 			 **/
 			pair<iterator,iterator>
 			equal_range (const key_type& k) {
-				return (make_pair(lower_bound(k), upper_bound(k)));
+				return (ft::make_pair(lower_bound(k), upper_bound(k)));
 			}
 		
 			pair<const_iterator,const_iterator>
 			equal_range (const key_type& k) const {
-				return (make_pair(lower_bound(k), upper_bound(k)));
+				return (ft::make_pair(lower_bound(k), upper_bound(k)));
 			}
 			/**————————————————————————————————————[ get_root ]———————————————————————————————————*
 			 ** @brief:  Returns a constant _root of the tree.

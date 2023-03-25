@@ -4,8 +4,6 @@
 /**===================================================================================================*/
 # include "./iterator.hpp"
 # include "./iterator_traits.hpp"
-# include "./RedBlack_iterator/RB_iterator.hpp"
-# include "./RedBlack_iterator/RB_const_iterator.hpp"
 /**===================================================================================================*/
 namespace ft {
 /**===================================================================================================*/
@@ -32,8 +30,6 @@ namespace ft {
 
 		private:
 			iterator_type			_current_iter;
-			pointer _root;
-			
 
 		public:
 			/*—————————————————————————————————[Empty Constructor]—————————————————————————————————*/
@@ -41,7 +37,7 @@ namespace ft {
 				: _current_iter() { }
 			
 			/*—————————————————————————————————[Constructor]———————————————————————————————————————*/
-//			explicit
+			explicit
 			reverse_iterator (iterator_type rev_it)
 				: _current_iter(rev_it) { }
 			
@@ -56,7 +52,7 @@ namespace ft {
 			reverse_iterator (const reverse_iterator<Iter>& rev_it)
 				: _current_iter(rev_it.base()) { }
 				
-			/*———————————————————————————————[Assignment operator]—————————————————————————————————*
+		/*———————————————————————————————[Assignment operator]—————————————————————————————————*
 			 * @Assignment_operator
 			 * A reverse_iterator across other types can be assigned if the underlying iterator
 			 * can be converted to the type of current
