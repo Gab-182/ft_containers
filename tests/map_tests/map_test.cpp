@@ -446,6 +446,7 @@ int main()
 	std::cout << BOLDYELLOW << "=====================================================================" << RESET << std::endl;
 	{
 		my_map.clear();
+		
 		std::cout << BOLDRED << "my_map.size() = " << BOLDWHITE << my_map.size() << RESET << std::endl;
 		std::cout << BOLDRED << "my_map.empty() = " << BOLDWHITE << my_map.empty() << RESET << std::endl;
 		std::cout << BOLDRED << "map has been cleared\n" << RESET << std::endl;

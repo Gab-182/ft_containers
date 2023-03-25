@@ -49,7 +49,7 @@ namespace ft {
 			class Allocator = std::allocator<ft::pair<Key, T> > >
 	class RedBlack {
 		/**——————————————————————————————————[Member_types]————————————————————————————————————————*/
-		public:
+		private:
 			/**[Tree_types]*/
 			typedef				T																		mapped_type;
 			typedef				Key																		key_type;
@@ -85,7 +85,6 @@ namespace ft {
 			allocator_type			_alloc_data;
 			node_allocator			_alloc_node;
 			node_pointer 			_root;
-			node_pointer 			_end;
 			size_type				_nodes_count;
 
 		public:
@@ -103,10 +102,8 @@ namespace ft {
 				:	_compare(comp),
 					_alloc_data(alloc),
 					_alloc_node(alloc),
-					_root(nullptr),
+					_root(NULL),
 					_nodes_count(0) {
-				_end = _alloc_node.allocate(sizeof(node));
-				_alloc_node.construct(_end, node());
 			}
 			
 			/**——————————————————————————————[Assignment_Operator]—————————————————————————————————*/
@@ -119,7 +116,8 @@ namespace ft {
 			RedBlack&
 			operator=(const RedBlack<NodePointer, Val, Diff>& copy) {
 				if (this != &copy) {
-					clear();
+					if (!empty())
+						clear();
 					_compare = copy._compare;
 					_alloc_data = copy._alloc_data;
 					_alloc_node = copy._alloc_node;
@@ -157,6 +155,8 @@ namespace ft {
 			 **/
 			bool
 			empty() const {
+				if (_root == NULL)
+					return (true);
 				return (_nodes_count == 0);
 			}
 		
@@ -224,7 +224,7 @@ namespace ft {
 			inline iterator
 			begin() {
 				if (empty())
-					return iterator(nullptr, _root);
+					return iterator(NULL, _root);
 				return iterator(GetMinNode(_root), _root);
 			}
 
@@ -235,7 +235,7 @@ namespace ft {
 			inline const_iterator
 			begin() const {
 				if (empty())
-					return const_iterator(nullptr, _root);
+					return const_iterator(NULL, _root);
 				return const_iterator(GetMinNode(_root), _root);
 			}
 		
@@ -251,8 +251,8 @@ namespace ft {
 			inline iterator
 			end() {
 				if (empty())
-					return iterator(nullptr, _root);
-				return iterator(nullptr, _root);
+					return iterator(NULL, _root);
+				return iterator(NULL, _root);
 			}
 		
 			/**——————————————————————————————————————[ end ]——————————————————————————————————————*
@@ -263,8 +263,8 @@ namespace ft {
 			inline const_iterator
 			end() const {
 				if (empty())
-					return const_iterator(nullptr, _root);
-				return const_iterator(nullptr, _root);
+					return const_iterator(NULL, _root);
+				return const_iterator(NULL, _root);
 			}
 		
 			/**————————————————————————————————————[ rbegin ]—————————————————————————————————————*
@@ -391,13 +391,14 @@ namespace ft {
 			ft::pair<iterator, bool>
 			insert(const value_type& value ) {
 				// Allocate a new node, and set its value to the given value.
-				node_pointer new_node = _alloc_node.allocate(sizeof(node));
+				node_pointer new_node = _alloc_node.allocate(1);
 				_alloc_node.construct(new_node, node(value));
 				
-				node_pointer parent = nullptr;
+				node_pointer parent = NULL;
 				node_pointer current = _root;
+				
 				// find the correct location for the new node, and set the parent of the new node.
-				while (current != nullptr) {
+				while (current != NULL) {
 					parent = current;
 					if (_compare(new_node->paired_data.first, current->paired_data.first) == true)
 						current = current->left;
@@ -407,11 +408,11 @@ namespace ft {
 				}
 				new_node->parent = parent;
 				// if the tree is empty, the new node will be the root.
-				if (parent == nullptr)
+				if (parent == NULL)
 					_root = new_node;
 				else if (find(new_node->paired_data.first) != end()) {
 					_alloc_node.destroy(new_node);
-					_alloc_node.deallocate(new_node, sizeof(node));
+					_alloc_node.deallocate(new_node, 1);
 					return (ft::make_pair(iterator(parent, _root), false));
 				}
 				// if the key of the new node is less than the parent, it will be the left child.
@@ -420,12 +421,9 @@ namespace ft {
 				// if the key of the new node is greater than the parent, it will be the right child.
 				else if (_compare(new_node->paired_data.first, parent->paired_data.first) == false)
 					parent->right = new_node;
-				else {
-					_alloc_node.destroy(new_node);
-					_alloc_node.deallocate(new_node, sizeof(node));
-					return (ft::make_pair(iterator(parent, _root), false));
-				}
-				new_node->left = nullptr;
+				new_node->left = NULL;
+				new_node->right = NULL;
+				
 				new_node->color = RED;
 				++_nodes_count;
 				InsertFixup(new_node);
@@ -488,11 +486,11 @@ namespace ft {
 				node_pointer right_child = node->right;
 				node->right = right_child->left;
 				
-				if (right_child->left != nullptr)
+				if (right_child->left != NULL)
 					right_child->left->parent = node;
 				right_child->parent = node->parent;
 				
-				if (node->parent == nullptr) // if node is the root
+				if (node->parent == NULL) // if node is the root
 					_root = right_child;
 				else if (node == node->parent->left) // if node is left child
 					node->parent->left = right_child;
@@ -511,11 +509,11 @@ namespace ft {
 				node_pointer left_child = node->left;
 				node->left = left_child->right;
 				
-				if (left_child->right != nullptr)
+				if (left_child->right != NULL)
 					left_child->right->parent = node;
 				left_child->parent = node->parent;
 				
-				if (node->parent == nullptr) // if node is the root
+				if (node->parent == NULL) // if node is the root
 					_root = left_child;
 				else if (node == node->parent->right) // if node is right child
 					node->parent->right = left_child;
@@ -555,7 +553,7 @@ namespace ft {
 			 **/
 			void
 			InsertFixup(node_pointer node) {
-				node_pointer parent = nullptr;
+				node_pointer parent = NULL;
 				node_pointer grand_parent = node->grandparent();
 				
 				while ((node != _root) && (node->color != BLACK) && (node->parent->color == RED)) {
@@ -567,7 +565,7 @@ namespace ft {
 						node_pointer uncle = grand_parent->right;
 
 						/* Case 1: Uncle is also red */
-						if (uncle != nullptr && uncle->color == RED) {
+						if (uncle != NULL && uncle->color == RED) {
 							grand_parent->color = RED;
 							parent->color = BLACK;
 							uncle->color = BLACK;
@@ -592,7 +590,7 @@ namespace ft {
 						node_pointer uncle = grand_parent->left;
 						
 						/* Case 1: Uncle is also red */
-						if (uncle != nullptr && uncle->color == RED) {
+						if (uncle != NULL && uncle->color == RED) {
 							grand_parent->color = RED;
 							parent->color = BLACK;
 							uncle->color = BLACK;
@@ -652,24 +650,24 @@ namespace ft {
 			size_type
 			erase(const key_type& k) {
 				node_pointer z = find_node(k);
-				if (z == nullptr)
+				if (z == NULL)
 					return 0;
 				node_pointer y = z;
 				node_pointer x;
-				if (z->left == nullptr || z->right == nullptr) {
+				if (z->left == NULL || z->right == NULL) {
 					y = z;
 				} else {
 					y = successor(z);
 				}
-				if (y->left != nullptr) {
+				if (y->left != NULL) {
 					x = y->left;
 				} else {
 					x = y->right;
 				}
-				if (x != nullptr) {
+				if (x != NULL) {
 					x->parent = y->parent;
 				}
-				if (y->parent == nullptr) {
+				if (y->parent == NULL) {
 					_root = x;
 				} else if (y == y->parent->left) {
 					y->parent->left = x;
@@ -700,10 +698,10 @@ namespace ft {
 			 **/
 			node_pointer
 			successor(node_pointer node) {
-				if (node->right != nullptr)
+				if (node->right != NULL)
 					return GetMinNode(node->right);
 				node_pointer parent = node->parent;
-				while (parent != nullptr && node == parent->right) {
+				while (parent != NULL && node == parent->right) {
 					node = parent;
 					parent = parent->parent;
 				}
@@ -790,18 +788,18 @@ namespace ft {
 			 ** recursively, used as a helper function for the clear() function.
 			 **/
 			void
-			delete_subtree(node_pointer node) {
-				if (node == nullptr) {
+			delete_subtree(node_pointer& node) {
+				if (node == NULL) {
 					return;
 				}
-				if (node != nullptr && node->left != nullptr)
+				if (node->left != NULL)
 					delete_subtree(node->left);
-				else if (node->right != nullptr)
+				if (node->right != NULL)
 					delete_subtree(node->right);
-				if (node != nullptr) {
+				if (node != NULL) {
 					_alloc_node.destroy(node);
-					_alloc_node.deallocate(node, sizeof(node));
-					node = nullptr;
+					_alloc_node.deallocate(node, 1);
+					node = NULL;
 				}
 			}
 
@@ -843,12 +841,13 @@ namespace ft {
 			 */
 			void
 			clear() {
-				if (_root == nullptr)
+				if (_nodes_count == 0 || _root == NULL)
 					return;
 				delete_subtree(_root);
-				if (_root != nullptr) {
+				if (_root != NULL) {
 					_alloc_node.destroy(_root);
-					_root = nullptr;
+					_alloc_node.deallocate(_root, 1);
+					_root = NULL;
 				}
 				_nodes_count = 0;
 			}
@@ -869,14 +868,14 @@ namespace ft {
 				node_allocator tmp_alloc_node = _alloc_node;
 				
 				_compare = other._compare;
-				_alloc_data = other._alloc_data;
 				_alloc_node = other._alloc_node;
+				_alloc_data = other._alloc_data;
 				_root = other._root;
 				_nodes_count = other._nodes_count;
 				
 				other._compare = tmp_comp;
-				other._alloc_data = tmp_alloc;
 				other._alloc_node = tmp_alloc_node;
+				other._alloc_data = tmp_alloc;
 				other._root = tmp;
 				other._nodes_count = tmp_size;
 				
@@ -928,7 +927,7 @@ namespace ft {
 			node_pointer
 			find_node(const key_type& k) {
 				node_pointer node = _root;
-				while (node != nullptr) {
+				while (node != NULL) {
 					if (node->paired_data.first == k)
 						return node;
 					else if (node->paired_data.first < k)
@@ -936,7 +935,7 @@ namespace ft {
 					else
 						node = node->left;
 				}
-				return nullptr;
+				return NULL;
 			}
 			
 			/**—————————————————————————————————————[ count ]—————————————————————————————————————*

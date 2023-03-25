@@ -35,7 +35,7 @@ namespace ft {
 	public:
 		/**——————————————————————————[Constructors && Destructor]——————————————————————————————*/
 		RB_const_iterator()
-				: _ptr(nullptr) , _root(nullptr){};
+				: _ptr(NULL) , _root(NULL){};
 		
 		explicit RB_const_iterator(const node_pointer& ptr, const node_pointer& root)
 				: _ptr(ptr), _root(root) { };
@@ -120,7 +120,7 @@ namespace ft {
 		inline RB_const_iterator&
 		operator++() {
 			// for the rend() iterator, return the min node
-			if (_ptr == nullptr)
+			if (_ptr == NULL)
 				_ptr = GetMinNode(_root);
 			else if (_ptr && _ptr != GetMaxNode(_root)) {
 				// if the node has a right child, go to its leftmost descendant
@@ -142,7 +142,7 @@ namespace ft {
 			}
 			else {
 				// if the current node is null, return the end iterator
-				_ptr = nullptr;
+				_ptr = NULL;
 			}
 			return *this;
 		}
@@ -172,13 +172,13 @@ namespace ft {
 			node_pointer MinNode = GetMinNode(_root);
 			
 			// for the end() iterator, return the max node
-			if (_ptr == nullptr)
+			if (_ptr == NULL)
 				_ptr = MaxNode;
 			else if (_ptr == MinNode)
-				_ptr = nullptr;
-			else if (_ptr && _ptr->left != nullptr) {
+				_ptr = NULL;
+			else if (_ptr && _ptr->left != NULL) {
 				_ptr = _ptr->left;
-				while (_ptr->right != nullptr)
+				while (_ptr->right != NULL)
 					_ptr = _ptr->right;
 			}
 			else {

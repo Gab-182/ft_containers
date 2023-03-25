@@ -79,9 +79,13 @@ namespace ft
 		vector (size_type n,
 						const value_type& val = value_type(),
 						const allocator_type& alloc = allocator_type()) {
-			_allocator = alloc;
 			_size = n;
 			_capacity = n;
+			_allocator = alloc;
+			if (n == 0) {
+				_array = NULL;
+				return;
+			}
 			_array = _allocator.allocate(_capacity); // **[Note]
 			for (size_type i = 0; i < _size; i++)
 				_allocator.construct(&_array[i], val); // **[Note]
@@ -146,7 +150,8 @@ namespace ft
 		**  responsibility.
 		*/
 		~vector() {
-			_allocator.deallocate(_array, _capacity);
+			if (_array)
+				clear();
 		}
 
 		/**————————————————————[ operator= ]——————————————————————————————*
@@ -162,6 +167,7 @@ namespace ft
 		operator= (const vector& vec) {
 			if (this == &vec)
 				return (*this);
+			clear();
 			_allocator = vec._allocator;
 			_size = vec._size;
 			_capacity = vec._size;
@@ -189,7 +195,7 @@ namespace ft
 			 **  A question answered from slack, on the resources page.
 			 **  _allocator.destroy(_array);
 			 **/
-			_allocator.deallocate(_array, _capacity);
+			 clear();
 			_size = n;
 			_capacity = _size;
 			_array = _allocator.allocate(n);
@@ -230,7 +236,7 @@ namespace ft
 		assign (Iter first,
 				Iter last,
 				typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = 0) {
-			_allocator.deallocate(_array, _capacity);
+			clear();
 			_size = distance(first, last);
 			_capacity = _size;
 			_array = _allocator.allocate(_size);
@@ -403,6 +409,8 @@ namespace ft
 		*/
 		void
 		resize (size_type n, value_type val = value_type()) {
+			if (n > max_size())
+				throw std::length_error("Length error");
 			while (n < _size)
 				pop_back();
 			while (n > _size)
@@ -437,10 +445,13 @@ namespace ft
 			if (n > max_size())
 				throw std::length_error("Length error");
 			if (n > _capacity) {
+				
 				pointer temp_array = _allocator.allocate(n);
 			for (size_type i = 0; i < _size; i++) {
 				_allocator.construct(&temp_array[i], _array[i]);
 			}
+			for (size_type i = 0; i < _size; i++)
+				_allocator.destroy(&_array[i]);
 			_allocator.deallocate(_array, _capacity);
 			_array = temp_array;
 			_capacity = n;
@@ -455,8 +466,12 @@ namespace ft
 		*/
 		void
 		clear() {
+			if (_size == 0 || _capacity == 0)
+				return ;
 			for (size_type i = 0; i < _size; i++)
 				_allocator.destroy(&_array[i]);
+			_allocator.deallocate(_array, _capacity);
+			_array = NULL;
 			_size = 0;
 		}
 		/*——————————————————————————————————————————————————————————————————————————————————————*
@@ -756,6 +771,8 @@ namespace ft
 			// get the index of the new element
 			difference_type val_index = distance(begin(), position);
 			
+			if (n == 0)
+				return;
 			// if the vector is empty, reserve (n) spaces
 			if (_size == 0)
 				reserve(n);

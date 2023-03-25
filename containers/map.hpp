@@ -38,7 +38,7 @@ namespace ft {
 				typedef	typename 	allocator_type::const_reference											const_reference;
 				typedef typename 	allocator_type::pointer													pointer;
 				typedef typename 	allocator_type::const_pointer											const_pointer;
-				typedef 			RedBlack<Key, T,Compare,Allocator >										tree;
+				typedef 			RedBlack<Key, T,Compare,Allocator >										RBtree;
 				
 				/**[Node_types]*/
 				typedef				ft::NODE<value_type>													node;
@@ -74,7 +74,7 @@ namespace ft {
 			private:
 				key_compare				_compare;
 				allocator_type			_alloc_data;
-				tree					_tree;
+				RBtree					_tree;
 				
 
 			public:
@@ -93,9 +93,13 @@ namespace ft {
 				}
 
 				/**——————————————————————————————[Copy_Constructor]———————————————————————————————————*/
-				map (const map& copy)
-						: _compare(copy._compare), _alloc_data(copy._alloc_data) {
-					insert(copy.begin(), copy.end());
+				map (const map& copy) {
+					if (*this != copy) {
+						clear();
+						_compare = copy._compare;
+						_alloc_data = copy._alloc_data;
+						insert(copy.begin(), copy.end());
+					}
 				}
 			
 			/**—————————————————————————————————[Destructor]——————————————————————————————————————*/
@@ -104,10 +108,11 @@ namespace ft {
 				/**——————————————————————————————————[Operator=]——————————————————————————————————————*/
 				map &operator=(const map &copy) {
 					if (this != &copy) {
-						clear();
+						if (!empty())
+							clear();
 						_compare = copy._compare;
 						_alloc_data = copy._alloc_data;
-						this->insert(copy.begin(), copy.end());
+						insert(copy.begin(), copy.end());
 					}
 					return (*this);
 				}
@@ -193,11 +198,20 @@ namespace ft {
 				}
 
 				void swap(map &x) {
+					key_compare tmp_compare  = _compare;
+					allocator_type tmp_data = _alloc_data;
+					
+					_compare = x._compare;
+					_alloc_data = x._alloc_data;
+					x._compare = tmp_compare;
+					x._alloc_data = tmp_data;
+					
 					this->_tree.swap(x._tree);
 				}
 
 				void clear() {
-					_tree.clear();
+					if (!_tree.empty())
+						_tree.clear();
 				}
 				
 				/**—————————————————————————————————[Observers]————————————————————————————————————————*/
