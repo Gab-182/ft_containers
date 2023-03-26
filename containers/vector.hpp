@@ -165,15 +165,17 @@ namespace ft
 		*/
 		vector&
 		operator= (const vector& vec) {
-			if (this == &vec)
-				return (*this);
-			clear();
-			_allocator = vec._allocator;
-			_size = vec._size;
-			_capacity = vec._size;
-			_array = _allocator.allocate(_capacity);
-			for (size_type i = 0; i < _size; i++)
-				_allocator.construct(&_array[i], vec._array[i]);
+			if (*this != vec) {
+				if (this->_array != NULL)
+					clear();
+				_allocator = vec._allocator;
+				_size = vec._size;
+				_capacity = vec._size;
+			
+				_array = _allocator.allocate(_capacity);
+				for (size_type i = 0; i < _size; i++)
+					_allocator.construct(&_array[i], vec._array[i]);
+			}
 			return (*this);
 		}
 		
@@ -445,7 +447,6 @@ namespace ft
 			if (n > max_size())
 				throw std::length_error("Length error");
 			if (n > _capacity) {
-				
 				pointer temp_array = _allocator.allocate(n);
 			for (size_type i = 0; i < _size; i++) {
 				_allocator.construct(&temp_array[i], _array[i]);
@@ -466,13 +467,14 @@ namespace ft
 		*/
 		void
 		clear() {
-			if (_size == 0 || _capacity == 0)
+			if (_capacity == 0)
 				return ;
 			for (size_type i = 0; i < _size; i++)
 				_allocator.destroy(&_array[i]);
 			_allocator.deallocate(_array, _capacity);
 			_array = NULL;
 			_size = 0;
+			_capacity = 0;
 		}
 		/*——————————————————————————————————————————————————————————————————————————————————————*
 		——————————————————————————————————[Elements access]——————————————————————————————————————
@@ -649,7 +651,7 @@ namespace ft
 		void
 		pop_back() {
 			_allocator.destroy(_array + (_size - 1));
-			_size--;
+			--_size;
 		}
 		
 		/**———————————————————————————————————————————————————————————*
@@ -736,16 +738,41 @@ namespace ft
 		*/
 		iterator
 		insert (iterator position, const value_type& val) {
-			difference_type val_index = distance(begin(), position);
-			if (_size == 0)
-				reserve(1);
-			else if (_size == _capacity)
-				reserve(_capacity * 2);
-			for (size_type i = val_index + 1; i <= _size; i++)
-				std::swap(_array[val_index], _array[i]);
-			_allocator.construct(&_array[val_index], val);
+			int index = 0;
+			pointer new_array = NULL;
+			
+			// allocate new memory to hold the vector's elements plus the new value.
+			new_array = _allocator.allocate(_size + 1);
+			
+			// copy the elements before the new value position to the new array.
+			for (iterator it = begin(); it != position; it++) {
+				_allocator.construct(&new_array[index++], *it);
+			}
+			
+			// insert the new value to the new array
+			_allocator.construct(&new_array[index], val);
+			iterator iter(&new_array[index]);
+			index++;
+			// copy the elements back after new value position to the new array.
+			for (iterator it = position; it != end(); it++) {
+				_allocator.construct(&new_array[index++], *it);
+			}
+			
+			// destroy the old array's elements and deallocate its memory.
+			for (size_type i = 0; i < _size; i++) {
+				_allocator.destroy(&_array[i]);
+			}
+			if (_array) {
+				_allocator.deallocate(_array, _capacity);
+			}
+			
+			// update the vector's internal state to reflect the new array
+			_array = new_array;
 			_size++;
-			return position;
+			_capacity = _size;
+			
+			// return an iterator pointing to the newly inserted element
+			return iter;
 		}
 		
 		/**———————————————————————————————————————————————————————————*
@@ -768,27 +795,38 @@ namespace ft
 		 */
 		void
 		insert (iterator position, size_type n, const value_type& val) {
-			// get the index of the new element
-			difference_type val_index = distance(begin(), position);
+			int index = 0;
+			pointer new_array = NULL;
 			
-			if (n == 0)
-				return;
-			// if the vector is empty, reserve (n) spaces
-			if (_size == 0)
-				reserve(n);
-			// if the vector is not empty, but there is not enough space
-			else if ((_size + n) > _capacity)
-					reserve(_size + n);
-			// move all elements after the position to the right, starting from the end.
-			for (difference_type i = _size - 1; i >= val_index; i--)
-				_allocator.construct(&_array[i + n], _array[i]);
-
-			// insert (n) elements at the position
-			for (size_type i = 0; i < n; i++) {
-				_allocator.construct(&_array[val_index], val);
-				val_index++;
+			// allocate new memory to hold the vector's elements plus the new elements
+			new_array = _allocator.allocate(_size + n);
+			
+			// copy the elements before the position into the new array
+			for (iterator it = begin(); it != position; it++) {
+				_allocator.construct(&new_array[index++], *it);
 			}
+			
+			// insert the new elements into the new array
+			for (size_type j = 0; j < n; j++) {
+				_allocator.construct(&new_array[index++], val);
+			}
+			
+			// copy the elements after the position into the new array
+			for (iterator it = position; it != end(); it++) {
+				_allocator.construct(&new_array[index++], *it);
+			}
+			
+			// destroy the old array's elements and deallocate its memory
+			for (size_type i = 0; i < _size; i++) {
+				_allocator.destroy(&_array[i]);
+			}
+			if (_array) {
+				_allocator.deallocate(_array, _capacity);
+			}
+			
+			_array = new_array;
 			_size += n;
+			_capacity = _size;
 		}
 		
 		/**———————————————————————————————————————————————————————————*
@@ -821,37 +859,45 @@ namespace ft
 		void
 		insert (iterator position, Iter first, Iter last,
 				typename ft::enable_if<!ft::is_integral<Iter>::value, Iter>::type* = 0) {
-			
-			// get the index of the new element
-			difference_type value_index = distance(begin(), position);
-			// get the number of elements to insert
-			difference_type range = distance(first, last);
-			
-			// static_cast the index to size_t.
-			long long index = static_cast<long long>(value_index);
-			// static_cast the range to size_t.
-			size_t n = static_cast<size_t>(range);
-			
-			// if the vector is empty, reserve (n) spaces
-			if (_size == 0)
-				reserve(n);
-			// if the vector is not empty, but there is not enough space:
-			// reserve the maximum between (_size + n) and (_capacity * 2)
-			else if ((_size + n) > _capacity)
-				reserve(std::max(_size + n, _capacity * 2));
-			
-			// move all elements after the position to the right, starting from the end.
-			for (long long i = _size - 1; i >= index; i--)
-				_allocator.construct(&_array[i + n], _array[i]);
-			
-			// insert (n) elements at the position
-			for (size_type i = 0; i < n; i++) {
-				_allocator.construct(&_array[index++], *first);
-				first++;
+			// create a temporary vector to hold the new elements to insert
+			vector<T> new_vec;
+			for (; first != last; first++) {
+				new_vec.push_back(*first);
 			}
 			
-			// increase the size of the vector
-			_size += n;
+			// allocate new memory to hold the vector's contents plus the new elements
+			int index = 0;
+			pointer new_array = NULL;
+			size_type _extra = new_vec.size();
+			new_array = _allocator.allocate(_size + _extra);
+			
+			// copy the elements before the insertion point into the new array
+			for (iterator it = begin(); it != position; it++) {
+				_allocator.construct(&new_array[index++], *it);
+			}
+			
+			// copy the new elements into the new array
+			for (iterator it = new_vec.begin(); it != new_vec.end(); it++) {
+				_allocator.construct(&new_array[index++], *it);
+			}
+			
+			// copy the elements after the insertion point into the new array
+			for (iterator it = position; it != end(); it++) {
+				_allocator.construct(&new_array[index++], *it);
+			}
+			
+			// destroy the old array's elements and deallocate its memory
+			for (size_type i = 0; i < _size; i++) {
+				_allocator.destroy(&_array[i]);
+			}
+			if (_array) {
+				_allocator.deallocate(_array, _capacity);
+			}
+			
+			// update the vector's internal state to reflect the new array
+			_array = new_array;
+			_size += _extra;
+			_capacity = _size;
 		}
 		/**—————————————————————————————————————————————————————————————————————————————*/
 	}; // vector
