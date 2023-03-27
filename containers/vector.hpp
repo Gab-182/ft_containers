@@ -847,13 +847,6 @@ namespace ft
 		 **  		This is generally an inefficient operation compared to the
 		 **  		one performed for the same operation by other kinds of sequence
 		 **  		containers (such as list or forward_list).
-		 *
-		 ** NOTE:
-		 * ======-----------------------------------------------------------
-		 **  the use of long long in this example is a way to ensure that
-		 **  the code works correctly and predictably on different systems,
-		 **  regardless of the size of the difference_type.
-		 * ------------------------------------------------------------------
 		 */
 		template <class Iter>
 		void
